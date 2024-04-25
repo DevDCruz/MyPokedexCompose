@@ -2,6 +2,7 @@ package com.example.mypokedexcompose.ui.screens.home
 
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
@@ -21,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -77,18 +79,18 @@ fun HomeScreen(onClick: (Pokemon) -> Unit) {
 fun PokemonItem(pokemon: Pokemon, onClick: () -> Unit) {
     Row(
         modifier = Modifier.clickable(onClick = onClick),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
             model = pokemon.bitImage,
             contentDescription = pokemon.name,
             modifier = Modifier
-                .size(50.dp)
-                .aspectRatio(2 / 2f)
+                .size(60.dp)
                 .clip(MaterialTheme.shapes.small)
         )
         Text(
             text = pokemon.name,
-            style = MaterialTheme.typography.bodySmall,
+            style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(8.dp)
         )
     }

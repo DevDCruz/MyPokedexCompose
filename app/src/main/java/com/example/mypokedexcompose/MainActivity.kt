@@ -30,6 +30,7 @@ import com.example.mypokedexcompose.data.Pokemon
 import com.example.mypokedexcompose.data.pokemons
 import com.example.mypokedexcompose.ui.screens.detail.DetailScreen
 import com.example.mypokedexcompose.ui.screens.home.HomeScreen
+import com.example.mypokedexcompose.ui.screens.navigation
 import com.example.mypokedexcompose.ui.theme.MyPokedexComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -37,24 +38,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val navControler = rememberNavController()
-            NavHost(navController = navControler, startDestination = "home") {
-                composable("home") {
-                    HomeScreen(onClick = { pokemon ->
-                        navControler.navigate("detail/${pokemon.id}")
-                    })
-                }
-                composable(
-                    "detail/{pokemonId}",
-                    arguments = listOf(navArgument("pokemonId") { type = NavType.IntType })
-                ) { backStackEntry ->
-                    val pokemonId = backStackEntry.arguments?.getInt("pokemonId")
-                    DetailScreen(
-                        pokemon = pokemons.first { it.id == pokemonId },
-                        onBack = { navControler.popBackStack() }
-                    )
-                }
-            }
+            navigation()
         }
     }
 }
