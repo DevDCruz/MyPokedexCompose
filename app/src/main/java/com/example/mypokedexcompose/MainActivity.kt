@@ -21,7 +21,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.mypokedexcompose.data.Pokemon
+import com.example.mypokedexcompose.data.pokemons
 import com.example.mypokedexcompose.ui.screens.detail.DetailScreen
 import com.example.mypokedexcompose.ui.screens.home.HomeScreen
 import com.example.mypokedexcompose.ui.theme.MyPokedexComposeTheme
@@ -31,13 +37,22 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            MyPokedexComposeTheme {
-
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    HomeScreen()
+            val navControler = rememberNavController()
+            NavHost(navController = navControler, startDestination = "home") {
+                composable("home") {
+                    HomeScreen(onClick = { pokemon ->
+                        navControler.navigate("detail/${pokemon.id}")
+                    })
+                }
+                composable(
+                    "detail/{pokemonId}",
+                    arguments = listOf(navArgument("pokemonId") { type = NavType.IntType })
+                ) { backStackEntry ->
+                    val pokemonId = backStackEntry.arguments?.getInt("pokemonId")
+                    DetailScreen(
+                        pokemon = pokemons.first { it.id == pokemonId },
+                        onBack = { navControler.popBackStack() }
+                    )
                 }
             }
         }
@@ -50,7 +65,7 @@ class MainActivity : ComponentActivity() {
 private fun MyLazyColumnPreview() {
     MyPokedexComposeTheme {
         Surface {
-            DetailScreen()
+
         }
     }
 }

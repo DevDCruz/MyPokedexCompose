@@ -32,20 +32,16 @@ import com.example.mypokedexcompose.ui.screens.home.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailScreen() {
+fun DetailScreen(pokemon: Pokemon, onBack: () -> Unit) {
 
     Screen {
 
-        val pokemon = Pokemon(
-            "Bulbasaur",
-            1,
-        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png")
         Scaffold(
             topBar = {
                 TopAppBar(
                     title = { Text(text = pokemon.name) },
                     navigationIcon = {
-                        IconButton(onClick = { /*TODO*/ }) {
+                        IconButton(onClick = onBack) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Default.ArrowBack,
                                 contentDescription = stringResource(id = R.string.back)
