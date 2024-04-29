@@ -4,6 +4,7 @@ package com.example.mypokedexcompose.ui.screens.home
 import android.Manifest
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -36,6 +38,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.mypokedexcompose.R
 import com.example.mypokedexcompose.data.Pokemon
@@ -59,12 +62,16 @@ fun Screen(content: @Composable () -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(onClick: (Pokemon) -> Unit) {
+fun HomeScreen(
+    onClick: (Pokemon) -> Unit,
+    vm: HomeViewModel = viewModel()
+) {
 
     val ctx = LocalContext.current.applicationContext
     val appName = stringResource(id = R.string.app_name)
     var appBarTitle by remember { mutableStateOf(appName) }
     val coroutineScope = rememberCoroutineScope()
+
 
 
     PermissionRequestEffect(permission = Manifest.permission.ACCESS_COARSE_LOCATION) { granted ->
@@ -77,7 +84,7 @@ fun HomeScreen(onClick: (Pokemon) -> Unit) {
         } else {
             appBarTitle = "$appName (Permission Denied)"
         }
-
+        vm.onUiReady()
     }
 
     Screen {
@@ -93,11 +100,23 @@ fun HomeScreen(onClick: (Pokemon) -> Unit) {
             modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
             contentWindowInsets = WindowInsets.safeDrawing
         ) { padding ->
+            val state = vm.state
+            if (state.loading) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(padding),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
+
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = padding
             ) {
-                items(pokemons) { pokemon ->
+                items(state.pokemons) { pokemon ->
                     PokemonItem(pokemon = pokemon, onClick = { onClick(pokemon) })
                 }
             }
