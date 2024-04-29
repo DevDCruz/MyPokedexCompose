@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">My Pokedex Compose</string>
+    <string name="app_name">Pokedex</string>
     <string name="back">Go Back</string>
 </resources>
