@@ -6,9 +6,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.mypokedexcompose.data.pokemons
 import com.example.mypokedexcompose.ui.screens.detail.DetailScreen
 import com.example.mypokedexcompose.ui.screens.home.HomeScreen
+import com.example.mypokedexcompose.data.home.PokedexResult
+import com.example.mypokedexcompose.data.home.pokemons
+
 
 @Composable
 fun navigation() {

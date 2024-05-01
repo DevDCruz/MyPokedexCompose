@@ -7,8 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypokedexcompose.data.Pokemon
 import com.example.mypokedexcompose.data.PokemonRepository
-import com.example.mypokedexcompose.data.pokemons
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
@@ -19,7 +17,7 @@ class HomeViewModel : ViewModel() {
     fun onUiReady() {
         viewModelScope.launch {
             state = UiState(loading = true)
-            state = UiState(false, pokemons = repository.fetchPokemons())
+            state = UiState(false, pokemons = repository.fetchPokedex())
         }
 
     }
