@@ -57,7 +57,7 @@ fun DetailScreen(pokemon: Pokemon, onBack: () -> Unit) {
                     .verticalScroll(rememberScrollState())
             ) {
                 AsyncImage(
-                    model = pokemon.image,
+                    model = pokemon.sprites,
                     contentDescription = pokemon.name,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
