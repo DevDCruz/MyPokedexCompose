@@ -39,6 +39,7 @@ import com.example.mypokedexcompose.R
 import com.example.mypokedexcompose.data.Pokemon
 import com.example.mypokedexcompose.data.home.pokemons
 import com.example.mypokedexcompose.ui.common.PermissionRequestEffect
+import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
 import com.example.mypokedexcompose.ui.common.getRegion
 import com.example.mypokedexcompose.ui.theme.MyPokedexComposeTheme
 import kotlinx.coroutines.launch
@@ -131,7 +132,9 @@ fun HomeScreen(
 fun PokedexItem(pokemon: Pokemon, onClick: () -> Unit, pokedexNumber: Int) {
     var imgPokedex by remember { mutableStateOf("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/") }
     Row(
-        modifier = Modifier.clickable(onClick = onClick),
+        modifier = Modifier
+            .clickable(onClick = onClick)
+            .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
@@ -143,12 +146,12 @@ fun PokedexItem(pokemon: Pokemon, onClick: () -> Unit, pokedexNumber: Int) {
         )
         Text(
             text = "$pokedexNumber - ",
-            style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.padding(8.dp)
         )
         Text(
-            text = pokemon.name,
-            style = MaterialTheme.typography.bodyMedium,
+            text = changefirstCharToUpperCase(pokemon.name),
+            style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.padding(8.dp)
         )
 
