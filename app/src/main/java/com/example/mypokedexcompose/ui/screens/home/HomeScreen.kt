@@ -37,6 +37,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.mypokedexcompose.R
 import com.example.mypokedexcompose.data.Pokemon
+import com.example.mypokedexcompose.data.home.pokemons
 import com.example.mypokedexcompose.ui.common.PermissionRequestEffect
 import com.example.mypokedexcompose.ui.common.getRegion
 import com.example.mypokedexcompose.ui.theme.MyPokedexComposeTheme
@@ -68,6 +69,7 @@ fun HomeScreen(
 
 
 
+
     PermissionRequestEffect(permission = Manifest.permission.ACCESS_COARSE_LOCATION) { granted ->
         if (granted) {
             coroutineScope.launch {
@@ -95,6 +97,7 @@ fun HomeScreen(
             contentWindowInsets = WindowInsets.safeDrawing
         ) { padding ->
             val state = vm.state
+
             if (state.loading) {
                 Box(
                     modifier = Modifier
@@ -111,32 +114,43 @@ fun HomeScreen(
                 contentPadding = padding
             ) {
                 items(state.pokemons) { pokemon ->
-                    PokemonItem(pokemon = pokemon, onClick = { onClick(pokemon) })
+                    PokedexItem(
+                        pokemon = pokemon,
+                        onClick = { /*onClick(pokemonResult)*/ },
+                        pokedexNumber = state.pokemons.indexOf(pokemon) +1
+                    )
+
                 }
+
             }
         }
     }
-
-
 }
 
 @Composable
-fun PokemonItem(pokemon: Pokemon, onClick: () -> Unit) {
+fun PokedexItem(pokemon: Pokemon, onClick: () -> Unit, pokedexNumber: Int) {
+    var imgPokedex by remember { mutableStateOf("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/") }
     Row(
         modifier = Modifier.clickable(onClick = onClick),
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
-            model = pokemon.sprites,
+            model = "$imgPokedex$pokedexNumber.png",
             contentDescription = pokemon.name,
             modifier = Modifier
                 .size(60.dp)
                 .clip(MaterialTheme.shapes.small)
         )
         Text(
+            text = "$pokedexNumber - ",
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.padding(8.dp)
+        )
+        Text(
             text = pokemon.name,
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(8.dp)
         )
+
     }
 }
