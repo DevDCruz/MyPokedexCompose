@@ -6,14 +6,16 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypokedexcompose.data.Pokemon
-import com.example.mypokedexcompose.data.PokemonRepository
+import com.example.mypokedexcompose.data.PokedexRepository
+import com.example.mypokedexcompose.data.detail.pokemonresult.Sprites
+import com.example.mypokedexcompose.data.home.pokemons
 import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
 
     var state by mutableStateOf(UiState())
         private set
-    private val repository = PokemonRepository()
+    private val repository = PokedexRepository()
     fun onUiReady() {
         viewModelScope.launch {
             state = UiState(loading = true)
@@ -21,6 +23,8 @@ class HomeViewModel : ViewModel() {
         }
 
     }
+
+
 
     data class UiState(
         val loading: Boolean = false,

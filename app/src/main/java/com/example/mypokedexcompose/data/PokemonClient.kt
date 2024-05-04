@@ -5,6 +5,7 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
 
@@ -17,7 +18,7 @@ object PokemonClient {
     val instance = Retrofit.Builder()
         .baseUrl("https://pokeapi.co/api/v2/")
         .client(okHttpClient)
-        .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+        .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create<PokemonService>()
 }
