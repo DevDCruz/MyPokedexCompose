@@ -1,5 +1,6 @@
 package com.example.mypokedexcompose.data
 
+import com.example.mypokedexcompose.data.detail.pokemonresult.PokemonResult
 import com.example.mypokedexcompose.data.detail.pokemonresult.Sprites
 import com.example.mypokedexcompose.data.home.PokedexResult
 import retrofit2.http.GET
@@ -12,7 +13,7 @@ interface PokemonService {
     suspend fun fetchPokedex(@Query("limit") limit: Int): PokedexResult
 
     @GET("pokemon/{name}")
-    suspend fun getPokemonByName(@Path("name") name: String): Pokemon
+    suspend fun getPokemonByName(@Path("name") name: String): PokemonResult
 
 
     @GET("sprites/pokemon/{id}.png")

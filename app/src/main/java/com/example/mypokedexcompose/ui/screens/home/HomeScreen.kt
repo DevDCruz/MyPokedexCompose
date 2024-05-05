@@ -37,7 +37,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.mypokedexcompose.R
 import com.example.mypokedexcompose.data.Pokemon
-import com.example.mypokedexcompose.data.home.pokemons
 import com.example.mypokedexcompose.ui.common.PermissionRequestEffect
 import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
 import com.example.mypokedexcompose.ui.common.getRegion
@@ -152,7 +151,7 @@ fun PokedexItem(pokemon: Pokemon, onClick: () -> Unit, pokedexNumber: Int) {
         Text(
             text = changefirstCharToUpperCase(pokemon.name),
             style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier.padding(8.dp).weight(1f)
         )
 
     }

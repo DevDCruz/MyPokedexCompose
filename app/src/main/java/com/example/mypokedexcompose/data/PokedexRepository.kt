@@ -6,11 +6,6 @@ import com.example.mypokedexcompose.data.detail.pokemonresult.Sprites
 
 class PokedexRepository {
 
-    suspend fun getSpriteUrl(id: Int): Sprites =
-        PokemonClient
-            .instance
-            .getSpriteUrl(id)
-
     suspend fun fetchPokedex(): List<Pokemon> = PokemonClient
         .instance
         .fetchPokedex(151)
