@@ -116,7 +116,7 @@ fun HomeScreen(
                 items(state.pokemons) { pokemon ->
                     PokedexItem(
                         pokemon = pokemon,
-                        onClick = { /*onClick(pokemonResult)*/ },
+                        onClick = { onClick(pokemon) },
                         pokedexNumber = state.pokemons.indexOf(pokemon) +1
                     )
 

@@ -1,5 +1,6 @@
 package com.example.mypokedexcompose.data
 
+import com.example.mypokedexcompose.data.detail.pokemonresult.spritesfolder.Sprites
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -14,7 +15,7 @@ data class Pokemon(
     @SerialName("weight")
     val weight: Int,
     @SerialName("sprites")
-    val sprites: String,
+    val sprites: Sprites?,
     @SerialName("spritePokedex")
     val spritePokedex: String,
 )

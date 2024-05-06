@@ -1,7 +1,6 @@
 package com.example.mypokedexcompose.data
 
 import com.example.mypokedexcompose.data.detail.pokemonresult.PokemonResult
-import com.example.mypokedexcompose.data.detail.pokemonresult.Sprites
 
 
 class PokedexRepository {
@@ -22,7 +21,7 @@ private fun PokemonResult.todomainModel(): Pokemon =
         id = id,
         height = height,
         weight = weight,
-        sprites = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{$id}.png",
+        sprites = sprites,
         spritePokedex = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{$id}.png"
     )
 
