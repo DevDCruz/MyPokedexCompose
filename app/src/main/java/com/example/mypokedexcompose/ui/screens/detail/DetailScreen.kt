@@ -73,10 +73,9 @@ fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
 
 
                 state.pokemon?.let { pokemon ->
-                    val img =
-                        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/"
-                    AsyncImage(
-                        model = "$img${pokemon.id}.png",
+
+                     AsyncImage(
+                        model = "${state.sprite}${pokemon.id}.png",
                         contentDescription = pokemon.name,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier

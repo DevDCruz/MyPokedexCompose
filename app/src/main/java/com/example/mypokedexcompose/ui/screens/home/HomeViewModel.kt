@@ -17,7 +17,11 @@ class HomeViewModel : ViewModel() {
     fun onUiReady() {
         viewModelScope.launch {
             state = UiState(loading = true)
-            state = UiState(false, pokemons = repository.fetchPokedex())
+            state = UiState(false,
+                pokemons = repository.fetchPokedex(),
+                spritePokedex = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"
+
+            )
         }
 
     }
@@ -26,7 +30,8 @@ class HomeViewModel : ViewModel() {
 
     data class UiState(
         val loading: Boolean = false,
-        val pokemons: List<Pokemon> = emptyList()
+        val pokemons: List<Pokemon> = emptyList(),
+        val spritePokedex: String? = null
     )
 
 }

@@ -33,6 +33,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.mypokedexcompose.R
@@ -114,11 +115,14 @@ fun HomeScreen(
                 contentPadding = padding
             ) {
                 items(state.pokemons) { pokemon ->
-                    PokedexItem(
-                        pokemon = pokemon,
-                        onClick = { onClick(pokemon) },
-                        pokedexNumber = state.pokemons.indexOf(pokemon) +1
-                    )
+                    vm.state.spritePokedex?.let {
+                        PokedexItem(
+                            pokemon = pokemon,
+                            onClick = { onClick(pokemon) },
+                            pokedexNumber = state.pokemons.indexOf(pokemon) +1,
+                            sprite = it
+                        )
+                    }
 
                 }
 
@@ -128,8 +132,7 @@ fun HomeScreen(
 }
 
 @Composable
-fun PokedexItem(pokemon: Pokemon, onClick: () -> Unit, pokedexNumber: Int) {
-    var imgPokedex by remember { mutableStateOf("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/") }
+fun PokedexItem(pokemon: Pokemon, onClick: () -> Unit, pokedexNumber: Int, sprite: String) {
     Row(
         modifier = Modifier
             .clickable(onClick = onClick)
@@ -137,7 +140,7 @@ fun PokedexItem(pokemon: Pokemon, onClick: () -> Unit, pokedexNumber: Int) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
-            model = "$imgPokedex$pokedexNumber.png",
+            model = "$sprite$pokedexNumber.png",
             contentDescription = pokemon.name,
             modifier = Modifier
                 .size(60.dp)
@@ -151,7 +154,9 @@ fun PokedexItem(pokemon: Pokemon, onClick: () -> Unit, pokedexNumber: Int) {
         Text(
             text = changefirstCharToUpperCase(pokemon.name),
             style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier.padding(8.dp).weight(1f)
+            modifier = Modifier
+                .padding(8.dp)
+                .weight(1f)
         )
 
     }
