@@ -19,6 +19,7 @@ private fun PokemonResult.todomainModel(): Pokemon =
         id = id,
         height = height,
         weight = weight,
+        types = types,
         spriteDetail = "",
         spritePokedex = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{$id}.png"
     )

@@ -23,7 +23,7 @@ suspend fun Context.getRegion(): String {
 
     val geocoder = Geocoder(this)
     val addresses = location?.let {
-        geocoder.getFromLocation(it.latitude, it.longitude, 1)
+        geocoder.getFromLocationCompat(it.latitude, it.longitude, 1)
     }
 
     return addresses?.firstOrNull()?.countryCode ?: DEFAULT_REGION

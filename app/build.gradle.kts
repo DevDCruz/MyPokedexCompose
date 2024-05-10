@@ -65,7 +65,6 @@ dependencies {
     implementation(libs.play.services.location)
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.kotlinx.serialization)
-    //converter gson
     implementation(libs.converter.gson)
     implementation(libs.kotlinx.serialization.json)
     testImplementation(libs.junit)

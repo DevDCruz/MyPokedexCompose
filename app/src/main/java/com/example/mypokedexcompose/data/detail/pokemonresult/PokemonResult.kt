@@ -13,7 +13,9 @@ data class PokemonResult(
     @SerialName("name")
     val name: String,
     @SerialName("types")
-    val types: List<Type>,
+    val types: List<Type>?,
+    @SerialName("url")
+    val url: String,
     @SerialName("weight")
     val weight: Int
 )
