@@ -2,8 +2,8 @@ package com.example.mypokedexcompose.ui.screens.home
 
 
 import android.Manifest
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,7 +12,8 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -29,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -37,9 +39,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.mypokedexcompose.R
 import com.example.mypokedexcompose.data.Pokemon
+import com.example.mypokedexcompose.ui.common.CircularProgressFun
 import com.example.mypokedexcompose.ui.common.PermissionRequestEffect
 import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
 import com.example.mypokedexcompose.ui.common.getRegion
+import com.example.mypokedexcompose.ui.theme.DarkRed
+import com.example.mypokedexcompose.ui.theme.DarkRedII
+import com.example.mypokedexcompose.ui.theme.LightRed
 import com.example.mypokedexcompose.ui.theme.MyPokedexComposeTheme
 import kotlinx.coroutines.launch
 
@@ -47,8 +53,7 @@ import kotlinx.coroutines.launch
 fun Screen(content: @Composable () -> Unit) {
     MyPokedexComposeTheme {
         Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background,
+            modifier = Modifier.fillMaxSize().background(DarkRed),
             content = content
         )
     }
@@ -83,42 +88,53 @@ fun HomeScreen(
         vm.onUiReady()
     }
 
-    Screen {
+    Screen() {
         val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+        //No se como implementar esto, no consigo que el lazycolumn mantenga la posicion en la recomposicion
+        val lazyLisState = rememberLazyListState()
 
         Scaffold(
             topBar = {
                 TopAppBar(
                     title = { Text(text = appBarTitle) },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = DarkRed,
+                        scrolledContainerColor = DarkRedII
+                    ),
                     scrollBehavior = scrollBehavior
                 )
             },
-            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-            contentWindowInsets = WindowInsets.safeDrawing
-        ) { padding ->
+            modifier = Modifier
+                .nestedScroll(scrollBehavior.nestedScrollConnection),
+            contentWindowInsets = WindowInsets.safeDrawing,
+
+
+            ) { padding ->
+
             val state = vm.state
 
+
             if (state.loading) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(padding),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
-                }
+                CircularProgressFun(padding = padding)
             }
 
             LazyColumn(
-                modifier = Modifier.fillMaxSize(),
+
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(DarkRed),
+                state = lazyLisState,
                 contentPadding = padding
             ) {
                 items(state.pokemons) { pokemon ->
-                    PokedexItem(
-                        pokemon = pokemon,
-                        onClick = { onClick(pokemon) },
-                        pokedexNumber = state.pokemons.indexOf(pokemon) +1
-                    )
+                    vm.state.spritePokedex?.let {
+                        PokedexItem(
+                            pokemon = pokemon,
+                            onClick = { onClick(pokemon) },
+                            pokedexNumber = state.pokemons.indexOf(pokemon) + 1,
+                            sprite = it
+                        )
+                    }
 
                 }
 
@@ -128,16 +144,17 @@ fun HomeScreen(
 }
 
 @Composable
-fun PokedexItem(pokemon: Pokemon, onClick: () -> Unit, pokedexNumber: Int) {
-    var imgPokedex by remember { mutableStateOf("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/") }
+fun PokedexItem(pokemon: Pokemon, onClick: () -> Unit, pokedexNumber: Int, sprite: String) {
+
     Row(
         modifier = Modifier
-            .clickable(onClick = onClick)
-            .padding(8.dp),
+            .padding(8.dp)
+            .clickable { onClick() }
+            .background(LightRed, shape = RoundedCornerShape(8.dp)),
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
-            model = "$imgPokedex$pokedexNumber.png",
+            model = "$sprite$pokedexNumber.png",
             contentDescription = pokemon.name,
             modifier = Modifier
                 .size(60.dp)
@@ -151,8 +168,11 @@ fun PokedexItem(pokemon: Pokemon, onClick: () -> Unit, pokedexNumber: Int) {
         Text(
             text = changefirstCharToUpperCase(pokemon.name),
             style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier.padding(8.dp).weight(1f)
+            modifier = Modifier
+                .padding(8.dp)
+                .weight(1f)
         )
 
     }
+
 }
