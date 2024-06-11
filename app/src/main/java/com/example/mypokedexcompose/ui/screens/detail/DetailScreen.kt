@@ -92,10 +92,11 @@ fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
 
             Column(
                 modifier = Modifier
-                    .padding(padding)
+                    .fillMaxSize()
+                    .padding(top = padding.calculateTopPadding())
                     .verticalScroll(rememberScrollState())
                     .background(DarkRed)
-                    .fillMaxSize()
+
 
             ) {
 
