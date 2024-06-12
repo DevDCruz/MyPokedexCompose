@@ -30,7 +30,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -88,10 +87,12 @@ fun HomeScreen(
         vm.onUiReady()
     }
 
-    Screen() {
+    Screen {
         val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-        //No se como implementar esto, no consigo que el lazycolumn mantenga la posicion en la recomposicion
-        val lazyLisState = rememberLazyListState()
+
+        val lazyLisState = rememberLazyListState(
+            initialFirstVisibleItemIndex = vm.state.scrollPosition
+        )
 
         Scaffold(
             topBar = {
@@ -130,7 +131,9 @@ fun HomeScreen(
                     vm.state.spritePokedex?.let {
                         PokedexItem(
                             pokemon = pokemon,
-                            onClick = { onClick(pokemon) },
+                            onClick = {
+                                onClick(pokemon)
+                                      vm.savedScrollPosition(lazyLisState.firstVisibleItemIndex)},
                             pokedexNumber = state.pokemons.indexOf(pokemon) + 1,
                             sprite = it
                         )
