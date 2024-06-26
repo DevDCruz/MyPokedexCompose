@@ -52,7 +52,9 @@ import kotlinx.coroutines.launch
 fun Screen(content: @Composable () -> Unit) {
     MyPokedexComposeTheme {
         Surface(
-            modifier = Modifier.fillMaxSize().background(DarkRed),
+            modifier = Modifier
+                .fillMaxSize()
+                .background(DarkRed),
             content = content
         )
     }
@@ -89,10 +91,7 @@ fun HomeScreen(
 
     Screen {
         val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-
-        val lazyLisState = rememberLazyListState(
-            initialFirstVisibleItemIndex = vm.state.scrollPosition
-        )
+        val lazyLisState = rememberLazyListState()
 
         Scaffold(
             topBar = {
@@ -131,9 +130,7 @@ fun HomeScreen(
                     vm.state.spritePokedex?.let {
                         PokedexItem(
                             pokemon = pokemon,
-                            onClick = {
-                                onClick(pokemon)
-                                      vm.savedScrollPosition(lazyLisState.firstVisibleItemIndex)},
+                            onClick = { onClick(pokemon) },
                             pokedexNumber = state.pokemons.indexOf(pokemon) + 1,
                             sprite = it
                         )
