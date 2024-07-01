@@ -43,9 +43,9 @@ import com.example.mypokedexcompose.ui.theme.LightRed
 fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
 
     val state = vm.state
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     Screen {
-        val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
         Scaffold(
             topBar = {
@@ -87,8 +87,6 @@ fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
                         .padding(top = padding.calculateTopPadding())
                         .verticalScroll(rememberScrollState())
                         .background(DarkRed)
-
-
                 ) {
 
                     state.pokemon?.let { pokemon ->
