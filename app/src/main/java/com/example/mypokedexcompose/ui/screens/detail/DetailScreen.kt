@@ -79,24 +79,25 @@ fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
 
             if (state.loading) {
                 CircularProgressFun(padding)
-            }
+            } else {
 
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = padding.calculateTopPadding())
-                    .verticalScroll(rememberScrollState())
-                    .background(DarkRed)
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(top = padding.calculateTopPadding())
+                        .verticalScroll(rememberScrollState())
+                        .background(DarkRed)
 
 
-            ) {
+                ) {
 
-                state.pokemon?.let { pokemon ->
+                    state.pokemon?.let { pokemon ->
 
-                    DeatilPokemonItem(pokemon, state.sprite ?: "")
+                        DeatilPokemonItem(pokemon, state.sprite ?: "")
 
-                } ?: kotlin.run {
-                    Text(text = "Pokemon not found")
+                    } ?: kotlin.run {
+                        Text(text = "Pokemon not found")
+                    }
                 }
             }
         }

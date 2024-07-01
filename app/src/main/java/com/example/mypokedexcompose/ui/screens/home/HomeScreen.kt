@@ -117,30 +117,32 @@ fun HomeScreen(
 
             if (state.loading) {
                 CircularProgressFun(padding = padding)
-            }
+            } else {
 
-            LazyColumn(
+                LazyColumn(
 
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(DarkRed),
-                state = lazyLisState,
-                contentPadding = padding
-            ) {
-                items(state.pokemons) { pokemon ->
-                    vm.state.spritePokedex?.let {
-                        PokedexItem(
-                            pokemon = pokemon,
-                            onClick = {
-                                onClick(pokemon)
-                                      vm.savedScrollPosition(lazyLisState.firstVisibleItemIndex)},
-                            pokedexNumber = state.pokemons.indexOf(pokemon) + 1,
-                            sprite = it
-                        )
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(DarkRed),
+                    state = lazyLisState,
+                    contentPadding = padding
+                ) {
+                    items(state.pokemons) { pokemon ->
+                        vm.state.spritePokedex?.let {
+                            PokedexItem(
+                                pokemon = pokemon,
+                                onClick = {
+                                    onClick(pokemon)
+                                    vm.savedScrollPosition(lazyLisState.firstVisibleItemIndex)
+                                },
+                                pokedexNumber = state.pokemons.indexOf(pokemon) + 1,
+                                sprite = it
+                            )
+                        }
+
                     }
 
                 }
-
             }
         }
     }
