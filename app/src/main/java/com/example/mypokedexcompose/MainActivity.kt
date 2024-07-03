@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.mypokedexcompose.ui.screens.navigation
+import com.example.mypokedexcompose.ui.screens.Navigation
 import com.example.mypokedexcompose.ui.theme.MyPokedexComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            navigation()
+            Navigation()
         }
     }
 }

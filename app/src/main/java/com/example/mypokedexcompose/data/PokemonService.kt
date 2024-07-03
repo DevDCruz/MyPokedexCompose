@@ -14,4 +14,7 @@ interface PokemonService {
     @GET("pokemon/{name}")
     suspend fun getPokemonByName(@Path("name") name: String): PokemonResult
 
+    @GET("pokemon/{id}")
+    suspend fun getPokemonById(@Path("id") id: Int): PokemonResult
+
 }

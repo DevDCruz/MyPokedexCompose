@@ -15,7 +15,7 @@ fun CircularProgressFun( padding: PaddingValues) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(padding)
+            .padding(top = padding.calculateTopPadding())
             .background(DarkRed),
         contentAlignment = Alignment.Center
     ) {
