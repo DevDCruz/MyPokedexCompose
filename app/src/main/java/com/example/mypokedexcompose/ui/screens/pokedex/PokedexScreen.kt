@@ -14,10 +14,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -43,30 +46,19 @@ import com.example.mypokedexcompose.ui.common.CircularProgressFun
 import com.example.mypokedexcompose.ui.common.PermissionRequestEffect
 import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
 import com.example.mypokedexcompose.ui.common.getRegion
+import com.example.mypokedexcompose.ui.screens.Screen
 import com.example.mypokedexcompose.ui.theme.DarkRed
 import com.example.mypokedexcompose.ui.theme.DarkRedII
 import com.example.mypokedexcompose.ui.theme.LightRed
-import com.example.mypokedexcompose.ui.theme.MyPokedexComposeTheme
 import kotlinx.coroutines.launch
 
-@Composable
-fun PokedexScreen(content: @Composable () -> Unit) {
-    MyPokedexComposeTheme {
-        Surface(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(DarkRed),
-            content = content
-        )
-    }
-
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PokedexScreen(
     onClick: (Pokemon) -> Unit,
-    vm: PokedexViewModel = viewModel()
+    vm: PokedexViewModel = viewModel(),
+    onBack: () -> Unit
 ) {
 
     val ctx = LocalContext.current.applicationContext
@@ -90,7 +82,7 @@ fun PokedexScreen(
         vm.onUiReady()
     }
 
-    PokedexScreen {
+    Screen {
         val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
         val lazyLisState = rememberLazyListState(
             initialFirstVisibleItemIndex = vm.state.collectAsState().value.scrollPosition
@@ -104,12 +96,21 @@ fun PokedexScreen(
                         containerColor = DarkRed,
                         scrolledContainerColor = DarkRedII
                     ),
-                    scrollBehavior = scrollBehavior
+                    scrollBehavior = scrollBehavior,
+                    navigationIcon = {
+                        IconButton(onClick = onBack) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Default.ArrowBack,
+                                contentDescription = stringResource(id = R.string.back)
+                            )
+                        }
+                    },
                 )
             },
             modifier = Modifier
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
             contentWindowInsets = WindowInsets.safeDrawing,
+
 
             ) { padding ->
 
