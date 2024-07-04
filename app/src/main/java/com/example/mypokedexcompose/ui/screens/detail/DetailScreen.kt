@@ -35,7 +35,7 @@ import com.example.mypokedexcompose.R
 import com.example.mypokedexcompose.data.Pokemon
 import com.example.mypokedexcompose.ui.common.CircularProgressFun
 import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
-import com.example.mypokedexcompose.ui.screens.pokedex.PokedexScreen
+import com.example.mypokedexcompose.ui.screens.Screen
 import com.example.mypokedexcompose.ui.theme.DarkRed
 import com.example.mypokedexcompose.ui.theme.DarkRedII
 import com.example.mypokedexcompose.ui.theme.LightRed
@@ -47,7 +47,7 @@ fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
     val state by vm.state.collectAsState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
-    PokedexScreen {
+    Screen {
 
         Scaffold(
             topBar = {
