@@ -29,21 +29,23 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.mypokedexcompose.R
 import com.example.mypokedexcompose.data.Pokemon
 import com.example.mypokedexcompose.ui.common.CircularProgressFun
-import com.example.mypokedexcompose.ui.screens.pokedex.PokedexScreen
+import com.example.mypokedexcompose.ui.screens.NavScreen
+import com.example.mypokedexcompose.ui.screens.Screen
 import com.example.mypokedexcompose.ui.theme.DarkRed
 import com.example.mypokedexcompose.ui.theme.DarkRedII
 import com.example.mypokedexcompose.ui.theme.LightRed
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(vm: HomeViewModel) {
+fun HomeScreen(vm: HomeViewModel, navController: NavController) {
     val state by vm.state.collectAsState()
 
-    PokedexScreen {
+    Screen {
         Scaffold(
             topBar = {
                 TopAppBar(
@@ -61,7 +63,7 @@ fun HomeScreen(vm: HomeViewModel) {
                 CircularProgressFun(padding)
             } else {
                 state.pokemon?.let { pokemon ->
-                    HomeScreenItem(pokemon, state.sprite ?: "")
+                    HomeScreenItem(pokemon, state.sprite ?: "", navController)
 
                 }
             }
@@ -72,11 +74,12 @@ fun HomeScreen(vm: HomeViewModel) {
 
 
 @Composable
-fun HomeScreenItem(pokemon: Pokemon, sprite: String) {
+fun HomeScreenItem(pokemon: Pokemon, sprite: String, navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(DarkRed)
+            .padding(top = 20.dp)
             .padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -97,23 +100,22 @@ fun HomeScreenItem(pokemon: Pokemon, sprite: String) {
         IconButtonWithText(
             imageRes = R.drawable.ic_pokedex,
             text = "Pokedex",
-            backgroundColor = LightRed
-        ) {
-
-        }
+            backgroundColor = LightRed,
+            onClick = { navController.navigate(NavScreen.Pokedex.route) }
+        )
         IconButtonWithText(
             imageRes = R.drawable.ic_bag,
             text = "Bag",
-            backgroundColor = LightRed) {
+            backgroundColor = LightRed
+        ) {
 
         }
         IconButtonWithText(
             imageRes = R.drawable.ic_berry,
             text = "Berries",
-            backgroundColor = LightRed
-        ) {
-
-        }
+            backgroundColor = LightRed,
+            onClick = { navController.navigate(NavScreen.Berries.route) }
+        )
     }
 }
 
@@ -137,7 +139,7 @@ fun IconButtonWithText(
             .size(width = 250.dp, height = 50.dp),
 
 
-    ) {
+        ) {
         Row(
             modifier = Modifier
                 .padding(4.dp)

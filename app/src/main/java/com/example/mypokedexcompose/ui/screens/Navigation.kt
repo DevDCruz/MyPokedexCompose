@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.mypokedexcompose.ui.screens.berries.BerriesScreen
 import com.example.mypokedexcompose.ui.screens.detail.DetailScreen
 import com.example.mypokedexcompose.ui.screens.detail.DetailViewModel
 import com.example.mypokedexcompose.ui.screens.home.HomeScreen
@@ -20,6 +21,7 @@ sealed class NavScreen(val route: String) {
     }
 
     data object Pokedex : NavScreen("pokedex")
+    data object Berries : NavScreen("berries")
 }
 
 enum class NavArs(val key: String) {
@@ -31,18 +33,28 @@ fun Navigation() {
     val navControler = rememberNavController()
     NavHost(navController = navControler, startDestination = NavScreen.Home.route) {
         composable(NavScreen.Home.route) {
-            HomeScreen(viewModel { HomeViewModel() })
+            HomeScreen(viewModel { HomeViewModel() }, navController = navControler)
         }
         composable(NavScreen.Pokedex.route) {
-            PokedexScreen(onClick = { pokemon ->
-                navControler.navigate(NavScreen.Detail.createRoute(pokemon.name))
-            })
+            PokedexScreen(
+                onClick = { pokemon ->
+                    navControler.navigate(NavScreen.Detail.createRoute(pokemon.name))
+                },
+                onBack = { navControler.popBackStack() }
+            )
+        }
+        composable(NavScreen.Berries.route) {
+            BerriesScreen(
+
+                onBack = { navControler.popBackStack() }
+            )
         }
         composable(
             route = NavScreen.Detail.route,
             arguments = listOf(navArgument(NavArs.POKEMON_NAME.key) { type = NavType.StringType })
         ) { backStackEntry ->
-            val pokemonName = requireNotNull(backStackEntry.arguments?.getString(NavArs.POKEMON_NAME.key))
+            val pokemonName =
+                requireNotNull(backStackEntry.arguments?.getString(NavArs.POKEMON_NAME.key))
             DetailScreen(
                 viewModel { DetailViewModel(pokemonName) },
                 onBack = { navControler.popBackStack() }

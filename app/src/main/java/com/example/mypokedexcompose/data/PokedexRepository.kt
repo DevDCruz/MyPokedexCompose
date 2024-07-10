@@ -7,7 +7,7 @@ class PokedexRepository {
 
     suspend fun fetchPokedex(): List<Pokemon> = PokemonClient
         .instance
-        .fetchPokedex(151)
+        .fetchPokedex(1025)
         .results
         .map {
             it.todomainModel()
