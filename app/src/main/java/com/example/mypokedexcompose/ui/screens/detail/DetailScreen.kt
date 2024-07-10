@@ -22,6 +22,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -33,7 +35,7 @@ import com.example.mypokedexcompose.R
 import com.example.mypokedexcompose.data.Pokemon
 import com.example.mypokedexcompose.ui.common.CircularProgressFun
 import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
-import com.example.mypokedexcompose.ui.screens.home.Screen
+import com.example.mypokedexcompose.ui.screens.Screen
 import com.example.mypokedexcompose.ui.theme.DarkRed
 import com.example.mypokedexcompose.ui.theme.DarkRedII
 import com.example.mypokedexcompose.ui.theme.LightRed
@@ -42,7 +44,7 @@ import com.example.mypokedexcompose.ui.theme.LightRed
 @Composable
 fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
 
-    val state = vm.state
+    val state by vm.state.collectAsState()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     Screen {
@@ -144,9 +146,7 @@ fun DeatilPokemonItem(pokemon: Pokemon, sprite: String) {
                 style = MaterialTheme.typography.headlineMedium
             )
         }
-
     }
-
 }
 
 fun getPokemonType(pokemon: Pokemon): String {

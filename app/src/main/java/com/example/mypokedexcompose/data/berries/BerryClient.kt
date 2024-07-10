@@ -1,12 +1,11 @@
-package com.example.mypokedexcompose.data
+package com.example.mypokedexcompose.data.berries
 
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
-
-object PokemonClient {
+object BerryClient {
 
     private val okHttpClient = OkHttpClient.Builder().build()
 
@@ -15,5 +14,5 @@ object PokemonClient {
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
-        .create<PokemonService>()
+        .create<BerryService>()
 }

@@ -1,48 +1,36 @@
 package com.example.mypokedexcompose.ui.screens.home
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypokedexcompose.data.Pokemon
-import com.example.mypokedexcompose.data.PokedexRepository
+import com.example.mypokedexcompose.data.detail.pokemonresult.PokemonRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel() {
+class HomeViewModel : ViewModel() {
+    private val repository = PokemonRepository()
 
-    var state by mutableStateOf(UiState())
-        private set
-    private val repository = PokedexRepository()
+    private val _state = MutableStateFlow(UiState())
+    val state: StateFlow<UiState> get() = _state.asStateFlow()
 
     init {
-        val scrollPosition = savedStateHandle.get<Int>("scroll_position") ?: 0
-        state = state.copy(scrollPosition = scrollPosition)
-    }
-    fun onUiReady() {
         viewModelScope.launch {
-            state = state.copy(loading = true)
-            state = state.copy(
-                pokemons = repository.fetchPokedex(),
-                spritePokedex = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/",
+            _state.value = UiState(loading = true)
+            _state.value = UiState(
+
+                pokemon = repository.fetchRandomPokemon(),
+                sprite = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/",
                 loading = false
-
             )
+
         }
-
     }
-
-fun savedScrollPosition(position: Int){
-    savedStateHandle.set("scroll_position", position)
-}
-
 
     data class UiState(
         val loading: Boolean = false,
-        val pokemons: List<Pokemon> = emptyList(),
-        val spritePokedex: String? = null,
-        val scrollPosition: Int = 0
+        val pokemon: Pokemon? = null,
+        val sprite: String? = null
     )
-
 }
