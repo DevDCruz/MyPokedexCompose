@@ -12,7 +12,7 @@ import com.example.mypokedexcompose.ui.screens.detail.DetailScreen
 import com.example.mypokedexcompose.ui.screens.detail.DetailViewModel
 import com.example.mypokedexcompose.ui.screens.home.HomeScreen
 import com.example.mypokedexcompose.ui.screens.home.HomeViewModel
-import com.example.mypokedexcompose.ui.screens.items.BackPackScreen
+import com.example.mypokedexcompose.ui.screens.backpack.BackPackScreen
 import com.example.mypokedexcompose.ui.screens.pokedex.PokedexScreen
 
 sealed class NavScreen(val route: String) {

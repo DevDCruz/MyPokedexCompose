@@ -1,4 +1,4 @@
-package com.example.mypokedexcompose.ui.screens.items
+package com.example.mypokedexcompose.ui.screens.backpack
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
