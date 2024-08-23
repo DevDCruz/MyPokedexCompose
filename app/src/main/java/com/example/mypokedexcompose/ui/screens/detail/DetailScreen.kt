@@ -67,7 +67,7 @@ fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
                         IconButton(onClick = onBack) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                                contentDescription = stringResource(id = R.string.back)
+                                contentDescription = stringResource(R.string.back)
                             )
                         }
                     },

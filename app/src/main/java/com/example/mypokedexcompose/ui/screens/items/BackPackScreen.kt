@@ -1,13 +1,17 @@
-package com.example.mypokedexcompose.ui.screens.berries
+package com.example.mypokedexcompose.ui.screens.items
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -31,13 +35,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImage
 import com.example.mypokedexcompose.R
-import com.example.mypokedexcompose.data.berries.Berry
+import com.example.mypokedexcompose.data.items.Item
 import com.example.mypokedexcompose.ui.common.CircularProgressFun
 import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
 import com.example.mypokedexcompose.ui.screens.Screen
@@ -48,8 +56,8 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BerriesScreen(
-    vm: BerriesViewModel = viewModel(),
+fun BackPackScreen(
+    vm: BackPackViewModel = viewModel(),
     onBack: () -> Unit
 ) {
     val state by vm.state.collectAsState()
@@ -67,7 +75,7 @@ fun BerriesScreen(
                 TopAppBar(
                     title = {
                         Text(
-                            text = "Berries",
+                            text = "BackPack",
                             style = MaterialTheme.typography.headlineLarge
                         )
                     },
@@ -90,7 +98,7 @@ fun BerriesScreen(
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
             contentWindowInsets = WindowInsets.safeDrawing
 
-            ) { padding ->
+        ) { padding ->
             if (state.loading) {
                 CircularProgressFun(padding)
             } else {
@@ -101,10 +109,10 @@ fun BerriesScreen(
                     state = lazyLisState,
                     contentPadding = padding
                 ) {
-                    items(state.berries) { berry ->
-                        DropDownBerry(
-                            berry = berry,
-                            berryId = state.berries.indexOf(berry) + 1
+                    items(state.items) { item ->
+                        DropDownItem(
+                            item = item,
+                            itemIndex = state.items.indexOf(item) + 1
                         )
                     }
                 }
@@ -114,20 +122,20 @@ fun BerriesScreen(
 }
 
 @Composable
-fun DropDownBerry(
-    berry: Berry,
-    berryId: Int,
-    vm: BerriesViewModel = viewModel()
+fun DropDownItem(
+    item: Item,
+    itemIndex: Int,
+    vm: BackPackViewModel = viewModel()
 ) {
     var selectedText by remember {
         mutableStateOf(
-            "$berryId - " + changefirstCharToUpperCase(
-                berry.name ?: ""
+            "$itemIndex - " + changefirstCharToUpperCase(
+                item.name ?: ""
             )
         )
     }
 
-    var berryDetail by remember { mutableStateOf<Berry?>(null) }
+    var itemDetail by remember { mutableStateOf<Item?>(null) }
     val coroutineScope = rememberCoroutineScope()
 
     Column(modifier = Modifier.padding(8.dp)) {
@@ -139,13 +147,13 @@ fun DropDownBerry(
             modifier = Modifier
                 .clickable {
                     coroutineScope.launch {
-                        if (berryDetail == null) {
-                            berryDetail = vm.fetchBerryDetails(berry.name ?: "")
+                        if (itemDetail == null) {
+                            itemDetail = vm.fetchItemDetails(itemIndex)
 
                         } else {
-                            berryDetail = null
+                            itemDetail = null
                             selectedText =
-                                "$berryId - " + changefirstCharToUpperCase(berry.name ?: "")
+                                "$itemIndex - " + changefirstCharToUpperCase(item.name ?: "")
                         }
                     }
                 }
@@ -154,19 +162,38 @@ fun DropDownBerry(
 
         )
 
-        berryDetail?.let { berry ->
-            Column(modifier = Modifier.padding(8.dp)) {
-                Text(text = "Name: ${berry.name ?: ""}")
-                Text(text = "Firmness: ${berry.firmness?.name ?: "Que va"}")
-                Text(text = "Flavors: ${berry.flavors?.joinToString(", ") { it.flavor.name } ?: ""}")
-                Text(text = "Growth Time: ${berry.growthTime?.toString() ?: ""}")
-                Text(text = "ID: ${berry.id?.toString() ?: ""}")
-                Text(text = "Item: ${berry.itemBerry?.name ?: ""}")
-                Text(text = "Max Harvest: ${berry.maxHarvest?.toString() ?: ""}")
-                Text(text = "Natural Gift Power: ${berry.naturalGiftPower?.toString() ?: ""}")
-                Text(text = "Natural Gift Type: ${berry.naturalGiftType?.name ?: ""}")
-                Text(text = "Size: ${berry.size?.toString() ?: ""}")
+        itemDetail?.let { item ->
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .border(2.dp, Color.Black, shape = MaterialTheme.shapes.medium)
+                    .background(LightRed, shape = RoundedCornerShape(16.dp))
+            ) {
+                Column(
+                    modifier = Modifier
+                        .padding(30.dp)
+                        .fillMaxWidth()
+                ) {
+
+                    AsyncImage(
+                        model = item.sprites?.default ?: "",
+                        contentDescription = "item's sprite",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .width(100.dp)
+                            .height(100.dp)
+                            .padding(16.dp)
+                            .align(Alignment.CenterHorizontally)
+
+                    )
+                    Text(text = "Name: ${item.name ?: ""}")
+                    Text(text = "Attributes: ${item.attributes?.joinToString(", ") { it.name ?: "" } ?: ""}")
+                    Text(text = "Category: ${item.category?.name ?: ""}")
+
+                }
             }
         }
     }
+
 }
