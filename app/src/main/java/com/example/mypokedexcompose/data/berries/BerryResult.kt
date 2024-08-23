@@ -15,7 +15,7 @@ data class BerryResult(
     @SerialName("id")
     val id: Int,
     @SerialName("item")
-    val item: Item,
+    val itemBerry: ItemBerry,
     @SerialName("max_harvest")
     val maxHarvest: Int,
     @SerialName("name")

@@ -106,10 +106,10 @@ fun HomeScreenItem(pokemon: Pokemon, sprite: String, navController: NavControlle
         IconButtonWithText(
             imageRes = R.drawable.ic_bag,
             text = "Bag",
-            backgroundColor = LightRed
-        ) {
+            backgroundColor = LightRed,
+            onClick = { navController.navigate(NavScreen.BackPack.route) }
 
-        }
+        )
         IconButtonWithText(
             imageRes = R.drawable.ic_berry,
             text = "Berries",
@@ -136,10 +136,8 @@ fun IconButtonWithText(
             .padding(16.dp)
             .border(2.dp, Color.Black, shape = MaterialTheme.shapes.large)
             .background(backgroundColor, shape = RoundedCornerShape(16.dp))
-            .size(width = 250.dp, height = 50.dp),
-
-
-        ) {
+            .size(width = 250.dp, height = 50.dp)
+    ) {
         Row(
             modifier = Modifier
                 .padding(4.dp)

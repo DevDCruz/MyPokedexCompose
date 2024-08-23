@@ -12,6 +12,7 @@ import com.example.mypokedexcompose.ui.screens.detail.DetailScreen
 import com.example.mypokedexcompose.ui.screens.detail.DetailViewModel
 import com.example.mypokedexcompose.ui.screens.home.HomeScreen
 import com.example.mypokedexcompose.ui.screens.home.HomeViewModel
+import com.example.mypokedexcompose.ui.screens.items.BackPackScreen
 import com.example.mypokedexcompose.ui.screens.pokedex.PokedexScreen
 
 sealed class NavScreen(val route: String) {
@@ -21,7 +22,9 @@ sealed class NavScreen(val route: String) {
     }
 
     data object Pokedex : NavScreen("pokedex")
+    data object BackPack : NavScreen("backpack")
     data object Berries : NavScreen("berries")
+
 }
 
 enum class NavArs(val key: String) {
@@ -45,10 +48,15 @@ fun Navigation() {
         }
         composable(NavScreen.Berries.route) {
             BerriesScreen(
-
                 onBack = { navControler.popBackStack() }
             )
         }
+        composable(NavScreen.BackPack.route) {
+            BackPackScreen(
+                onBack = { navControler.popBackStack() }
+            )
+        }
+
         composable(
             route = NavScreen.Detail.route,
             arguments = listOf(navArgument(NavArs.POKEMON_NAME.key) { type = NavType.StringType })

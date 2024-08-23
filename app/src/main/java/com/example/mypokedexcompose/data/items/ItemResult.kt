@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ItemsResult(
+data class ItemResult(
     @SerialName("atributes")
     val attributes: List<Attribute>,
     @SerialName("baby_trigger_for")
