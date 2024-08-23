@@ -90,7 +90,7 @@ fun BerriesScreen(
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
             contentWindowInsets = WindowInsets.safeDrawing
 
-            ) { padding ->
+        ) { padding ->
             if (state.loading) {
                 CircularProgressFun(padding)
             } else {

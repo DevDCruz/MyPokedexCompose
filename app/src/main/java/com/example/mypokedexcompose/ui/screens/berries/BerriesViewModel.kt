@@ -25,6 +25,7 @@ class BerriesViewModel : ViewModel() {
             )
         }
     }
+
     suspend fun fetchBerryDetails(name: String): Berry {
         return repository.fetchBerryByName(name)
     }
