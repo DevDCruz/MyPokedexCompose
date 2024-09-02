@@ -73,7 +73,6 @@ fun HomeScreen(vm: HomeViewModel, navController: NavController) {
     }
 }
 
-
 @Composable
 fun HomeScreenItem(pokemon: Pokemon, navController: NavController) {
     Column(

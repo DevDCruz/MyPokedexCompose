@@ -1,13 +1,10 @@
 package com.example.mypokedexcompose.ui.screens.detail
 
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mypokedexcompose.R
 import com.example.mypokedexcompose.data.pokemon.Pokemon
 import com.example.mypokedexcompose.data.pokemon.PokemonRepository
 import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

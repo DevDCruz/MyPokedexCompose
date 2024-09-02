@@ -7,12 +7,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.mypokedexcompose.ui.screens.backpack.BackPackScreen
 import com.example.mypokedexcompose.ui.screens.berries.BerriesScreen
 import com.example.mypokedexcompose.ui.screens.detail.DetailScreen
 import com.example.mypokedexcompose.ui.screens.detail.DetailViewModel
 import com.example.mypokedexcompose.ui.screens.home.HomeScreen
 import com.example.mypokedexcompose.ui.screens.home.HomeViewModel
-import com.example.mypokedexcompose.ui.screens.backpack.BackPackScreen
 import com.example.mypokedexcompose.ui.screens.pokedex.PokedexScreen
 
 sealed class NavScreen(val route: String) {

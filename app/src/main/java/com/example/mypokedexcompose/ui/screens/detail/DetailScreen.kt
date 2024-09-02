@@ -13,10 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -32,14 +29,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.ParagraphStyle
-import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.mypokedexcompose.R
 import com.example.mypokedexcompose.data.pokemon.Pokemon
@@ -136,12 +127,13 @@ fun DeatilPokemonItem(pokemon: Pokemon) {
                 .border(2.dp, Color.Black, shape = MaterialTheme.shapes.medium)
                 .background(LightRed, shape = RoundedCornerShape(16.dp))
         ) {
-            Text(text = buildAnnotatedString {
-                PropertyPokemonDetail(name = "Type", value = getPokemonType(pokemon))
-                PropertyPokemonDetail(name = "Nº Pokedex", value = pokemon.id.toString())
-                PropertyPokemonDetail(name = "Height", value = pokemon.height.toString())
-                PropertyPokemonDetail(name = "Weight", value = pokemon.weight.toString(),true)
-            },
+            Text(
+                text = buildAnnotatedString {
+                    PropertyPokemonDetail(name = "Type", value = getPokemonType(pokemon))
+                    PropertyPokemonDetail(name = "Nº Pokedex", value = pokemon.id.toString())
+                    PropertyPokemonDetail(name = "Height", value = pokemon.height.toString())
+                    PropertyPokemonDetail(name = "Weight", value = pokemon.weight.toString(), true)
+                },
                 modifier = Modifier.padding(16.dp),
                 style = MaterialTheme.typography.headlineMedium
             )

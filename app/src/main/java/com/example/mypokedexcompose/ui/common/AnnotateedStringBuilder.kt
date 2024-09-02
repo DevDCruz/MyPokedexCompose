@@ -9,7 +9,11 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun AnnotatedString.Builder.PropertyPokemonDetail(name: String, value: String, end: Boolean= false) {
+fun AnnotatedString.Builder.PropertyPokemonDetail(
+    name: String,
+    value: String,
+    end: Boolean = false
+) {
     withStyle(ParagraphStyle(lineHeight = 24.sp)) {
         withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
             append("$name: ")
