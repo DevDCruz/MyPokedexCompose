@@ -27,12 +27,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.mypokedexcompose.R
-import com.example.mypokedexcompose.data.Pokemon
+import com.example.mypokedexcompose.data.pokemon.Pokemon
 import com.example.mypokedexcompose.ui.common.CircularProgressFun
 import com.example.mypokedexcompose.ui.screens.NavScreen
 import com.example.mypokedexcompose.ui.screens.Screen
@@ -63,7 +64,7 @@ fun HomeScreen(vm: HomeViewModel, navController: NavController) {
                 CircularProgressFun(padding)
             } else {
                 state.pokemon?.let { pokemon ->
-                    HomeScreenItem(pokemon, state.sprite ?: "", navController)
+                    HomeScreenItem(pokemon, navController)
 
                 }
             }
@@ -74,7 +75,7 @@ fun HomeScreen(vm: HomeViewModel, navController: NavController) {
 
 
 @Composable
-fun HomeScreenItem(pokemon: Pokemon, sprite: String, navController: NavController) {
+fun HomeScreenItem(pokemon: Pokemon, navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -85,7 +86,7 @@ fun HomeScreenItem(pokemon: Pokemon, sprite: String, navController: NavControlle
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         AsyncImage(
-            model = "${sprite}${pokemon.id}.png",
+            model = "${stringResource(id = R.string.sprite_officialArtoWork_URL)}${pokemon.id}.png",
             contentDescription = pokemon.name,
             contentScale = ContentScale.Fit,
             modifier = Modifier

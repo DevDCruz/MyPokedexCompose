@@ -4,7 +4,7 @@ class ItemRepository {
 
     suspend fun fetchItems(): List<Item> = ItemClient
         .instance
-        .fetchItems(64)
+        .fetchItems(304)
         .results
         .map {
             it.todomainModel()
