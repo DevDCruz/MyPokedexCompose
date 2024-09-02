@@ -2,8 +2,9 @@ package com.example.mypokedexcompose.ui.screens.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mypokedexcompose.data.Pokemon
-import com.example.mypokedexcompose.data.detail.pokemonresult.PokemonRepository
+import com.example.mypokedexcompose.data.pokemon.Pokemon
+import com.example.mypokedexcompose.data.pokemon.PokemonRepository
+import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,7 +23,6 @@ class DetailViewModel(private val name: String) : ViewModel() {
             _state.value = UiState(
 
                 pokemon = repository.fetchPokemon(name),
-                sprite = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/",
                 loading = false
             )
 
@@ -31,7 +31,16 @@ class DetailViewModel(private val name: String) : ViewModel() {
 
     data class UiState(
         val loading: Boolean = false,
-        val pokemon: Pokemon? = null,
-        val sprite: String? = null
+        val pokemon: Pokemon? = null
     )
+}
+
+fun getPokemonType(pokemon: Pokemon): String {
+    return if (pokemon.types?.size!! > 1) {
+        changefirstCharToUpperCase(pokemon.types[0].type.name) +
+                " - " + changefirstCharToUpperCase(pokemon.types[1].type.name)
+
+    } else {
+        changefirstCharToUpperCase(pokemon.types[0].type.name)
+    }
 }

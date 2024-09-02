@@ -2,14 +2,15 @@ package com.example.mypokedexcompose.ui.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mypokedexcompose.data.Pokemon
-import com.example.mypokedexcompose.data.detail.pokemonresult.PokemonRepository
+import com.example.mypokedexcompose.data.pokemon.Pokemon
+import com.example.mypokedexcompose.data.pokemon.PokemonRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
+
     private val repository = PokemonRepository()
 
     private val _state = MutableStateFlow(UiState())
@@ -21,7 +22,6 @@ class HomeViewModel : ViewModel() {
             _state.value = UiState(
 
                 pokemon = repository.fetchRandomPokemon(),
-                sprite = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/",
                 loading = false
             )
 
@@ -30,7 +30,6 @@ class HomeViewModel : ViewModel() {
 
     data class UiState(
         val loading: Boolean = false,
-        val pokemon: Pokemon? = null,
-        val sprite: String? = null
+        val pokemon: Pokemon? = null
     )
 }

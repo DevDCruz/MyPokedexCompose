@@ -1,6 +1,5 @@
-package com.example.mypokedexcompose.data
+package com.example.mypokedexcompose.data.pokemon
 
-import com.example.mypokedexcompose.data.detail.pokemonresult.Type
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -15,10 +14,6 @@ data class Pokemon(
     @SerialName("weight")
     val weight: Int,
     @SerialName("types")
-    val types: List<Type>?,
-    @SerialName("sprites")
-    val spriteDetail: String?,
-    @SerialName("spritePokedex")
-    val spritePokedex: String?,
+    val types: List<Type>?
 )
 

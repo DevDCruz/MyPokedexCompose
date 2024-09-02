@@ -1,4 +1,4 @@
-package com.example.mypokedexcompose.data
+package com.example.mypokedexcompose.data.pokemon
 
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

@@ -37,16 +37,20 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.mypokedexcompose.R
 import com.example.mypokedexcompose.data.items.Item
 import com.example.mypokedexcompose.ui.common.CircularProgressFun
+import com.example.mypokedexcompose.ui.common.PropertyDetailItem
 import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
 import com.example.mypokedexcompose.ui.screens.Screen
 import com.example.mypokedexcompose.ui.theme.DarkRed
@@ -139,43 +143,43 @@ fun DropDownItem(
     val coroutineScope = rememberCoroutineScope()
 
     Column(modifier = Modifier.padding(8.dp)) {
-        OutlinedTextField(
-            value = selectedText,
-            onValueChange = { selectedText = it },
-            enabled = false,
-            readOnly = true,
+        Box(
             modifier = Modifier
-                .clickable {
-                    coroutineScope.launch {
-                        if (itemDetail == null) {
-                            itemDetail = vm.fetchItemDetails(itemIndex)
-
-                        } else {
-                            itemDetail = null
-                            selectedText =
-                                "$itemIndex - " + changefirstCharToUpperCase(item.name ?: "")
-                        }
-                    }
-                }
                 .fillMaxWidth()
-                .background(LightRed, shape = RoundedCornerShape(8.dp))
-
-        )
-
-        itemDetail?.let { item ->
-
-            Box(
+                .border(2.dp, Color.Black, shape = RoundedCornerShape(16.dp))
+                .clip(RoundedCornerShape(16.dp))
+                .background(LightRed)
+        ) {
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .border(2.dp, Color.Black, shape = MaterialTheme.shapes.medium)
-                    .background(LightRed, shape = RoundedCornerShape(16.dp))
             ) {
-                Column(
+                OutlinedTextField(
+                    value = selectedText,
+                    onValueChange = { selectedText = it },
+                    enabled = false,
+                    readOnly = true,
+                    textStyle = TextStyle(Color.Black),
                     modifier = Modifier
-                        .padding(30.dp)
+                        .clickable {
+                            coroutineScope.launch {
+                                if (itemDetail == null) {
+                                    itemDetail = vm.fetchItemDetails(itemIndex)
+                                } else {
+                                    itemDetail = null
+                                    selectedText =
+                                        "$itemIndex - " + changefirstCharToUpperCase(
+                                            item.name ?: ""
+                                        )
+                                }
+                            }
+                        }
                         .fillMaxWidth()
-                ) {
+                        .background(LightRed, shape = RoundedCornerShape(8.dp))
 
+                )
+
+                itemDetail?.let { item ->
                     AsyncImage(
                         model = item.sprites?.default ?: "",
                         contentDescription = "item's sprite",
@@ -185,15 +189,22 @@ fun DropDownItem(
                             .height(100.dp)
                             .padding(16.dp)
                             .align(Alignment.CenterHorizontally)
-
                     )
-                    Text(text = "Name: ${item.name ?: ""}")
-                    Text(text = "Attributes: ${item.attributes?.joinToString(", ") { it.name ?: "" } ?: ""}")
-                    Text(text = "Category: ${item.category?.name ?: ""}")
-
+                    Text(buildAnnotatedString {
+                        PropertyDetailItem(name = "Name", value = item.name ?: "")
+                        PropertyDetailItem(
+                            name = "Attributes",
+                            value = item.attributes?.joinToString(", ") { it.name } ?: "")
+                        PropertyDetailItem(name = "Category", value = item.category?.name ?: "")
+                        PropertyDetailItem(
+                            name = "Cost",
+                            value = ("${item.cost ?: ""} $").toString(),
+                            true
+                        )
+                    }, modifier = Modifier.padding(16.dp))
                 }
             }
         }
     }
-
 }
+

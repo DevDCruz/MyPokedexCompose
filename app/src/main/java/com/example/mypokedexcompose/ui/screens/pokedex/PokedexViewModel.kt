@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypokedexcompose.data.PokedexRepository
-import com.example.mypokedexcompose.data.Pokemon
+import com.example.mypokedexcompose.data.pokemon.Pokemon
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -27,7 +27,6 @@ class PokedexViewModel(private val savedStateHandle: SavedStateHandle) : ViewMod
             _state.value = UiState(loading = true)
             _state.value = UiState(
                 pokemons = repository.fetchPokedex(),
-                spritePokedex = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/",
                 loading = false
             )
         }
@@ -41,7 +40,6 @@ class PokedexViewModel(private val savedStateHandle: SavedStateHandle) : ViewMod
     data class UiState(
         val loading: Boolean = false,
         val pokemons: List<Pokemon> = emptyList(),
-        val spritePokedex: String? = null,
         val scrollPosition: Int = 0
     )
 }

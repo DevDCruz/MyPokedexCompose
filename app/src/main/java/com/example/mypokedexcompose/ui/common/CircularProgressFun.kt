@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import com.example.mypokedexcompose.ui.theme.DarkRed
 
 @Composable
-fun CircularProgressFun( padding: PaddingValues) {
+fun CircularProgressFun(padding: PaddingValues) {
     Box(
         modifier = Modifier
             .fillMaxSize()

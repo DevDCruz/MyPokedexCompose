@@ -1,6 +1,8 @@
 package com.example.mypokedexcompose.data
 
-import com.example.mypokedexcompose.data.detail.pokemonresult.PokemonResult
+import com.example.mypokedexcompose.data.pokemon.Pokemon
+import com.example.mypokedexcompose.data.pokemon.PokemonClient
+import com.example.mypokedexcompose.data.pokemon.PokemonResult
 
 
 class PokedexRepository {
@@ -21,8 +23,6 @@ private fun PokemonResult.todomainModel(): Pokemon =
         id = id,
         height = height,
         weight = weight,
-        types = types,
-        spriteDetail = "",
-        spritePokedex = ""
+        types = types
     )
 

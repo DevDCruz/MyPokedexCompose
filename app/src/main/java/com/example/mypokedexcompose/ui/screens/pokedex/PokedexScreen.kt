@@ -41,7 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.mypokedexcompose.R
-import com.example.mypokedexcompose.data.Pokemon
+import com.example.mypokedexcompose.data.pokemon.Pokemon
 import com.example.mypokedexcompose.ui.common.CircularProgressFun
 import com.example.mypokedexcompose.ui.common.PermissionRequestEffect
 import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
@@ -127,23 +127,23 @@ fun PokedexScreen(
                     contentPadding = padding
                 ) {
                     items(state.pokemons) { pokemon ->
-                        vm.state.collectAsState().value.spritePokedex?.let {
-                            PokedexItem(
-                                pokemon = pokemon,
-                                onClick = {
-                                    onClick(pokemon)
-                                    vm.savedScrollPosition(lazyLisState.firstVisibleItemIndex)
-                                },
-                                pokedexNumber = state.pokemons.indexOf(pokemon) + 1,
-                                sprite = it
-                            )
-                        }
+
+                        PokedexItem(
+                            pokemon = pokemon,
+                            onClick = {
+                                onClick(pokemon)
+                                vm.savedScrollPosition(lazyLisState.firstVisibleItemIndex)
+                            },
+                            pokedexNumber = state.pokemons.indexOf(pokemon) + 1,
+                            sprite = stringResource(id = R.string.sprite_deffault_URL)
+                        )
                     }
                 }
             }
         }
     }
 }
+
 
 @Composable
 fun PokedexItem(pokemon: Pokemon, onClick: () -> Unit, pokedexNumber: Int, sprite: String) {

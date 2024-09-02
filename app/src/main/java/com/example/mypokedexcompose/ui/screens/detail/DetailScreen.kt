@@ -29,11 +29,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.mypokedexcompose.R
-import com.example.mypokedexcompose.data.Pokemon
+import com.example.mypokedexcompose.data.pokemon.Pokemon
 import com.example.mypokedexcompose.ui.common.CircularProgressFun
+import com.example.mypokedexcompose.ui.common.PropertyPokemonDetail
 import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
 import com.example.mypokedexcompose.ui.screens.Screen
 import com.example.mypokedexcompose.ui.theme.DarkRed
@@ -93,7 +95,7 @@ fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
 
                     state.pokemon?.let { pokemon ->
 
-                        DeatilPokemonItem(pokemon, state.sprite ?: "")
+                        DeatilPokemonItem(pokemon)
 
                     } ?: kotlin.run {
                         Text(text = "Pokemon not found")
@@ -105,11 +107,11 @@ fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
 }
 
 @Composable
-fun DeatilPokemonItem(pokemon: Pokemon, sprite: String) {
+fun DeatilPokemonItem(pokemon: Pokemon) {
 
     Column {
         AsyncImage(
-            model = "${sprite}${pokemon.id}.png",
+            model = "${stringResource(id = R.string.sprite_officialArtoWork_URL)}${pokemon.id}.png",
             contentDescription = pokemon.name,
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -126,22 +128,12 @@ fun DeatilPokemonItem(pokemon: Pokemon, sprite: String) {
                 .background(LightRed, shape = RoundedCornerShape(16.dp))
         ) {
             Text(
-                text = "Nº Pokedex: ${pokemon.id}",
-                modifier = Modifier.padding(16.dp),
-                style = MaterialTheme.typography.headlineMedium
-            )
-            Text(
-                text = "Type: ${getPokemonType(pokemon)}",
-                modifier = Modifier.padding(16.dp),
-                style = MaterialTheme.typography.headlineMedium
-            )
-            Text(
-                text = "Height: ${pokemon.height}",
-                modifier = Modifier.padding(16.dp),
-                style = MaterialTheme.typography.headlineMedium
-            )
-            Text(
-                text = "Weight: ${pokemon.weight}",
+                text = buildAnnotatedString {
+                    PropertyPokemonDetail(name = "Type", value = getPokemonType(pokemon))
+                    PropertyPokemonDetail(name = "Nº Pokedex", value = pokemon.id.toString())
+                    PropertyPokemonDetail(name = "Height", value = pokemon.height.toString())
+                    PropertyPokemonDetail(name = "Weight", value = pokemon.weight.toString(), true)
+                },
                 modifier = Modifier.padding(16.dp),
                 style = MaterialTheme.typography.headlineMedium
             )
@@ -149,12 +141,4 @@ fun DeatilPokemonItem(pokemon: Pokemon, sprite: String) {
     }
 }
 
-fun getPokemonType(pokemon: Pokemon): String {
-    return if (pokemon.types?.size!! > 1) {
-        changefirstCharToUpperCase(pokemon.types[0].type.name) +
-                " - " + changefirstCharToUpperCase(pokemon.types[1].type.name)
 
-    } else {
-        changefirstCharToUpperCase(pokemon.types[0].type.name)
-    }
-}
