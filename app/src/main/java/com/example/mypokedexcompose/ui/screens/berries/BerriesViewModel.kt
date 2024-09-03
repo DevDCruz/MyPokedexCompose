@@ -16,6 +16,7 @@ class BerriesViewModel : ViewModel() {
     private val _state = MutableStateFlow(UiState())
     val state: StateFlow<UiState> get() = _state.asStateFlow()
 
+
     fun onUiReady() {
         viewModelScope.launch {
             _state.value = UiState(loading = true)
@@ -25,7 +26,6 @@ class BerriesViewModel : ViewModel() {
             )
         }
     }
-
     suspend fun fetchBerryDetails(name: String): Berry {
         return repository.fetchBerryByName(name)
     }
