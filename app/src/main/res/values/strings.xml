@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Pokedex</string>
     <string name="back">Go Back</string>
+    <string name="favorite">Favorite</string>
+
     <string name="sprite_officialArtoWork_URL">https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/</string>
     <string name="sprite_deffault_URL">"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"</string>
 </resources>

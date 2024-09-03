@@ -8,9 +8,11 @@ import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class DetailViewModel(private val name: String) : ViewModel() {
+
 
     private val repository = PokemonRepository()
 
@@ -31,8 +33,17 @@ class DetailViewModel(private val name: String) : ViewModel() {
 
     data class UiState(
         val loading: Boolean = false,
-        val pokemon: Pokemon? = null
+        val pokemon: Pokemon? = null,
+        val message: String? = null
     )
+
+fun onFavoriteClick() {
+    _state.update {it.copy(message = "Pokemon added to favorites")}
+}
+
+    fun onMessageShown() {
+        _state.update { it.copy(message = null) }
+    }
 }
 
 fun getPokemonType(pokemon: Pokemon): String {
