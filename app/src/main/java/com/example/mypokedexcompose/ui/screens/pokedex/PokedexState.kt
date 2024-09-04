@@ -36,5 +36,5 @@ class PokedexHomeState @OptIn(ExperimentalMaterial3Api::class) constructor(
 fun RememberPokedexState(
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 ): PokedexHomeState {
-    return remember { PokedexHomeState(scrollBehavior) }
+    return remember(scrollBehavior) { PokedexHomeState(scrollBehavior) }
 }

@@ -65,15 +65,13 @@ fun BackPackScreen(
     onBack: () -> Unit
 ) {
     val state by vm.state.collectAsState()
+    val backPackState = remeberBackPackState()
 
     LaunchedEffect(Unit) {
         vm.onUiReady()
     }
 
     Screen {
-        val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-        val lazyLisState = rememberLazyListState()
-
         Scaffold(
             topBar = {
                 TopAppBar(
@@ -87,7 +85,7 @@ fun BackPackScreen(
                         containerColor = DarkRed,
                         scrolledContainerColor = DarkRedII
                     ),
-                    scrollBehavior = scrollBehavior,
+                    scrollBehavior = backPackState.scrollBehavior,
                     navigationIcon = {
                         IconButton(onClick = onBack) {
                             Icon(
@@ -99,7 +97,7 @@ fun BackPackScreen(
                 )
             },
             modifier = Modifier
-                .nestedScroll(scrollBehavior.nestedScrollConnection),
+                .nestedScroll(backPackState.scrollBehavior.nestedScrollConnection),
             contentWindowInsets = WindowInsets.safeDrawing
 
         ) { padding ->
@@ -110,7 +108,7 @@ fun BackPackScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .background(DarkRed),
-                    state = lazyLisState,
+                    state = backPackState.lazyListState,
                     contentPadding = padding
                 ) {
                     items(state.items) { item ->

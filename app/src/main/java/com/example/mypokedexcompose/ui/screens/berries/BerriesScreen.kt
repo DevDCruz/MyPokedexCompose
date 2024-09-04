@@ -60,15 +60,13 @@ fun BerriesScreen(
     onBack: () -> Unit
 ) {
     val state by vm.state.collectAsState()
+    val berriesState = remeberBerriesState()
 
     LaunchedEffect(Unit) {
         vm.onUiReady()
     }
 
     Screen {
-        val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
-        val lazyLisState = rememberLazyListState()
-
         Scaffold(
             topBar = {
                 TopAppBar(
@@ -82,7 +80,7 @@ fun BerriesScreen(
                         containerColor = DarkRed,
                         scrolledContainerColor = DarkRedII
                     ),
-                    scrollBehavior = scrollBehavior,
+                    scrollBehavior = berriesState.scrollBehavior,
                     navigationIcon = {
                         IconButton(onClick = onBack) {
                             Icon(
@@ -94,7 +92,7 @@ fun BerriesScreen(
                 )
             },
             modifier = Modifier
-                .nestedScroll(scrollBehavior.nestedScrollConnection),
+                .nestedScroll(berriesState.scrollBehavior.nestedScrollConnection),
             contentWindowInsets = WindowInsets.safeDrawing
 
         ) { padding ->
@@ -105,7 +103,7 @@ fun BerriesScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .background(DarkRed),
-                    state = lazyLisState,
+                    state = berriesState.lazyListState,
                     contentPadding = padding
                 ) {
                     items(state.berries) { berry ->

@@ -21,15 +21,12 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -53,13 +50,10 @@ import com.example.mypokedexcompose.ui.theme.LightRed
 fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
 
     val state by vm.state.collectAsState()
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-    val snackbarHostState = remember { SnackbarHostState() }
+    val detailState = rememberDetailState()
 
-    LaunchedEffect(state.message) {
-        state.message?.let {
-            snackbarHostState.currentSnackbarData?.dismiss()
-            snackbarHostState.showSnackbar(it)
+    state.message?.let {
+        detailState.ShowMessageEffect(message = it) {
             vm.onMessageShown()
         }
     }
@@ -79,7 +73,7 @@ fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
                         containerColor = DarkRed,
                         scrolledContainerColor = DarkRedII
                     ),
-                    scrollBehavior = scrollBehavior,
+                    scrollBehavior = detailState.scrollBehavior,
                     navigationIcon = {
                         IconButton(onClick = onBack) {
                             Icon(
@@ -102,9 +96,9 @@ fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
                     )
                 }
             },
-            snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+            snackbarHost = { SnackbarHost(hostState = detailState.snackbarHostState) },
             modifier = Modifier
-                .nestedScroll(scrollBehavior.nestedScrollConnection)
+                .nestedScroll(detailState.scrollBehavior.nestedScrollConnection)
                 .background(DarkRed),
             contentWindowInsets = WindowInsets.safeDrawing
         ) { padding ->
