@@ -5,26 +5,12 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -36,20 +22,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.mypokedexcompose.R
 import com.example.mypokedexcompose.data.berries.Berry
-import com.example.mypokedexcompose.ui.common.CircularProgressFun
 import com.example.mypokedexcompose.ui.common.PropertyDetailItem
 import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
-import com.example.mypokedexcompose.ui.screens.Screen
-import com.example.mypokedexcompose.ui.theme.DarkRed
-import com.example.mypokedexcompose.ui.theme.DarkRedII
+import com.example.mypokedexcompose.ui.screens.ListScreen
 import com.example.mypokedexcompose.ui.theme.LightRed
 import kotlinx.coroutines.launch
 
@@ -66,55 +46,16 @@ fun BerriesScreen(
         vm.onUiReady()
     }
 
-    Screen {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(
-                            text = "Berries",
-                            style = MaterialTheme.typography.headlineLarge
-                        )
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = DarkRed,
-                        scrolledContainerColor = DarkRedII
-                    ),
-                    scrollBehavior = berriesState.scrollBehavior,
-                    navigationIcon = {
-                        IconButton(onClick = onBack) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                                contentDescription = stringResource(id = R.string.back)
-                            )
-                        }
-                    }
-                )
-            },
-            modifier = Modifier
-                .nestedScroll(berriesState.scrollBehavior.nestedScrollConnection),
-            contentWindowInsets = WindowInsets.safeDrawing
+    ListScreen(
+        title = "Berries",
+        items = state.berries,
+        onBack = { onBack() },
+        loading = state.loading,
+        scrollBehavior = berriesState.scrollBehavior,
+        lazyListState = berriesState.lazyListState
 
-        ) { padding ->
-            if (state.loading) {
-                CircularProgressFun(padding)
-            } else {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(DarkRed),
-                    state = berriesState.lazyListState,
-                    contentPadding = padding
-                ) {
-                    items(state.berries) { berry ->
-                        DropDownBerry(
-                            berry = berry,
-                            berryId = state.berries.indexOf(berry) + 1
-                        )
-                    }
-                }
-            }
-        }
+    ) { berry, berryIndex ->
+        DropDownBerry(berry, berryIndex)
     }
 }
 

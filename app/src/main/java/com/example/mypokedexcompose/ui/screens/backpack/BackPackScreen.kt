@@ -5,28 +5,14 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -39,22 +25,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
-import com.example.mypokedexcompose.R
 import com.example.mypokedexcompose.data.items.Item
-import com.example.mypokedexcompose.ui.common.CircularProgressFun
 import com.example.mypokedexcompose.ui.common.PropertyDetailItem
 import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
-import com.example.mypokedexcompose.ui.screens.Screen
-import com.example.mypokedexcompose.ui.theme.DarkRed
-import com.example.mypokedexcompose.ui.theme.DarkRedII
+import com.example.mypokedexcompose.ui.screens.ListScreen
 import com.example.mypokedexcompose.ui.theme.LightRed
 import kotlinx.coroutines.launch
 
@@ -70,56 +50,16 @@ fun BackPackScreen(
     LaunchedEffect(Unit) {
         vm.onUiReady()
     }
+    ListScreen(
+        title = "BackPack",
+        items = state.items,
+        onBack = { onBack() },
+        loading = state.loading,
+        scrollBehavior = backPackState.scrollBehavior,
+        lazyListState = backPackState.lazyListState
 
-    Screen {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(
-                            text = "BackPack",
-                            style = MaterialTheme.typography.headlineLarge
-                        )
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = DarkRed,
-                        scrolledContainerColor = DarkRedII
-                    ),
-                    scrollBehavior = backPackState.scrollBehavior,
-                    navigationIcon = {
-                        IconButton(onClick = onBack) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                                contentDescription = stringResource(id = R.string.back)
-                            )
-                        }
-                    }
-                )
-            },
-            modifier = Modifier
-                .nestedScroll(backPackState.scrollBehavior.nestedScrollConnection),
-            contentWindowInsets = WindowInsets.safeDrawing
-
-        ) { padding ->
-            if (state.loading) {
-                CircularProgressFun(padding)
-            } else {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(DarkRed),
-                    state = backPackState.lazyListState,
-                    contentPadding = padding
-                ) {
-                    items(state.items) { item ->
-                        DropDownItem(
-                            item = item,
-                            itemIndex = state.items.indexOf(item) + 1
-                        )
-                    }
-                }
-            }
-        }
+    ) { item, itemIndex ->
+        DropDownItem(item, itemIndex)
     }
 }
 
