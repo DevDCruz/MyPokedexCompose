@@ -81,7 +81,9 @@ fun DropDownBackPack(
             )
             Text(buildAnnotatedString {
                 PropertyDetailItem(name = "Name", value = detailItem.name ?: "")
-                PropertyDetailItem(name = "Attributes", value = detailItem.attributes?.joinToString(", ") { it.name } ?: "")
+                PropertyDetailItem(
+                    name = "Attributes",
+                    value = detailItem.attributes?.joinToString(", ") { it.name } ?: "")
                 PropertyDetailItem(name = "Category", value = detailItem.category?.name ?: "")
                 PropertyDetailItem(name = "Cost", value = ("${detailItem.cost ?: ""} $").toString(), true)
             }, modifier = Modifier.padding(16.dp))

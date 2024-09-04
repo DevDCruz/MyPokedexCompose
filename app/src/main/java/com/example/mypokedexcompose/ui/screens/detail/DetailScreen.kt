@@ -38,6 +38,7 @@ import coil.compose.AsyncImage
 import com.example.mypokedexcompose.R
 import com.example.mypokedexcompose.data.pokemon.Pokemon
 import com.example.mypokedexcompose.ui.common.CircularProgressFun
+import com.example.mypokedexcompose.ui.common.Constants
 import com.example.mypokedexcompose.ui.common.PropertyPokemonDetail
 import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
 import com.example.mypokedexcompose.ui.screens.Screen
@@ -130,10 +131,9 @@ fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
 
 @Composable
 fun DeatilPokemonItem(pokemon: Pokemon) {
-
     Column {
         AsyncImage(
-            model = "${stringResource(id = R.string.sprite_officialArtoWork_URL)}${pokemon.id}.png",
+            model = "${Constants.SPRITE_OFFICIAL_ARTWORK_URL}${pokemon.id}.png",
             contentDescription = pokemon.name,
             contentScale = ContentScale.Crop,
             modifier = Modifier

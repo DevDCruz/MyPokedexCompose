@@ -40,6 +40,7 @@ import coil.compose.AsyncImage
 import com.example.mypokedexcompose.R
 import com.example.mypokedexcompose.data.pokemon.Pokemon
 import com.example.mypokedexcompose.ui.common.CircularProgressFun
+import com.example.mypokedexcompose.ui.common.Constants
 import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
 import com.example.mypokedexcompose.ui.screens.Screen
 import com.example.mypokedexcompose.ui.theme.DarkRed
@@ -91,7 +92,6 @@ fun PokedexScreen(
                 .nestedScroll(pokedexState.scrollBehavior.nestedScrollConnection),
             contentWindowInsets = WindowInsets.safeDrawing,
 
-
             ) { padding ->
 
             if (state.loading) {
@@ -115,7 +115,7 @@ fun PokedexScreen(
                                 vm.savedScrollPosition(lazyLisState.firstVisibleItemIndex)
                             },
                             pokedexNumber = state.pokemons.indexOf(pokemon) + 1,
-                            sprite = stringResource(id = R.string.sprite_deffault_URL)
+                            sprite = Constants.SPRITE_DEFAULT_URL
                         )
                     }
                 }
