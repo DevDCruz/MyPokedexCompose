@@ -2,6 +2,6 @@ package com.example.mypokedexcompose.ui.common
 
 import java.util.Locale
 
-fun changefirstCharToUpperCase(str: String): String {
-    return str.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+fun String.changefirstCharToUpperCase(): String {
+    return this.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
 }

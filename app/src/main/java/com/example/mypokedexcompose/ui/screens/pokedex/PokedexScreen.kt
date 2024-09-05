@@ -148,7 +148,7 @@ fun PokedexItem(pokemon: Pokemon, onClick: () -> Unit, pokedexNumber: Int, sprit
             modifier = Modifier.padding(8.dp)
         )
         Text(
-            text = changefirstCharToUpperCase(pokemon.name),
+            text = pokemon.name.changefirstCharToUpperCase(),
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier
                 .padding(8.dp)

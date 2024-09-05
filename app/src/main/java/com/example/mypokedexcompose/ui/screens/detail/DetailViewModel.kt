@@ -47,11 +47,8 @@ fun onFavoriteClick() {
 }
 
 fun getPokemonType(pokemon: Pokemon): String {
-    return if (pokemon.types?.size!! > 1) {
-        changefirstCharToUpperCase(pokemon.types[0].type.name) +
-                " - " + changefirstCharToUpperCase(pokemon.types[1].type.name)
 
-    } else {
-        changefirstCharToUpperCase(pokemon.types[0].type.name)
-    }
+    val types = pokemon.types ?: return "Unknown Type"
+
+    return types.joinToString(" - ") { it.type.name.changefirstCharToUpperCase() }
 }

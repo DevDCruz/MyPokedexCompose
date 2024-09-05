@@ -33,7 +33,7 @@ fun <T> DropDownItem(
     displayDetails: @Composable (T) -> Unit
 ) {
     var selectedText by remember {
-        mutableStateOf("$index - " + changefirstCharToUpperCase(title))
+        mutableStateOf(index.toString() + " - " + title.changefirstCharToUpperCase())
     }
 
     val coroutineScope = rememberCoroutineScope()
@@ -59,11 +59,11 @@ fun <T> DropDownItem(
                                 if (detail == null) {
                                     onFetchDetails()?.let {
                                         selectedText =
-                                            "$index - " + changefirstCharToUpperCase(title)
+                                            "$index - " + title.changefirstCharToUpperCase()
                                     }
                                 } else {
                                     onClearDetails()
-                                    selectedText = "$index - " + changefirstCharToUpperCase(title)
+                                    selectedText = "$index - " + title.changefirstCharToUpperCase()
                                 }
                             }
                         }

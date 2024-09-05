@@ -29,7 +29,7 @@ fun AnnotatedString.Builder.PropertyDetailItem(name: String, value: String, end:
         withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
             append("$name: ")
         }
-        append(changefirstCharToUpperCase(value))
+        append(value.changefirstCharToUpperCase())
         if (!end) append("\n")
     }
 }

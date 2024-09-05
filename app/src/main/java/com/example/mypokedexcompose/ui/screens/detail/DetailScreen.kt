@@ -66,7 +66,7 @@ fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
                 TopAppBar(
                     title = {
                         Text(
-                            text = changefirstCharToUpperCase(state.pokemon?.name ?: ""),
+                            text = (state.pokemon?.name ?: "").changefirstCharToUpperCase(),
                             style = MaterialTheme.typography.headlineLarge
                         )
                     },
