@@ -1,4 +1,4 @@
-package com.example.mypokedexcompose.data.home
+package com.example.mypokedexcompose.data.pokedex
 
 
 import com.example.mypokedexcompose.data.pokemon.PokemonResult

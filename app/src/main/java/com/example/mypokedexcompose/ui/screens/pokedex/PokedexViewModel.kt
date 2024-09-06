@@ -3,7 +3,7 @@ package com.example.mypokedexcompose.ui.screens.pokedex
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mypokedexcompose.data.PokedexRepository
+import com.example.mypokedexcompose.data.pokedex.PokedexRepository
 import com.example.mypokedexcompose.data.pokemon.Pokemon
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,7 +26,7 @@ class PokedexViewModel(private val savedStateHandle: SavedStateHandle) : ViewMod
         viewModelScope.launch {
             _state.value = UiState(loading = true)
             _state.value = UiState(
-                pokemons = repository.fetchPokedex(),
+                pokemons = repository.fetchRegionalPokedex(0,151),
                 loading = false
             )
         }
