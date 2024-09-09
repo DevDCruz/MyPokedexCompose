@@ -1,12 +1,16 @@
 package com.example.mypokedexcompose.ui.screens
 
+import android.app.Application
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.mypokedexcompose.data.region.RegionRepository
 import com.example.mypokedexcompose.ui.screens.backpack.BackPackScreen
 import com.example.mypokedexcompose.ui.screens.berries.BerriesScreen
 import com.example.mypokedexcompose.ui.screens.detail.DetailScreen
@@ -43,7 +47,8 @@ fun Navigation() {
                 onClick = { pokemon ->
                     navControler.navigate(NavScreen.Detail.createRoute(pokemon.name))
                 },
-                onBack = { navControler.popBackStack() }
+                onBack = { navControler.popBackStack() },
+                regionRepository = RegionRepository(LocalContext.current.applicationContext as Application),
             )
         }
         composable(NavScreen.Berries.route) {

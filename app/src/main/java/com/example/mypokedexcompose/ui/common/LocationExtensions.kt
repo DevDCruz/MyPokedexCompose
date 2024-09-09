@@ -8,6 +8,7 @@ import android.location.Location
 import android.os.Build
 import androidx.annotation.FloatRange
 import androidx.annotation.IntRange
+import com.example.mypokedexcompose.ui.common.Constants.DEFAULT_REGION
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.Dispatchers
@@ -15,14 +16,13 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.resume
 
-const val DEFAULT_REGION = "US"
-
 suspend fun Context.getRegion(): String {
     val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     val location = fusedLocationClient.lastLocation()
 
-    val geocoder = Geocoder(this)
+
     val addresses = location?.let {
+        val geocoder = Geocoder(this)
         geocoder.getFromLocationCompat(it.latitude, it.longitude, 1)
     }
 

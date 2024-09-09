@@ -45,8 +45,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.mypokedexcompose.R
-import com.example.mypokedexcompose.data.pokedex.Region
+import com.example.mypokedexcompose.data.pokedex.PokedexRegion
 import com.example.mypokedexcompose.data.pokemon.Pokemon
+import com.example.mypokedexcompose.data.region.RegionRepository
 import com.example.mypokedexcompose.ui.common.CircularProgressFun
 import com.example.mypokedexcompose.ui.common.Constants
 import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
@@ -61,16 +62,23 @@ import com.example.mypokedexcompose.ui.theme.LightRed
 fun PokedexScreen(
     onClick: (Pokemon) -> Unit,
     vm: PokedexViewModel = viewModel(),
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    regionRepository: RegionRepository
 ) {
-    val pokedexState = RememberPokedexState(savedStateHandle = vm.savedStateHandle, viewModel = vm)
+    val pokedexState = RememberPokedexState(
+        savedStateHandle = vm.savedStateHandle,
+        viewModel = vm,
+        regionRepository = regionRepository
+    )
     val state by vm.state.collectAsState()
     var location by remember { mutableStateOf("") }
-    val region by pokedexState.selectedRegion.collectAsState()
+    val pokedexRegion by pokedexState.selectedPokedexRegion.collectAsState()
 
     pokedexState.AskRegionEffect {
-        vm.onUiReady()
         location = it
+        val mappedRegion = pokedexState.mapLocationtoPokedexRegion(it)
+        pokedexState.updateSelectedGeneration(mappedRegion)
+        vm.onUiReady()
     }
 
     Screen {
@@ -121,7 +129,7 @@ fun PokedexScreen(
                 ) {
                     itemsIndexed(state.pokemons) { index, pokemon ->
 
-                        val pokedexNumber = region.range[0] + index + 1
+                        val pokedexNumber = pokedexRegion.range[0] + index + 1
                         PokedexItem(
                             pokemon = pokemon,
                             onClick = {
@@ -173,9 +181,9 @@ fun PokedexItem(pokemon: Pokemon, onClick: () -> Unit, pokedexNumber: Int, sprit
 
 @Composable
 fun DropDownMenu(pokedexViewModel: PokedexViewModel, pokedexState: PokedexState) {
-    var selectedText by remember { mutableStateOf(pokedexState.selectedRegion.value.displayName) }
+    var selectedText by remember { mutableStateOf(pokedexState.selectedPokedexRegion.value.displayName) }
     var expanded by remember { mutableStateOf(false) }
-    val regions = Region.entries.toTypedArray()
+    val pokedexRegions = PokedexRegion.entries.toTypedArray()
 
     OutlinedTextField(
         value = selectedText,
@@ -205,7 +213,7 @@ fun DropDownMenu(pokedexViewModel: PokedexViewModel, pokedexState: PokedexState)
         onDismissRequest = { expanded = false },
         modifier = Modifier.background(DarkRedII)
     ) {
-        regions.forEach { region ->
+        pokedexRegions.forEach { region ->
             DropdownMenuItem(
                 text = { Text(text = region.displayName) },
                 onClick = {
