@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class PokedexViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel() {
+class PokedexViewModel(val savedStateHandle: SavedStateHandle) : ViewModel() {
 
     private val repository = PokedexRepository()
 
@@ -18,28 +18,47 @@ class PokedexViewModel(private val savedStateHandle: SavedStateHandle) : ViewMod
     val state: StateFlow<UiState> get() = _state.asStateFlow()
 
     init {
-        val scrollPosition = savedStateHandle.get<Int>("scroll_position") ?: 0
-        _state.value = UiState(scrollPosition = scrollPosition)
-    }
 
-    fun onUiReady() {
-        viewModelScope.launch {
-            _state.value = UiState(loading = true)
+        val savedPokemons = savedStateHandle.get<List<Pokemon>>("pokemons")
+        if (savedPokemons != null) {
             _state.value = UiState(
-                pokemons = repository.fetchRegionalPokedex(0,151),
+                pokemons = savedPokemons,
                 loading = false
             )
         }
     }
 
-    fun savedScrollPosition(position: Int) {
-        savedStateHandle["scroll_position"] = position
+    fun onUiReady() {
+        val savedPokemons = savedStateHandle.get<List<Pokemon>>("pokemons")
+        if (savedPokemons != null) {
+            _state.value = UiState(pokemons = savedPokemons, loading = false)
+        } else {
+            viewModelScope.launch {
+                _state.value = UiState(loading = true)
+                val pokemons = repository.fetchRegionalPokedex(0, 1010)
+                _state.value = UiState(pokemons = pokemons, loading = false)
+                savedStateHandle["pokemons"] = pokemons
+            }
+        }
     }
 
+    fun fetchPokemonsForRegion(range: IntArray) {
+        viewModelScope.launch {
+            _state.value = UiState(loading = true)
+
+            val pokemons =
+                repository.fetchRegionalPokedex(offset = range[0], limit = range[1] - range[0])
+
+            _state.value = UiState(
+                pokemons = pokemons,
+                loading = false
+            )
+            savedStateHandle["pokemons"] = pokemons
+        }
+    }
 
     data class UiState(
         val loading: Boolean = false,
-        val pokemons: List<Pokemon> = emptyList(),
-        val scrollPosition: Int = 0
+        val pokemons: List<Pokemon> = emptyList()
     )
 }

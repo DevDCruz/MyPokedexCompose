@@ -10,17 +10,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -32,12 +36,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.mypokedexcompose.R
+import com.example.mypokedexcompose.data.pokedex.Region
 import com.example.mypokedexcompose.data.pokemon.Pokemon
 import com.example.mypokedexcompose.ui.common.CircularProgressFun
 import com.example.mypokedexcompose.ui.common.Constants
@@ -55,9 +63,10 @@ fun PokedexScreen(
     vm: PokedexViewModel = viewModel(),
     onBack: () -> Unit
 ) {
-    val pokedexState = RememberPokedexState()
+    val pokedexState = RememberPokedexState(savedStateHandle = vm.savedStateHandle, viewModel = vm)
     val state by vm.state.collectAsState()
     var location by remember { mutableStateOf("") }
+    val region by pokedexState.selectedRegion.collectAsState()
 
     pokedexState.AskRegionEffect {
         vm.onUiReady()
@@ -66,11 +75,12 @@ fun PokedexScreen(
 
     Screen {
         val lazyLisState = rememberLazyListState(
-            initialFirstVisibleItemIndex = vm.state.collectAsState().value.scrollPosition
+            initialFirstVisibleItemIndex = pokedexState.scrollPosition
         )
 
         Scaffold(
             topBar = {
+
                 TopAppBar(
                     title = { Text(text = stringResource(id = R.string.app_name) + " - $location") },
                     colors = TopAppBarDefaults.topAppBarColors(
@@ -85,6 +95,9 @@ fun PokedexScreen(
                                 contentDescription = stringResource(id = R.string.back)
                             )
                         }
+                    },
+                    actions = {
+                        DropDownMenu(vm, pokedexState)
                     },
                 )
             },
@@ -106,15 +119,16 @@ fun PokedexScreen(
                     state = lazyLisState,
                     contentPadding = padding
                 ) {
-                    items(state.pokemons) { pokemon ->
+                    itemsIndexed(state.pokemons) { index, pokemon ->
 
+                        val pokedexNumber = region.range[0] + index + 1
                         PokedexItem(
                             pokemon = pokemon,
                             onClick = {
                                 onClick(pokemon)
-                                vm.savedScrollPosition(lazyLisState.firstVisibleItemIndex)
+                                pokedexState.savedScrollPosition(lazyLisState.firstVisibleItemIndex)
                             },
-                            pokedexNumber = state.pokemons.indexOf(pokemon) + 1,
+                            pokedexNumber = pokedexNumber,
                             sprite = Constants.SPRITE_DEFAULT_URL
                         )
                     }
@@ -154,5 +168,55 @@ fun PokedexItem(pokemon: Pokemon, onClick: () -> Unit, pokedexNumber: Int, sprit
                 .padding(8.dp)
                 .weight(1f)
         )
+    }
+}
+
+@Composable
+fun DropDownMenu(pokedexViewModel: PokedexViewModel, pokedexState: PokedexState) {
+    var selectedText by remember { mutableStateOf(pokedexState.selectedRegion.value.displayName) }
+    var expanded by remember { mutableStateOf(false) }
+    val regions = Region.entries.toTypedArray()
+
+    OutlinedTextField(
+        value = selectedText,
+        onValueChange = { selectedText = it },
+        enabled = false,
+        readOnly = true,
+        modifier = Modifier
+            .clickable { expanded = true }
+            .size(width = 80.dp, height = 60.dp),
+        label = {
+            Text(
+                text = "Regions",
+                style = TextStyle(Color.Black),
+                fontSize = 12.sp
+            )
+        },
+        textStyle = TextStyle(color = Color.Black),
+        colors = TextFieldDefaults.colors(
+            disabledContainerColor = DarkRedII,
+            focusedIndicatorColor = Color.Black,
+            unfocusedIndicatorColor = Color.Black,
+            disabledIndicatorColor = Color.Black
+        )
+    )
+    DropdownMenu(
+        expanded = expanded,
+        onDismissRequest = { expanded = false },
+        modifier = Modifier.background(DarkRedII)
+    ) {
+        regions.forEach { region ->
+            DropdownMenuItem(
+                text = { Text(text = region.displayName) },
+                onClick = {
+                    selectedText = region.displayName
+                    pokedexState.updateSelectedGeneration(region)
+                    pokedexState.onClikedRegion(region, pokedexViewModel)
+                    expanded = false
+                },
+                modifier = Modifier
+                    .size(width = 80.dp, height = 30.dp)
+            )
+        }
     }
 }

@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.mypokedexcompose.data.items.Item
-import com.example.mypokedexcompose.ui.common.DropDownItem
+import com.example.mypokedexcompose.ui.common.DropDownCustomItem
 import com.example.mypokedexcompose.ui.common.PropertyDetailItem
 import com.example.mypokedexcompose.ui.screens.ListScreen
 
@@ -59,7 +59,7 @@ fun DropDownBackPack(
 ) {
     var itemDetail by remember { mutableStateOf<Item?>(null) }
 
-    DropDownItem(
+    DropDownCustomItem(
         title = item.name ?: "",
         index = itemIndex,
         detail = itemDetail,

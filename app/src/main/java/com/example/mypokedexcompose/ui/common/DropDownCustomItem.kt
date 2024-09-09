@@ -24,7 +24,7 @@ import com.example.mypokedexcompose.ui.theme.LightRed
 import kotlinx.coroutines.launch
 
 @Composable
-fun <T> DropDownItem(
+fun <T> DropDownCustomItem(
     title: String,
     index: Int,
     detail: T?,
