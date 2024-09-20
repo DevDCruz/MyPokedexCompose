@@ -9,13 +9,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class BerriesViewModel : ViewModel() {
-
-    private val repository = BerryRepository()
+class BerriesViewModel(
+    private val repository: BerryRepository
+) : ViewModel() {
 
     private val _state = MutableStateFlow(UiState())
     val state: StateFlow<UiState> get() = _state.asStateFlow()
-
 
     fun onUiReady() {
         viewModelScope.launch {
@@ -26,6 +25,7 @@ class BerriesViewModel : ViewModel() {
             )
         }
     }
+
     suspend fun fetchBerryDetails(name: String): Berry {
         return repository.fetchBerryByName(name)
     }

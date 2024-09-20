@@ -11,10 +11,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class DetailViewModel(private val name: String) : ViewModel() {
-
-
-    private val repository = PokemonRepository()
+class DetailViewModel(
+    private val repository: PokemonRepository,
+    private val name: String
+) : ViewModel() {
 
     private val _state = MutableStateFlow(UiState())
     val state: StateFlow<UiState> get() = _state.asStateFlow()
@@ -37,9 +37,9 @@ class DetailViewModel(private val name: String) : ViewModel() {
         val message: String? = null
     )
 
-fun onFavoriteClick() {
-    _state.update {it.copy(message = "Pokemon added to favorites")}
-}
+    fun onFavoriteClick() {
+        _state.update { it.copy(message = "Pokemon added to favorites") }
+    }
 
     fun onMessageShown() {
         _state.update { it.copy(message = null) }

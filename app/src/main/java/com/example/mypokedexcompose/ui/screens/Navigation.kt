@@ -10,9 +10,21 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.mypokedexcompose.data.berries.BerryRepository
+import com.example.mypokedexcompose.data.dataSource.BerryRemoteDataSource
+import com.example.mypokedexcompose.data.dataSource.ItemRemoteDataSource
+import com.example.mypokedexcompose.data.dataSource.LocationDataSource
+import com.example.mypokedexcompose.data.dataSource.PokedexRemoteDataSource
+import com.example.mypokedexcompose.data.dataSource.PokemonRemoteDataSource
+import com.example.mypokedexcompose.data.dataSource.RegionDataSource
+import com.example.mypokedexcompose.data.items.ItemRepository
+import com.example.mypokedexcompose.data.pokedex.PokedexRepository
+import com.example.mypokedexcompose.data.pokemon.PokemonRepository
 import com.example.mypokedexcompose.data.region.RegionRepository
 import com.example.mypokedexcompose.ui.screens.backpack.BackPackScreen
+import com.example.mypokedexcompose.ui.screens.backpack.BackPackViewModel
 import com.example.mypokedexcompose.ui.screens.berries.BerriesScreen
+import com.example.mypokedexcompose.ui.screens.berries.BerriesViewModel
 import com.example.mypokedexcompose.ui.screens.detail.DetailScreen
 import com.example.mypokedexcompose.ui.screens.detail.DetailViewModel
 import com.example.mypokedexcompose.ui.screens.home.HomeScreen
@@ -39,30 +51,55 @@ enum class NavArs(val key: String) {
 @Composable
 fun Navigation() {
     val navControler = rememberNavController()
-    val regionRepository = RegionRepository(LocalContext.current.applicationContext as Application)
+    val app = LocalContext.current.applicationContext as Application
+    val regionRepository = RegionRepository(
+        RegionDataSource(
+            app,
+            LocationDataSource(app)
+        )
+    )
+    val pokedexRepository = PokedexRepository(PokedexRemoteDataSource())
+    val itemRepository = ItemRepository(ItemRemoteDataSource())
+    val berryRepository = BerryRepository(BerryRemoteDataSource())
+    val pokemonRepository = PokemonRepository(PokemonRemoteDataSource())
+
     NavHost(navController = navControler, startDestination = NavScreen.Home.route) {
         composable(NavScreen.Home.route) {
-            HomeScreen(viewModel { HomeViewModel() }, navController = navControler)
+            HomeScreen(
+                viewModel {
+                    HomeViewModel(pokemonRepository)
+                },
+                navController = navControler
+            )
         }
         composable(NavScreen.Pokedex.route) {
             PokedexScreen(
                 onClick = { pokemon ->
                     navControler.navigate(NavScreen.Detail.createRoute(pokemon.name))
                 },
-                viewModel{
+                viewModel {
                     PokedexViewModel(
                         SavedStateHandle(),
-                        regionRepository)},
+                        regionRepository,
+                        pokedexRepository
+                    )
+                },
                 onBack = { navControler.popBackStack() }
             )
         }
         composable(NavScreen.Berries.route) {
             BerriesScreen(
+                viewModel {
+                    BerriesViewModel(berryRepository)
+                },
                 onBack = { navControler.popBackStack() }
             )
         }
         composable(NavScreen.BackPack.route) {
             BackPackScreen(
+                viewModel {
+                    BackPackViewModel(itemRepository)
+                },
                 onBack = { navControler.popBackStack() }
             )
         }
@@ -74,7 +111,12 @@ fun Navigation() {
             val pokemonName =
                 requireNotNull(backStackEntry.arguments?.getString(NavArs.POKEMON_NAME.key))
             DetailScreen(
-                viewModel { DetailViewModel(pokemonName) },
+                viewModel {
+                    DetailViewModel(
+                        pokemonRepository,
+                        pokemonName
+                    )
+                },
                 onBack = { navControler.popBackStack() }
             )
         }

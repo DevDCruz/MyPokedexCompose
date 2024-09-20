@@ -1,37 +1,12 @@
 package com.example.mypokedexcompose.data.items
 
-class ItemRepository {
+import com.example.mypokedexcompose.data.dataSource.ItemRemoteDataSource
 
-    suspend fun fetchItems(): List<Item> = ItemClient
-        .instance
-        .fetchItems(304)
-        .results
-        .map {
-            it.todomainModel()
-        }
+class ItemRepository(private val itemRemoteDataSource: ItemRemoteDataSource) {
 
+    suspend fun fetchItems(): List<Item> = itemRemoteDataSource.fetchItems()
 
-    suspend fun fetchItemById(id: Int): Item = ItemClient
-        .instance
-        .getItemById(id)
+    suspend fun fetchItemById(id: Int): Item = itemRemoteDataSource.fetchItemById(id)
 
 
 }
-
-private fun ItemResult.todomainModel(): Item =
-    Item(
-        attributes = attributes,
-        babyTriggerFor = babyTriggerFor,
-        category = category,
-        cost = cost,
-        effectEntries = effectEntries,
-        flavorTextEntries = flavorTextEntries,
-        flingEffect = flingEffect,
-        flingPower = flingPower,
-        gameIndices = gameIndices,
-        heldByPokemon = heldByPokemon,
-        id = id,
-        machines = machines,
-        name = name,
-        sprites = sprites
-    )

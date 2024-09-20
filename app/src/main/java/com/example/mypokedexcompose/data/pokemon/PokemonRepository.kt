@@ -1,30 +1,11 @@
 package com.example.mypokedexcompose.data.pokemon
 
-import com.example.mypokedexcompose.R
-import java.util.Random
+import com.example.mypokedexcompose.data.dataSource.PokemonRemoteDataSource
 
-class PokemonRepository {
+class PokemonRepository(private val remoteDataSource: PokemonRemoteDataSource) {
 
-    suspend fun fetchPokemon(name: String): Pokemon = PokemonClient.instance
-        .getPokemonByName(name)
-        .toDomainModel()
+    suspend fun fetchPokemon(name: String): Pokemon = remoteDataSource.fetchPokemon(name)
 
-
-    suspend fun fetchRandomPokemon(): Pokemon = PokemonClient.instance
-        .getPokemonById(generateRandomId())
-        .toDomainModel()
-
+    suspend fun fetchRandomPokemon(): Pokemon = remoteDataSource.fetchRandomPokemon()
 
 }
-
-private fun PokemonResult.toDomainModel(): Pokemon =
-    Pokemon(
-        name = name,
-        id = id,
-        height = height,
-        weight = weight,
-        types = types
-    )
-
-
-private fun generateRandomId(): Int = Random().nextInt(1025)

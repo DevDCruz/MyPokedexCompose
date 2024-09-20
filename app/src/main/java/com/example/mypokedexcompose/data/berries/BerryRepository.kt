@@ -1,34 +1,11 @@
 package com.example.mypokedexcompose.data.berries
 
-class BerryRepository {
+import com.example.mypokedexcompose.data.dataSource.BerryRemoteDataSource
 
-    suspend fun fetchBerries(): List<Berry> = BerryClient
-        .instance
-        .fetchBerries(64)
-        .results
-        .map {
-            it.todomainModel()
-        }
+class BerryRepository(private val berryRemoteDataSource: BerryRemoteDataSource) {
 
+    suspend fun fetchBerries(): List<Berry> = berryRemoteDataSource.fetchBerries()
 
-    suspend fun fetchBerryByName(name: String): Berry = BerryClient
-        .instance
-        .getBerryByName(name)
-
+    suspend fun fetchBerryByName(name: String): Berry = berryRemoteDataSource.fetchBerryByName(name)
 }
 
-private fun BerryResult.todomainModel(): Berry =
-    Berry(
-        firmness = firmness,
-        flavors = flavors,
-        growthTime = growthTime,
-        id = id,
-        item = item,
-        maxHarvest = maxHarvest,
-        name = name,
-        naturalGiftPower = naturalGiftPower,
-        naturalGiftType = naturalGiftType,
-        size = size,
-        smoothness = smoothness,
-        soilDryness = soilDryness
-    )

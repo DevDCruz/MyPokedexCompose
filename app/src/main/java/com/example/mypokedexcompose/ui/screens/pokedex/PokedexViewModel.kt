@@ -14,10 +14,11 @@ import kotlinx.coroutines.launch
 
 class PokedexViewModel(
     val savedStateHandle: SavedStateHandle,
-    private val regionRepository: RegionRepository
+    private val regionRepository: RegionRepository,
+    private val repository: PokedexRepository
 ) : ViewModel() {
 
-    private val repository = PokedexRepository()
+
 
     private val _state = MutableStateFlow(UiState())
     val state: StateFlow<UiState> get() = _state.asStateFlow()
