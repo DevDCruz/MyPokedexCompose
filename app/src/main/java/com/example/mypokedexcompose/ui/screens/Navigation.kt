@@ -11,11 +11,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.mypokedexcompose.data.berries.BerryRepository
-import com.example.mypokedexcompose.data.dataSource.BerryRemoteDataSource
-import com.example.mypokedexcompose.data.dataSource.ItemRemoteDataSource
+import com.example.mypokedexcompose.data.dataSource.remote.berry.BerryRemoteDataSource
+import com.example.mypokedexcompose.data.dataSource.remote.backpack.ItemRemoteDataSource
 import com.example.mypokedexcompose.data.dataSource.LocationDataSource
-import com.example.mypokedexcompose.data.dataSource.PokedexRemoteDataSource
-import com.example.mypokedexcompose.data.dataSource.PokemonRemoteDataSource
+import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokedexRemoteDataSource
+import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonRemoteDataSource
 import com.example.mypokedexcompose.data.dataSource.RegionDataSource
 import com.example.mypokedexcompose.data.items.ItemRepository
 import com.example.mypokedexcompose.data.pokedex.PokedexRepository

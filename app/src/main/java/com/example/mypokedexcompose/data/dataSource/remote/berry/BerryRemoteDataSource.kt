@@ -1,20 +1,17 @@
-package com.example.mypokedexcompose.data.dataSource
+package com.example.mypokedexcompose.data.dataSource.remote.berry
 
 import com.example.mypokedexcompose.data.berries.Berry
-import com.example.mypokedexcompose.data.berries.BerryClient
 import com.example.mypokedexcompose.data.berries.BerryResult
 
 class BerryRemoteDataSource {
-    suspend fun fetchBerries(): List<Berry> = BerryClient
-        .instance
+    suspend fun fetchBerries(): List<Berry> = BerryClient.instance
         .fetchBerries(64)
         .results
         .map {
             it.todomainModel()
         }
 
-    suspend fun fetchBerryByName(name: String): Berry = BerryClient
-        .instance
+    suspend fun fetchBerryByName(name: String): Berry = BerryClient.instance
         .getBerryByName(name)
 
 }

@@ -1,12 +1,10 @@
-package com.example.mypokedexcompose.data.pokedex
+package com.example.mypokedexcompose.data.dataSource.remote.pokedex
 
+import com.example.mypokedexcompose.data.pokedex.PokedexResult
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface PokedexService {
-
-    @GET("pokemon")
-    suspend fun fetchPokedex(@Query("limit") limit: Int): PokedexResult
 
     @GET("pokemon")
     suspend fun fectkRegionalPokedex(

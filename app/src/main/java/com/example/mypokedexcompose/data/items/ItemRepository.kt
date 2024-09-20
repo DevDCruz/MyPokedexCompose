@@ -1,6 +1,6 @@
 package com.example.mypokedexcompose.data.items
 
-import com.example.mypokedexcompose.data.dataSource.ItemRemoteDataSource
+import com.example.mypokedexcompose.data.dataSource.remote.backpack.ItemRemoteDataSource
 
 class ItemRepository(private val itemRemoteDataSource: ItemRemoteDataSource) {
 

@@ -1,6 +1,6 @@
 package com.example.mypokedexcompose.data.berries
 
-import com.example.mypokedexcompose.data.dataSource.BerryRemoteDataSource
+import com.example.mypokedexcompose.data.dataSource.remote.berry.BerryRemoteDataSource
 
 class BerryRepository(private val berryRemoteDataSource: BerryRemoteDataSource) {
 

@@ -1,6 +1,6 @@
-package com.example.mypokedexcompose.data.dataSource
+package com.example.mypokedexcompose.data.dataSource.remote.pokemon
 
-import com.example.mypokedexcompose.data.pokedex.PokedexClient
+import com.example.mypokedexcompose.data.dataSource.remote.pokedex.PokedexClient
 import com.example.mypokedexcompose.data.pokemon.Pokemon
 import com.example.mypokedexcompose.data.pokemon.PokemonResult
 

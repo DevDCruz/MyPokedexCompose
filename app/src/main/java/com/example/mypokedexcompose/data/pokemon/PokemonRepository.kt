@@ -1,6 +1,6 @@
 package com.example.mypokedexcompose.data.pokemon
 
-import com.example.mypokedexcompose.data.dataSource.PokemonRemoteDataSource
+import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonRemoteDataSource
 
 class PokemonRepository(private val remoteDataSource: PokemonRemoteDataSource) {
 

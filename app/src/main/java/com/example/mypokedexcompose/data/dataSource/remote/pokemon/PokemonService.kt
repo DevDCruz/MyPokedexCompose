@@ -1,5 +1,6 @@
-package com.example.mypokedexcompose.data.pokemon
+package com.example.mypokedexcompose.data.dataSource.remote.pokemon
 
+import com.example.mypokedexcompose.data.pokemon.PokemonResult
 import retrofit2.http.GET
 import retrofit2.http.Path
 

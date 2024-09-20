@@ -1,7 +1,6 @@
-package com.example.mypokedexcompose.data.dataSource
+package com.example.mypokedexcompose.data.dataSource.remote.pokemon
 
 import com.example.mypokedexcompose.data.pokemon.Pokemon
-import com.example.mypokedexcompose.data.pokemon.PokemonClient
 import com.example.mypokedexcompose.data.pokemon.PokemonResult
 import java.util.Random
 
