@@ -8,8 +8,8 @@ import androidx.compose.runtime.LaunchedEffect
 @Composable
 fun PermissionRequestEffect(permission: String, onResult: (Boolean) -> Unit) {
     val permissionLauncher =
-        rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
-            onResult(it)
+        rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            onResult(granted)
         }
     LaunchedEffect(Unit) {
         permissionLauncher.launch(permission)

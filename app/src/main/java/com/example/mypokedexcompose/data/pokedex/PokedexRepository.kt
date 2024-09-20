@@ -5,13 +5,6 @@ import com.example.mypokedexcompose.data.pokemon.PokemonResult
 
 class PokedexRepository {
 
-    suspend fun fetchPokedex(): List<Pokemon> = PokedexClient.instance
-        .fetchPokedex(1025)
-        .results
-        .map {
-            it.todomainModel()
-        }
-
     suspend fun fetchRegionalPokedex(offset : Int, limit: Int): List<Pokemon> = PokedexClient.instance
         .fectkRegionalPokedex(offset, limit)
         .results

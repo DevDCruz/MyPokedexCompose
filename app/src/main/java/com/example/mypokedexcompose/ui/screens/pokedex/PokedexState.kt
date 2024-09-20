@@ -1,6 +1,5 @@
 package com.example.mypokedexcompose.ui.screens.pokedex
 
-import android.Manifest
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
@@ -8,19 +7,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.SavedStateHandle
 import com.example.mypokedexcompose.data.pokedex.PokedexRegion
-import com.example.mypokedexcompose.data.region.RegionRepository
-import com.example.mypokedexcompose.ui.common.PermissionRequestEffect
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 
 class PokedexState @OptIn(ExperimentalMaterial3Api::class) constructor(
     val scrollBehavior: TopAppBarScrollBehavior,
-    private val savedStateHandle: SavedStateHandle,
-    private val regionRepository: RegionRepository
+    private val savedStateHandle: SavedStateHandle
 ) {
 
     private val _selectedPokedexRegion = MutableStateFlow(PokedexRegion.ALL_GENERATIONS)
@@ -34,19 +28,6 @@ class PokedexState @OptIn(ExperimentalMaterial3Api::class) constructor(
             savedStateHandle.get<PokedexRegion>("selected_region") ?: PokedexRegion.ALL_GENERATIONS
     }
 
-    @Composable
-    fun AskRegionEffect(onRegion: (String) -> Unit) {
-        val coroutineScope = rememberCoroutineScope()
-
-        PermissionRequestEffect(permission = Manifest.permission.ACCESS_COARSE_LOCATION) {
-            coroutineScope.launch {
-                val location = regionRepository.findLastregion()
-                val region = mapLocationtoPokedexRegion(location)
-                onRegion(region.displayName)
-            }
-        }
-    }
-
     fun savedScrollPosition(position: Int) {
         scrollPosition = savedStateHandle.get<Int>("scroll_position") ?: 0
         savedStateHandle["scroll_position"] = position
@@ -58,12 +39,8 @@ class PokedexState @OptIn(ExperimentalMaterial3Api::class) constructor(
     }
 
     fun onClikedRegion(pokedexRegion: PokedexRegion, viewModel: PokedexViewModel) {
+        updateSelectedGeneration(pokedexRegion)
         viewModel.fetchPokemonsForRegion(pokedexRegion.range)
-    }
-
-    fun updateRegionBasedOnLocation(location: String) {
-        val region = mapLocationtoPokedexRegion(location)
-        updateSelectedGeneration(region)
     }
 
     fun mapLocationtoPokedexRegion(location: String): PokedexRegion {
@@ -80,8 +57,6 @@ class PokedexState @OptIn(ExperimentalMaterial3Api::class) constructor(
             else -> PokedexRegion.ALL_GENERATIONS
         }
     }
-
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -89,15 +64,13 @@ class PokedexState @OptIn(ExperimentalMaterial3Api::class) constructor(
 fun RememberPokedexState(
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(),
     savedStateHandle: SavedStateHandle,
-    viewModel: PokedexViewModel,
-    regionRepository: RegionRepository
+    viewModel: PokedexViewModel
 ): PokedexState {
 
     val pokedexState = remember(scrollBehavior) {
         PokedexState(
             scrollBehavior,
-            savedStateHandle,
-            regionRepository
+            savedStateHandle
         )
     }
 

@@ -3,22 +3,28 @@ package com.example.mypokedexcompose.ui.screens.pokedex
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mypokedexcompose.data.pokedex.PokedexRegion
 import com.example.mypokedexcompose.data.pokedex.PokedexRepository
 import com.example.mypokedexcompose.data.pokemon.Pokemon
+import com.example.mypokedexcompose.data.region.RegionRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class PokedexViewModel(val savedStateHandle: SavedStateHandle) : ViewModel() {
+class PokedexViewModel(
+    val savedStateHandle: SavedStateHandle,
+    private val regionRepository: RegionRepository
+) : ViewModel() {
 
     private val repository = PokedexRepository()
 
     private val _state = MutableStateFlow(UiState())
     val state: StateFlow<UiState> get() = _state.asStateFlow()
 
-    init {
+    private val _location = MutableStateFlow<PokedexRegion>(PokedexRegion.ALL_GENERATIONS)
 
+    init {
         val savedPokemons = savedStateHandle.get<List<Pokemon>>("pokemons")
         if (savedPokemons != null) {
             _state.value = UiState(
@@ -55,6 +61,13 @@ class PokedexViewModel(val savedStateHandle: SavedStateHandle) : ViewModel() {
             )
             savedStateHandle["pokemons"] = pokemons
         }
+    }
+
+    suspend fun updateRegionBasedOnLocation(pokedexState: PokedexState) {
+        val region = pokedexState.mapLocationtoPokedexRegion(regionRepository.findLastRegion())
+        fetchPokemonsForRegion(region.range)
+        pokedexState.updateSelectedGeneration(region)
+        _location.value = region
     }
 
     data class UiState(

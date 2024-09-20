@@ -1,6 +1,7 @@
 package com.example.mypokedexcompose.ui.screens.pokedex
 
 
+import android.Manifest
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -32,6 +33,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -47,14 +49,15 @@ import coil.compose.AsyncImage
 import com.example.mypokedexcompose.R
 import com.example.mypokedexcompose.data.pokedex.PokedexRegion
 import com.example.mypokedexcompose.data.pokemon.Pokemon
-import com.example.mypokedexcompose.data.region.RegionRepository
 import com.example.mypokedexcompose.ui.common.CircularProgressFun
 import com.example.mypokedexcompose.ui.common.Constants
+import com.example.mypokedexcompose.ui.common.PermissionRequestEffect
 import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
 import com.example.mypokedexcompose.ui.screens.Screen
 import com.example.mypokedexcompose.ui.theme.DarkRed
 import com.example.mypokedexcompose.ui.theme.DarkRedII
 import com.example.mypokedexcompose.ui.theme.LightRed
+import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -62,22 +65,23 @@ import com.example.mypokedexcompose.ui.theme.LightRed
 fun PokedexScreen(
     onClick: (Pokemon) -> Unit,
     vm: PokedexViewModel = viewModel(),
-    onBack: () -> Unit,
-    regionRepository: RegionRepository
+    onBack: () -> Unit
 ) {
     val pokedexState = RememberPokedexState(
         savedStateHandle = vm.savedStateHandle,
-        viewModel = vm,
-        regionRepository = regionRepository
+        viewModel = vm
     )
     val state by vm.state.collectAsState()
-    var location by remember { mutableStateOf("") }
     val pokedexRegion by pokedexState.selectedPokedexRegion.collectAsState()
+    val coroutineScope = rememberCoroutineScope()
 
-    pokedexState.AskRegionEffect {
-        location = it
-        val mappedRegion = pokedexState.mapLocationtoPokedexRegion(it)
-        pokedexState.updateSelectedGeneration(mappedRegion)
+
+    PermissionRequestEffect(permission = Manifest.permission.ACCESS_COARSE_LOCATION) { permissionGranted ->
+        if (permissionGranted) {
+            coroutineScope.launch {
+                vm.updateRegionBasedOnLocation(pokedexState)
+            }
+        }
         vm.onUiReady()
     }
 
@@ -90,7 +94,7 @@ fun PokedexScreen(
             topBar = {
 
                 TopAppBar(
-                    title = { Text(text = stringResource(id = R.string.app_name) + " - $location") },
+                    title = { Text(text = stringResource(id = R.string.app_name)) },
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = DarkRed,
                         scrolledContainerColor = DarkRedII
@@ -181,18 +185,18 @@ fun PokedexItem(pokemon: Pokemon, onClick: () -> Unit, pokedexNumber: Int, sprit
 
 @Composable
 fun DropDownMenu(pokedexViewModel: PokedexViewModel, pokedexState: PokedexState) {
-    var selectedText by remember { mutableStateOf(pokedexState.selectedPokedexRegion.value.displayName) }
+    val selectedText by pokedexState.selectedPokedexRegion.collectAsState()
     var expanded by remember { mutableStateOf(false) }
     val pokedexRegions = PokedexRegion.entries.toTypedArray()
 
     OutlinedTextField(
-        value = selectedText,
-        onValueChange = { selectedText = it },
+        value = selectedText.displayName,
+        onValueChange = { },
         enabled = false,
         readOnly = true,
         modifier = Modifier
             .clickable { expanded = true }
-            .size(width = 80.dp, height = 60.dp),
+            .size(width = 100.dp, height = 60.dp),
         label = {
             Text(
                 text = "Regions",
@@ -217,13 +221,12 @@ fun DropDownMenu(pokedexViewModel: PokedexViewModel, pokedexState: PokedexState)
             DropdownMenuItem(
                 text = { Text(text = region.displayName) },
                 onClick = {
-                    selectedText = region.displayName
-                    pokedexState.updateSelectedGeneration(region)
                     pokedexState.onClikedRegion(region, pokedexViewModel)
+                    pokedexState.updateSelectedGeneration(region)
                     expanded = false
                 },
                 modifier = Modifier
-                    .size(width = 80.dp, height = 30.dp)
+                    .size(width = 90.dp, height = 30.dp)
             )
         }
     }

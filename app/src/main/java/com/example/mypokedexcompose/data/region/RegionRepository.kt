@@ -10,9 +10,9 @@ import com.google.android.gms.location.LocationServices
 
 class RegionRepository(app: Application) {
     private val fusedLocationClient = LocationServices.getFusedLocationProviderClient(app)
-    val geocoder = Geocoder(app)
+    private val geocoder = Geocoder(app)
 
-    suspend fun findLastregion(): String = fusedLocationClient.lastLocation()?.toRegion() ?: DEFAULT_REGION
+    suspend fun findLastRegion(): String = fusedLocationClient.lastLocation()?.toRegion() ?: DEFAULT_REGION
 
     private suspend fun Location.toRegion(): String {
         val addresses = geocoder.getFromLocationCompat(latitude, longitude, 1)

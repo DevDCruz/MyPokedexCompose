@@ -1,9 +1,9 @@
 package com.example.mypokedexcompose.ui.screens
 
 import android.app.Application
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -18,6 +18,7 @@ import com.example.mypokedexcompose.ui.screens.detail.DetailViewModel
 import com.example.mypokedexcompose.ui.screens.home.HomeScreen
 import com.example.mypokedexcompose.ui.screens.home.HomeViewModel
 import com.example.mypokedexcompose.ui.screens.pokedex.PokedexScreen
+import com.example.mypokedexcompose.ui.screens.pokedex.PokedexViewModel
 
 sealed class NavScreen(val route: String) {
     data object Home : NavScreen("home")
@@ -38,6 +39,7 @@ enum class NavArs(val key: String) {
 @Composable
 fun Navigation() {
     val navControler = rememberNavController()
+    val regionRepository = RegionRepository(LocalContext.current.applicationContext as Application)
     NavHost(navController = navControler, startDestination = NavScreen.Home.route) {
         composable(NavScreen.Home.route) {
             HomeScreen(viewModel { HomeViewModel() }, navController = navControler)
@@ -47,8 +49,11 @@ fun Navigation() {
                 onClick = { pokemon ->
                     navControler.navigate(NavScreen.Detail.createRoute(pokemon.name))
                 },
-                onBack = { navControler.popBackStack() },
-                regionRepository = RegionRepository(LocalContext.current.applicationContext as Application),
+                viewModel{
+                    PokedexViewModel(
+                        SavedStateHandle(),
+                        regionRepository)},
+                onBack = { navControler.popBackStack() }
             )
         }
         composable(NavScreen.Berries.route) {
