@@ -1,6 +1,5 @@
 package com.example.mypokedexcompose.ui.screens
 
-import android.app.Application
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.SavedStateHandle
@@ -10,13 +9,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.mypokedexcompose.App
 import com.example.mypokedexcompose.data.berries.BerryRepository
-import com.example.mypokedexcompose.data.dataSource.remote.berry.BerryRemoteDataSource
-import com.example.mypokedexcompose.data.dataSource.remote.backpack.ItemRemoteDataSource
 import com.example.mypokedexcompose.data.dataSource.LocationDataSource
+import com.example.mypokedexcompose.data.dataSource.PokedexLocalDataSource
+import com.example.mypokedexcompose.data.dataSource.RegionDataSource
+import com.example.mypokedexcompose.data.dataSource.remote.backpack.ItemRemoteDataSource
+import com.example.mypokedexcompose.data.dataSource.remote.berry.BerryRemoteDataSource
 import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokedexRemoteDataSource
 import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonRemoteDataSource
-import com.example.mypokedexcompose.data.dataSource.RegionDataSource
 import com.example.mypokedexcompose.data.items.ItemRepository
 import com.example.mypokedexcompose.data.pokedex.PokedexRepository
 import com.example.mypokedexcompose.data.pokemon.PokemonRepository
@@ -51,14 +52,17 @@ enum class NavArs(val key: String) {
 @Composable
 fun Navigation() {
     val navControler = rememberNavController()
-    val app = LocalContext.current.applicationContext as Application
+    val app = LocalContext.current.applicationContext as App
     val regionRepository = RegionRepository(
         RegionDataSource(
             app,
             LocationDataSource(app)
         )
     )
-    val pokedexRepository = PokedexRepository(PokedexRemoteDataSource())
+    val pokedexRepository =
+        PokedexRepository(
+            PokedexRemoteDataSource(),
+            PokedexLocalDataSource(app.db.pokedexDao()))
     val itemRepository = ItemRepository(ItemRemoteDataSource())
     val berryRepository = BerryRepository(BerryRemoteDataSource())
     val pokemonRepository = PokemonRepository(PokemonRemoteDataSource())

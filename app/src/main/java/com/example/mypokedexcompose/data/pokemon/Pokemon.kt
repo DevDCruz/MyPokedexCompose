@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Entity
 @Serializable
 data class Pokemon(
-    @PrimaryKey(autoGenerate = true)
+   @PrimaryKey(autoGenerate = true)
     @SerialName("name")
     val name: String,
     @SerialName("id")
