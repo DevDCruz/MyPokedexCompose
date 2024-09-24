@@ -4,10 +4,9 @@ import android.app.Application
 import androidx.room.Room
 import com.example.mypokedexcompose.data.dataSource.database.pokedex.PokedexDatabase
 
-class App: Application() {
+class App : Application() {
 
     lateinit var db: PokedexDatabase
-
 
     override fun onCreate() {
         super.onCreate()

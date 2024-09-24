@@ -1,12 +1,11 @@
-package com.example.mypokedexcompose.data.dataSource.remote.pokemon
+package com.example.mypokedexcompose.data.dataSource.remote.pokedex
 
-import com.example.mypokedexcompose.data.dataSource.remote.pokedex.PokedexClient
 import com.example.mypokedexcompose.data.pokemon.Pokemon
 import com.example.mypokedexcompose.data.pokemon.PokemonResult
 
 class PokedexRemoteDataSource {
 
-    suspend fun fetchRegionalPokedex(offset: Int, limit: Int): List<Pokemon> =
+    suspend fun fetchPokedex(offset: Int, limit: Int): List<Pokemon> =
         PokedexClient.instance
             .fectkRegionalPokedex(offset, limit)
             .results
@@ -20,7 +19,8 @@ class PokedexRemoteDataSource {
             id = id,
             height = height,
             weight = weight,
-            types = types
+            types = types,
+            favorite = false
         )
 
 }

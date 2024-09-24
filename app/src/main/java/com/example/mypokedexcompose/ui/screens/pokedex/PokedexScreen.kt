@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -180,6 +181,14 @@ fun PokedexItem(pokemon: Pokemon, onClick: () -> Unit, pokedexNumber: Int, sprit
                 .padding(8.dp)
                 .weight(1f)
         )
+        if (pokemon.favorite) {
+            Icon(
+                imageVector = Icons.Default.Favorite,
+                contentDescription = stringResource(id = R.string.favorite),
+                tint = DarkRedII,
+                modifier = Modifier.padding(8.dp)
+            )
+        }
     }
 }
 

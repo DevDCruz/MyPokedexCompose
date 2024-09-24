@@ -8,15 +8,17 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Pokemon(
    @PrimaryKey(autoGenerate = true)
+   @SerialName("id")
+   val id: Int,
     @SerialName("name")
     val name: String,
-    @SerialName("id")
-    val id: Int,
     @SerialName("height")
     val height: Int,
     @SerialName("weight")
     val weight: Int,
     @SerialName("types")
-    val types: List<Type>?
+    val types: List<Type>?,
+    @SerialName("favotite")
+    var favorite: Boolean
 )
 

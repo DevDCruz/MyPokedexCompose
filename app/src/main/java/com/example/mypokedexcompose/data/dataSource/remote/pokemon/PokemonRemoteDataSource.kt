@@ -9,9 +9,10 @@ class PokemonRemoteDataSource {
         .getPokemonByName(name)
         .toDomainModel()
 
-    suspend fun fetchRandomPokemon(): Pokemon = PokemonClient.instance
-        .getPokemonById(generateRandomId())
+    suspend fun fetchRandomPokemon(id: Int): Pokemon = PokemonClient.instance
+        .getPokemonById(id)
         .toDomainModel()
+
 
 }
 
@@ -21,7 +22,6 @@ private fun PokemonResult.toDomainModel(): Pokemon =
         id = id,
         height = height,
         weight = weight,
-        types = types
+        types = types,
+        favorite = false
     )
-
-private fun generateRandomId(): Int = Random().nextInt(1025)

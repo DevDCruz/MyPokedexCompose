@@ -22,33 +22,32 @@ class DetailViewModel(
     init {
         viewModelScope.launch {
             _state.value = UiState(loading = true)
-            _state.value = UiState(
-
-                pokemon = repository.fetchPokemon(name),
-                loading = false
-            )
-
+            repository.fetchPokemon(name).collect { pokemon ->
+                _state.value = UiState(
+                    pokemon = pokemon,
+                    loading = false
+                )
+            }
         }
     }
 
     data class UiState(
         val loading: Boolean = false,
-        val pokemon: Pokemon? = null,
-        val message: String? = null
-    )
+        val pokemon: Pokemon? = null)
 
-    fun onFavoriteClick() {
-        _state.update { it.copy(message = "Pokemon added to favorites") }
-    }
 
-    fun onMessageShown() {
-        _state.update { it.copy(message = null) }
+
+    fun onFavoriteClicked() {
+        state.value.pokemon?.let {
+            viewModelScope.launch {
+                repository.toggleFavorite(it)
+            }
+        }
     }
 }
+    fun getPokemonType(pokemon: Pokemon): String {
 
-fun getPokemonType(pokemon: Pokemon): String {
+        val types = pokemon.types ?: return "Unknown Type"
 
-    val types = pokemon.types ?: return "Unknown Type"
-
-    return types.joinToString(" - ") { it.type.name.changefirstCharToUpperCase() }
-}
+        return types.joinToString(" - ") { it.type.name.changefirstCharToUpperCase() }
+    }

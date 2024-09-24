@@ -4,9 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypokedexcompose.data.pokemon.Pokemon
 import com.example.mypokedexcompose.data.pokemon.PokemonRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
@@ -20,12 +22,13 @@ class HomeViewModel(
     init {
         viewModelScope.launch {
             _state.value = UiState(loading = true)
-            _state.value = UiState(
+            repository.fetchRandomPokemon().take(1).collect { pokemon ->
+                _state.value = UiState(
+                    pokemon = pokemon,
+                    loading = false
+                )
 
-                pokemon = repository.fetchRandomPokemon(),
-                loading = false
-            )
-
+            }
         }
     }
 

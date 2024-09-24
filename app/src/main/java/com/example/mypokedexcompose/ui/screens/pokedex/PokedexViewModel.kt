@@ -10,6 +10,7 @@ import com.example.mypokedexcompose.data.region.RegionRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 
 class PokedexViewModel(
@@ -42,9 +43,11 @@ class PokedexViewModel(
         } else {
             viewModelScope.launch {
                 _state.value = UiState(loading = true)
-                val pokemons = repository.fetchRegionalPokedex(0, 1010)
-                _state.value = UiState(pokemons = pokemons, loading = false)
-                savedStateHandle["pokemons"] = pokemons
+                repository.pokemons.collect{ pokemons ->
+                    _state.value = UiState(pokemons = pokemons, loading = false)
+                    savedStateHandle["pokemons"] = pokemons
+                }
+
             }
         }
     }

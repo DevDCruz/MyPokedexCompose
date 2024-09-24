@@ -12,11 +12,12 @@ import androidx.navigation.navArgument
 import com.example.mypokedexcompose.App
 import com.example.mypokedexcompose.data.berries.BerryRepository
 import com.example.mypokedexcompose.data.dataSource.LocationDataSource
-import com.example.mypokedexcompose.data.dataSource.PokedexLocalDataSource
 import com.example.mypokedexcompose.data.dataSource.RegionDataSource
+import com.example.mypokedexcompose.data.dataSource.local.PokedexLocalDataSource
+import com.example.mypokedexcompose.data.dataSource.local.PokemonLocalDataSource
 import com.example.mypokedexcompose.data.dataSource.remote.backpack.ItemRemoteDataSource
 import com.example.mypokedexcompose.data.dataSource.remote.berry.BerryRemoteDataSource
-import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokedexRemoteDataSource
+import com.example.mypokedexcompose.data.dataSource.remote.pokedex.PokedexRemoteDataSource
 import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonRemoteDataSource
 import com.example.mypokedexcompose.data.items.ItemRepository
 import com.example.mypokedexcompose.data.pokedex.PokedexRepository
@@ -62,10 +63,15 @@ fun Navigation() {
     val pokedexRepository =
         PokedexRepository(
             PokedexRemoteDataSource(),
-            PokedexLocalDataSource(app.db.pokedexDao()))
+            PokedexLocalDataSource(app.db.pokedexDao())
+        )
     val itemRepository = ItemRepository(ItemRemoteDataSource())
     val berryRepository = BerryRepository(BerryRemoteDataSource())
-    val pokemonRepository = PokemonRepository(PokemonRemoteDataSource())
+    val pokemonRepository = PokemonRepository(
+        PokemonRemoteDataSource(),
+        PokemonLocalDataSource(app.db.pokemonDao())
+    )
+
 
     NavHost(navController = navControler, startDestination = NavScreen.Home.route) {
         composable(NavScreen.Home.route) {
