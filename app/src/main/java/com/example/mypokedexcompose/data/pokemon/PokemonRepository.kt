@@ -12,8 +12,7 @@ class PokemonRepository(
 ) {
 
     fun fetchPokemon(name: String): Flow<Pokemon?> {
-        return pokemonLocalDataSource.getPokemonByName(name)
-    }
+        return pokemonLocalDataSource.getPokemonByName(name)}
 
     suspend fun fetchRandomPokemon(): Flow<Pokemon?> =
         pokemonLocalDataSource.getPokemonById(generateRandomId()).transform { localPokemon ->

@@ -6,7 +6,7 @@ import android.location.Location
 import com.example.mypokedexcompose.ui.common.Constants.DEFAULT_REGION
 import com.example.mypokedexcompose.ui.common.getFromLocationCompat
 
-class RegionDataSource(app: Application,private val locationDataSource: LocationDataSource) {
+class RegionDataSource(app: Application, private val locationDataSource: LocationDataSource) {
     private val geocoder = Geocoder(app)
 
     suspend fun findLastRegion(): String =

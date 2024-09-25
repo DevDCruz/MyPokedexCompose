@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -73,7 +73,6 @@ fun PokedexScreen(
         viewModel = vm
     )
     val state by vm.state.collectAsState()
-    val pokedexRegion by pokedexState.selectedPokedexRegion.collectAsState()
     val coroutineScope = rememberCoroutineScope()
 
 
@@ -83,7 +82,6 @@ fun PokedexScreen(
                 vm.updateRegionBasedOnLocation(pokedexState)
             }
         }
-        vm.onUiReady()
     }
 
     Screen {
@@ -132,16 +130,15 @@ fun PokedexScreen(
                     state = lazyLisState,
                     contentPadding = padding
                 ) {
-                    itemsIndexed(state.pokemons) { index, pokemon ->
+                    items(state.pokemons) { pokemon ->
 
-                        val pokedexNumber = pokedexRegion.range[0] + index + 1
                         PokedexItem(
                             pokemon = pokemon,
                             onClick = {
                                 onClick(pokemon)
                                 pokedexState.savedScrollPosition(lazyLisState.firstVisibleItemIndex)
                             },
-                            pokedexNumber = pokedexNumber,
+                            pokedexNumber = pokemon.id,
                             sprite = Constants.SPRITE_DEFAULT_URL
                         )
                     }
