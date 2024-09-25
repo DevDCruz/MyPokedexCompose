@@ -22,6 +22,7 @@ import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonRemote
 import com.example.mypokedexcompose.data.items.ItemRepository
 import com.example.mypokedexcompose.data.pokedex.PokedexRepository
 import com.example.mypokedexcompose.data.pokemon.PokemonRepository
+import com.example.mypokedexcompose.data.region.RegionMapper
 import com.example.mypokedexcompose.data.region.RegionRepository
 import com.example.mypokedexcompose.ui.screens.backpack.BackPackScreen
 import com.example.mypokedexcompose.ui.screens.backpack.BackPackViewModel
@@ -71,6 +72,7 @@ fun Navigation() {
         PokemonRemoteDataSource(),
         PokemonLocalDataSource(app.db.pokemonDao())
     )
+    val regionMapper = RegionMapper()
 
 
     NavHost(navController = navControler, startDestination = NavScreen.Home.route) {
@@ -91,7 +93,8 @@ fun Navigation() {
                     PokedexViewModel(
                         SavedStateHandle(),
                         regionRepository,
-                        pokedexRepository
+                        pokedexRepository,
+                        regionMapper
                     )
                 },
                 onBack = { navControler.popBackStack() }

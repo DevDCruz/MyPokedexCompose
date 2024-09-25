@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypokedexcompose.data.pokedex.PokedexRepository
 import com.example.mypokedexcompose.data.pokemon.Pokemon
+import com.example.mypokedexcompose.data.region.RegionMapper
 import com.example.mypokedexcompose.data.region.RegionRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +15,8 @@ import kotlinx.coroutines.launch
 class PokedexViewModel(
     val savedStateHandle: SavedStateHandle,
     private val regionRepository: RegionRepository,
-    private val repository: PokedexRepository
+    private val repository: PokedexRepository,
+    private val regionMapper: RegionMapper
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(UiState())
@@ -55,7 +57,7 @@ class PokedexViewModel(
     }
 
     suspend fun updateRegionBasedOnLocation(pokedexState: PokedexState) {
-        val region = pokedexState.mapLocationtoPokedexRegion(regionRepository.findLastRegion())
+        val region = regionMapper.mapLocationtoPokedexRegion(regionRepository.findLastRegion())
         fetchPokemonsForRegion(region.range)
         pokedexState.updateSelectedGeneration(region)
     }
