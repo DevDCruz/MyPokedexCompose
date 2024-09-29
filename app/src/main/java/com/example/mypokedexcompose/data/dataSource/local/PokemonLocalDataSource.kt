@@ -1,6 +1,6 @@
 package com.example.mypokedexcompose.data.dataSource.local
 
-import com.example.mypokedexcompose.data.dataSource.database.PokemonDao
+import com.example.mypokedexcompose.data.dataSource.database.pokemon.PokemonDao
 import com.example.mypokedexcompose.data.pokemon.Pokemon
 
 class PokemonLocalDataSource(

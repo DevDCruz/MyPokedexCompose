@@ -11,7 +11,8 @@ class PokedexLocalDataSource(private val pokedexDao: PokedexDao) {
 
     suspend fun savePokemons(pokemons: List<Pokemon>) = pokedexDao.savePokemons(pokemons)
 
-    suspend fun getPokedexForRegion(offset: Int, limit: Int): List<Pokemon> = pokedexDao.fetchRegionalPokedex(offset, limit)
+    suspend fun getPokedexForRegion(offset: Int, limit: Int): List<Pokemon> =
+        pokedexDao.fetchRegionalPokedex(offset, limit)
 
 
 }

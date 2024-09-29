@@ -26,8 +26,12 @@ class PokedexState @OptIn(ExperimentalMaterial3Api::class) constructor(
 
     init {
         scrollPosition = savedStateHandle.get<Int>("scroll_position") ?: 0
-        _selectedPokedexRegion.value =
-            savedStateHandle.get<PokedexRegion>("selected_region") ?: PokedexRegion.ALL_GENERATIONS
+        val savedRegion = savedStateHandle.get<PokedexRegion>("selected_region")
+        if (savedRegion != null) {
+            _selectedPokedexRegion.value = savedRegion
+        } else {
+            _selectedPokedexRegion.value = PokedexRegion.ALL_GENERATIONS
+        }
     }
 
     fun savedScrollPosition(position: Int) {
