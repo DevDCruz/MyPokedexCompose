@@ -1,14 +1,14 @@
 package com.example.mypokedexcompose.ui.screens.detail
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonRepository
 import com.example.mypokedexcompose.data.pokemon.Pokemon
-import com.example.mypokedexcompose.data.pokemon.PokemonRepository
 import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class DetailViewModel(
@@ -22,7 +22,11 @@ class DetailViewModel(
     init {
         viewModelScope.launch {
             _state.value = UiState(loading = true)
-            repository.fetchPokemon(name).collect { pokemon ->
+            repository.fetchPokemonDetails(name).collect { pokemon ->
+                Log.d(
+                    "DetailViewModel",
+                    "Pokemon details fetched: ${pokemon?.name}, favorite: ${pokemon?.favorite}"
+                )
                 _state.value = UiState(
                     pokemon = pokemon,
                     loading = false
@@ -33,21 +37,24 @@ class DetailViewModel(
 
     data class UiState(
         val loading: Boolean = false,
-        val pokemon: Pokemon? = null)
-
+        val pokemon: Pokemon? = null
+    )
 
 
     fun onFavoriteClicked() {
-        state.value.pokemon?.let {
+        state.value.pokemon?.let { currentPokemon ->
             viewModelScope.launch {
-                repository.toggleFavorite(it)
+                repository.toggleFavorite(currentPokemon).collect {
+                    _state.value = _state.value.copy(pokemon = it)
+                }
             }
         }
     }
 }
-    fun getPokemonType(pokemon: Pokemon): String {
 
-        val types = pokemon.types ?: return "Unknown Type"
+fun getPokemonType(pokemon: Pokemon): String {
 
-        return types.joinToString(" - ") { it.type.name.changefirstCharToUpperCase() }
-    }
+    val types = pokemon.types ?: return "Unknown Type"
+
+    return types.joinToString(" - ") { it.type.name.changefirstCharToUpperCase() }
+}

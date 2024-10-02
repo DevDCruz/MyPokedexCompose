@@ -1,7 +1,7 @@
 package com.example.mypokedexcompose.data.pokedex
 
 
-import com.example.mypokedexcompose.data.pokemon.PokemonResult
+import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonResult
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

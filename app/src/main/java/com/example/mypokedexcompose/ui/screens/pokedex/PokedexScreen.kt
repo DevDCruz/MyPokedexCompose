@@ -137,9 +137,7 @@ fun PokedexScreen(
                             onClick = {
                                 onClick(pokemon)
                                 pokedexState.savedScrollPosition(lazyLisState.firstVisibleItemIndex)
-                            },
-                            pokedexNumber = pokemon.id,
-                            sprite = Constants.SPRITE_DEFAULT_URL
+                            }
                         )
                     }
                 }
@@ -150,7 +148,7 @@ fun PokedexScreen(
 
 
 @Composable
-fun PokedexItem(pokemon: Pokemon, onClick: () -> Unit, pokedexNumber: Int, sprite: String) {
+fun PokedexItem(pokemon: Pokemon, onClick: () -> Unit) {
 
     Row(
         modifier = Modifier
@@ -160,14 +158,14 @@ fun PokedexItem(pokemon: Pokemon, onClick: () -> Unit, pokedexNumber: Int, sprit
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
-            model = "$sprite$pokedexNumber.png",
+            model = "${Constants.SPRITE_DEFAULT_URL}${pokemon.id}.png",
             contentDescription = pokemon.name,
             modifier = Modifier
                 .size(60.dp)
                 .clip(MaterialTheme.shapes.small)
         )
         Text(
-            text = "$pokedexNumber - ",
+            text = "${pokemon.id} - ",
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.padding(8.dp)
         )

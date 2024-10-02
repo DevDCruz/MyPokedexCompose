@@ -4,18 +4,19 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.mypokedexcompose.data.pokemon.Pokemon
+import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PokemonDao {
 
-    @Query("SELECT * FROM Pokemon WHERE name = :name")
-    fun getPokemonByName(name: String): Flow<Pokemon?>
+    @Query("SELECT * FROM PokemonEntity WHERE name = :name")
+    fun getPokemonByName(name: String): Flow<PokemonEntity?>
 
-    @Query("SELECT * FROM Pokemon WHERE id = :id")
-    fun getPokemonById(id: Int): Flow<Pokemon?>
+    @Query("SELECT * FROM PokemonEntity WHERE id = :id")
+    fun getPokemonById(id: Int): Flow<PokemonEntity?>
 
+    @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun savePokemon(pokemon: List<Pokemon>)
+    suspend fun savePokemon(pokemon: List<PokemonEntity>)
 }

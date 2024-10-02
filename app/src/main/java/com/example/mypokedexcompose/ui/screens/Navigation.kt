@@ -12,6 +12,7 @@ import androidx.navigation.navArgument
 import com.example.mypokedexcompose.App
 import com.example.mypokedexcompose.data.berries.BerryRepository
 import com.example.mypokedexcompose.data.dataSource.LocationDataSource
+import com.example.mypokedexcompose.data.dataSource.PokemonMapper
 import com.example.mypokedexcompose.data.dataSource.RegionDataSource
 import com.example.mypokedexcompose.data.dataSource.local.PokedexLocalDataSource
 import com.example.mypokedexcompose.data.dataSource.local.PokemonLocalDataSource
@@ -19,9 +20,9 @@ import com.example.mypokedexcompose.data.dataSource.remote.backpack.ItemRemoteDa
 import com.example.mypokedexcompose.data.dataSource.remote.berry.BerryRemoteDataSource
 import com.example.mypokedexcompose.data.dataSource.remote.pokedex.PokedexRemoteDataSource
 import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonRemoteDataSource
+import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonRepository
 import com.example.mypokedexcompose.data.items.ItemRepository
 import com.example.mypokedexcompose.data.pokedex.PokedexRepository
-import com.example.mypokedexcompose.data.pokemon.PokemonRepository
 import com.example.mypokedexcompose.data.region.RegionMapper
 import com.example.mypokedexcompose.data.region.RegionRepository
 import com.example.mypokedexcompose.ui.screens.backpack.BackPackScreen
@@ -61,16 +62,19 @@ fun Navigation() {
             LocationDataSource(app)
         )
     )
+    val pokemonMapper = PokemonMapper()
     val pokedexRepository =
         PokedexRepository(
             PokedexRemoteDataSource(),
-            PokedexLocalDataSource(app.db.pokedexDao())
+            PokedexLocalDataSource(app.db.pokedexDao()),
+            pokemonMapper
         )
     val itemRepository = ItemRepository(ItemRemoteDataSource())
     val berryRepository = BerryRepository(BerryRemoteDataSource())
     val pokemonRepository = PokemonRepository(
         PokemonRemoteDataSource(),
-        PokemonLocalDataSource(app.db.pokemonDao())
+        PokemonLocalDataSource(app.db.pokemonDao()),
+        pokemonMapper
     )
     val regionMapper = RegionMapper()
 

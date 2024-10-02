@@ -1,6 +1,7 @@
-package com.example.mypokedexcompose.data.pokemon
+package com.example.mypokedexcompose.data.dataSource.remote.pokemon
 
 
+import com.example.mypokedexcompose.data.pokemon.Type
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

@@ -1,15 +1,12 @@
 package com.example.mypokedexcompose.data.pokemon
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-@Entity
+
 @Serializable
 data class Pokemon(
-   @PrimaryKey(autoGenerate = true)
-   @SerialName("id")
-   val id: Int,
+    @SerialName("id")
+    val id: Int,
     @SerialName("name")
     val name: String,
     @SerialName("height")
@@ -18,7 +15,7 @@ data class Pokemon(
     val weight: Int,
     @SerialName("types")
     val types: List<Type>?,
-    @SerialName("favotite")
+    @SerialName("favorite")
     var favorite: Boolean
 )
 

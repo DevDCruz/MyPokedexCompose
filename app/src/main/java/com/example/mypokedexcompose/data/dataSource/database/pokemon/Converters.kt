@@ -1,4 +1,4 @@
-package com.example.mypokedexcompose.data.dataSource.database.pokedex
+package com.example.mypokedexcompose.data.dataSource.database.pokemon
 
 import androidx.room.TypeConverter
 import com.example.mypokedexcompose.data.pokemon.Type

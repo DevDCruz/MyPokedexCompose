@@ -1,7 +1,7 @@
 package com.example.mypokedexcompose.data.dataSource.local
 
 import com.example.mypokedexcompose.data.dataSource.database.pokemon.PokemonDao
-import com.example.mypokedexcompose.data.pokemon.Pokemon
+import com.example.mypokedexcompose.data.dataSource.database.pokemon.PokemonEntity
 
 class PokemonLocalDataSource(
     private val pokemonDao: PokemonDao
@@ -11,6 +11,7 @@ class PokemonLocalDataSource(
 
     fun getPokemonById(id: Int) = pokemonDao.getPokemonById(id)
 
-    suspend fun savePokemon(pokemon: List<Pokemon>) = pokemonDao.savePokemon(pokemon)
+    suspend fun savePokemon(pokemonEntity: PokemonEntity) =
+        pokemonDao.savePokemon(listOf(pokemonEntity))
 
 }
