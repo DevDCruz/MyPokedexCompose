@@ -14,6 +14,8 @@ import com.example.mypokedexcompose.data.berries.BerryRepository
 import com.example.mypokedexcompose.data.dataSource.LocationDataSource
 import com.example.mypokedexcompose.data.dataSource.PokemonMapper
 import com.example.mypokedexcompose.data.dataSource.RegionDataSource
+import com.example.mypokedexcompose.data.dataSource.database.berries.BerryMapper
+import com.example.mypokedexcompose.data.dataSource.local.BerryLocalDataSource
 import com.example.mypokedexcompose.data.dataSource.local.PokedexLocalDataSource
 import com.example.mypokedexcompose.data.dataSource.local.PokemonLocalDataSource
 import com.example.mypokedexcompose.data.dataSource.remote.backpack.ItemRemoteDataSource
@@ -62,21 +64,24 @@ fun Navigation() {
             LocationDataSource(app)
         )
     )
-    val pokemonMapper = PokemonMapper()
+
     val pokedexRepository =
         PokedexRepository(
             PokedexRemoteDataSource(),
             PokedexLocalDataSource(app.db.pokedexDao()),
-            pokemonMapper
+            PokemonMapper()
         )
     val itemRepository = ItemRepository(ItemRemoteDataSource())
-    val berryRepository = BerryRepository(BerryRemoteDataSource())
+    val berryRepository = BerryRepository(
+        BerryRemoteDataSource(),
+        BerryLocalDataSource(app.db.berryDao()),
+        BerryMapper()
+    )
     val pokemonRepository = PokemonRepository(
         PokemonRemoteDataSource(),
         PokemonLocalDataSource(app.db.pokemonDao()),
-        pokemonMapper
+        PokemonMapper()
     )
-    val regionMapper = RegionMapper()
 
 
     NavHost(navController = navControler, startDestination = NavScreen.Home.route) {
@@ -98,7 +103,7 @@ fun Navigation() {
                         SavedStateHandle(),
                         regionRepository,
                         pokedexRepository,
-                        regionMapper
+                        RegionMapper()
                     )
                 },
                 onBack = { navControler.popBackStack() }

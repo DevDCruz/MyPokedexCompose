@@ -44,9 +44,9 @@ class PokemonRepository(
             emit(pokemonMapper.toDomain(localPokemon))
         } else {
             val remotePokemon = pokemonRemoteDataSource.fetchRandomPokemon(generateRandomId())
-            val localPokemon = pokemonMapper.fromRemoteToEntity(remotePokemon)
-            pokemonLocalDataSource.savePokemon(localPokemon)
-            emit(pokemonMapper.toDomain(localPokemon))
+            val newLocalPokemon = pokemonMapper.fromRemoteToEntity(remotePokemon)
+            pokemonLocalDataSource.savePokemon(newLocalPokemon)
+            emit(pokemonMapper.toDomain(newLocalPokemon))
         }
     }
 

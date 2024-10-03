@@ -6,6 +6,4 @@ class PokemonRemoteDataSource {
 
     suspend fun fetchRandomPokemon(id: Int): PokemonResult = PokemonClient.instance
         .getPokemonById(id)
-
-
 }

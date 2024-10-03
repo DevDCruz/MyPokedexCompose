@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,9 +28,6 @@ fun BerriesScreen(
     val state by vm.state.collectAsState()
     val berriesState = remeberBerriesState()
 
-    LaunchedEffect(Unit) {
-        vm.onUiReady()
-    }
 
     ListScreen(
         title = "Berries",
@@ -63,21 +59,21 @@ fun DropDownBerry(
         },
         onClearDetails = { berryDetail = null }
 
-    ) { detailBerry ->
+    ) {
         Column(modifier = Modifier.padding(8.dp)) {
             Text(buildAnnotatedString {
-                PropertyDetailItem(name = "Name", value = detailBerry.name ?: "")
-                PropertyDetailItem(name = "Firmness", value = detailBerry.firmness?.name ?: "")
+                PropertyDetailItem(name = "Name", value = berryDetail?.name ?: "")
+                PropertyDetailItem(name = "Firmness", value = berryDetail?.firmness?.name ?: "")
                 PropertyDetailItem(
                     name = "Flavors",
-                    value = detailBerry.flavors?.joinToString(", ") { it.flavor.name } ?: ""
+                    value = berryDetail?.flavors?.joinToString(", ") { it.flavor.name } ?: ""
                 )
                 PropertyDetailItem(
                     name = "Smoothness",
-                    value = detailBerry.smoothness?.toString() ?: ""
+                    value = berryDetail?.smoothness?.toString() ?: ""
                 )
-                PropertyDetailItem(name = "ID", value = detailBerry.id?.toString() ?: "")
-                PropertyDetailItem(name = "Size", value = detailBerry.size?.toString() ?: "", true)
+                PropertyDetailItem(name = "ID", value = berryDetail?.id?.toString() ?: "")
+                PropertyDetailItem(name = "Size", value = berryDetail?.size?.toString() ?: "", true)
             })
         }
     }

@@ -1,6 +1,5 @@
 package com.example.mypokedexcompose.ui.screens.detail
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonRepository
@@ -23,10 +22,6 @@ class DetailViewModel(
         viewModelScope.launch {
             _state.value = UiState(loading = true)
             repository.fetchPokemonDetails(name).collect { pokemon ->
-                Log.d(
-                    "DetailViewModel",
-                    "Pokemon details fetched: ${pokemon?.name}, favorite: ${pokemon?.favorite}"
-                )
                 _state.value = UiState(
                     pokemon = pokemon,
                     loading = false
