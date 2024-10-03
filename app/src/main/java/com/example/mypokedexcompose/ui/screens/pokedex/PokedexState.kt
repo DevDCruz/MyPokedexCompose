@@ -8,7 +8,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.lifecycle.SavedStateHandle
-import com.example.mypokedexcompose.data.pokedex.PokedexRegion
+import com.example.mypokedexcompose.data.region.PokedexRegion
 import com.example.mypokedexcompose.data.region.RegionMapper
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

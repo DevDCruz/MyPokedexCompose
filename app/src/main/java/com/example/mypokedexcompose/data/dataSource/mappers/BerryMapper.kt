@@ -1,7 +1,8 @@
-package com.example.mypokedexcompose.data.dataSource.database.berries
+package com.example.mypokedexcompose.data.dataSource.mappers
 
 import com.example.mypokedexcompose.data.berries.Berry
 import com.example.mypokedexcompose.data.berries.BerryResult
+import com.example.mypokedexcompose.data.dataSource.local.database.berries.BerryEntity
 
 class BerryMapper {
     fun toDomain(berryEntity: BerryEntity): Berry {

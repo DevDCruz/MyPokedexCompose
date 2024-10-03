@@ -2,7 +2,7 @@ package com.example.mypokedexcompose.ui.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonRepository
+import com.example.mypokedexcompose.data.dataSource.repository.PokemonRepository
 import com.example.mypokedexcompose.data.pokemon.Pokemon
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

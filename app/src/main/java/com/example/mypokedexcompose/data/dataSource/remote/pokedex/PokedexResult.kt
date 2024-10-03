@@ -1,4 +1,4 @@
-package com.example.mypokedexcompose.data.pokedex
+package com.example.mypokedexcompose.data.dataSource.remote.pokedex
 
 
 import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonResult

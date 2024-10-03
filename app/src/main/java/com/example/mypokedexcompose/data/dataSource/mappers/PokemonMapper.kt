@@ -1,6 +1,6 @@
-package com.example.mypokedexcompose.data.dataSource
+package com.example.mypokedexcompose.data.dataSource.mappers
 
-import com.example.mypokedexcompose.data.dataSource.database.pokemon.PokemonEntity
+import com.example.mypokedexcompose.data.dataSource.local.database.pokemon.PokemonEntity
 import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonResult
 import com.example.mypokedexcompose.data.pokemon.Pokemon
 

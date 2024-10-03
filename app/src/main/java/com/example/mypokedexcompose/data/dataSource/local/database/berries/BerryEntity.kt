@@ -1,4 +1,4 @@
-package com.example.mypokedexcompose.data.dataSource.database.berries
+package com.example.mypokedexcompose.data.dataSource.local.database.berries
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

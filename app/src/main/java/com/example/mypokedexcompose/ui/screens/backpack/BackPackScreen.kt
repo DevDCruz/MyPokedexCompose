@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,10 +32,6 @@ fun BackPackScreen(
 ) {
     val state by vm.state.collectAsState()
     val backPackState = remeberBackPackState()
-
-    LaunchedEffect(Unit) {
-        vm.onUiReady()
-    }
 
     ListScreen(
         title = "BackPack",
@@ -64,13 +59,13 @@ fun DropDownBackPack(
         index = itemIndex,
         detail = itemDetail,
         onFetchDetails = {
-            vm.fetchItemDetails(itemIndex).also { itemDetail = it }
+            vm.fetchItemDetails(item.name ?: "").also { itemDetail = it }
         },
         onClearDetails = { itemDetail = null }
-    ) { detailItem ->
+    ) {
         Column(modifier = Modifier.padding(8.dp)) {
             AsyncImage(
-                model = detailItem.sprites?.default ?: "",
+                model = itemDetail?.sprites?.default ?: "",
                 contentDescription = "item's sprite",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -80,12 +75,16 @@ fun DropDownBackPack(
                     .align(Alignment.CenterHorizontally)
             )
             Text(buildAnnotatedString {
-                PropertyDetailItem(name = "Name", value = detailItem.name ?: "")
+                PropertyDetailItem(name = "Name", value = itemDetail?.name ?: "")
                 PropertyDetailItem(
                     name = "Attributes",
-                    value = detailItem.attributes?.joinToString(", ") { it.name } ?: "")
-                PropertyDetailItem(name = "Category", value = detailItem.category?.name ?: "")
-                PropertyDetailItem(name = "Cost", value = ("${detailItem.cost ?: ""} $").toString(), true)
+                    value = itemDetail?.attributes?.joinToString(", ") { it.name } ?: "")
+                PropertyDetailItem(name = "Category", value = itemDetail?.category?.name ?: "")
+                PropertyDetailItem(
+                    name = "Cost",
+                    value = ("${itemDetail?.cost ?: ""} $").toString(),
+                    true
+                )
             }, modifier = Modifier.padding(16.dp))
         }
     }

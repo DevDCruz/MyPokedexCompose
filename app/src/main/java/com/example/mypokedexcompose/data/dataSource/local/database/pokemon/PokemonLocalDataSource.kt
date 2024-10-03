@@ -1,7 +1,4 @@
-package com.example.mypokedexcompose.data.dataSource.local
-
-import com.example.mypokedexcompose.data.dataSource.database.pokemon.PokemonDao
-import com.example.mypokedexcompose.data.dataSource.database.pokemon.PokemonEntity
+package com.example.mypokedexcompose.data.dataSource.local.database.pokemon
 
 class PokemonLocalDataSource(
     private val pokemonDao: PokemonDao

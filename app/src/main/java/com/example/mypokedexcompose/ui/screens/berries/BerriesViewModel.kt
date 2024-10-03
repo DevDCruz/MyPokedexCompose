@@ -3,7 +3,7 @@ package com.example.mypokedexcompose.ui.screens.berries
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypokedexcompose.data.berries.Berry
-import com.example.mypokedexcompose.data.berries.BerryRepository
+import com.example.mypokedexcompose.data.dataSource.repository.BerryRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -34,10 +34,10 @@ class BerriesViewModel(
         }
     }
 
-    suspend fun fetchBerryDetails(name: String) : Berry? {
+    suspend fun fetchBerryDetails(name: String): Berry? {
         val berryDetail = repository.fetchBerryByName(name)
         return berryDetail.firstOrNull()
-        }
+    }
 
     data class UiState(
         val loading: Boolean = false,

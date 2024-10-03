@@ -1,8 +1,9 @@
-package com.example.mypokedexcompose.data.berries
+package com.example.mypokedexcompose.data.dataSource.repository
 
 import android.util.Log
-import com.example.mypokedexcompose.data.dataSource.database.berries.BerryMapper
-import com.example.mypokedexcompose.data.dataSource.local.BerryLocalDataSource
+import com.example.mypokedexcompose.data.berries.Berry
+import com.example.mypokedexcompose.data.dataSource.local.database.berries.BerryLocalDataSource
+import com.example.mypokedexcompose.data.dataSource.mappers.BerryMapper
 import com.example.mypokedexcompose.data.dataSource.remote.berry.BerryRemoteDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull

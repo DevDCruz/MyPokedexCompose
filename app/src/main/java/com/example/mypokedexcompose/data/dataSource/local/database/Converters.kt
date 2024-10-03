@@ -1,8 +1,11 @@
-package com.example.mypokedexcompose.data.dataSource.database.pokemon
+package com.example.mypokedexcompose.data.dataSource.local.database
 
 import androidx.room.TypeConverter
 import com.example.mypokedexcompose.data.berries.Firmness
 import com.example.mypokedexcompose.data.berries.Flavor
+import com.example.mypokedexcompose.data.items.Attribute
+import com.example.mypokedexcompose.data.items.Category
+import com.example.mypokedexcompose.data.items.Sprites
 import com.example.mypokedexcompose.data.pokemon.Type
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -51,4 +54,48 @@ class Converters {
             Gson().fromJson(flavorsString, listType)
         }
     }
+
+    @TypeConverter
+    fun fromAtributesList(attributes: List<Attribute>?): String? {
+        return Gson().toJson(attributes)
+    }
+
+    @TypeConverter
+    fun toAttributesList(attributesString: String?): List<Attribute>? {
+        return if (attributesString == null) {
+            emptyList()
+        } else {
+            val listType = object : TypeToken<List<Attribute>>() {}.type
+            Gson().fromJson(attributesString, listType)
+        }
+    }
+
+    @TypeConverter
+    fun fromCategory(category: Category?): String? {
+        return Gson().toJson(category)
+    }
+
+    @TypeConverter
+    fun toCategory(categoryString: String?): Category? {
+        return if (categoryString == null) {
+            null
+        } else {
+            Gson().fromJson(categoryString, Category::class.java)
+        }
+    }
+
+    @TypeConverter
+    fun fromSprites(sprites: Sprites?): String? {
+        return Gson().toJson(sprites)
+    }
+
+    @TypeConverter
+    fun toSprites(spritesString: String?): Sprites? {
+        return if (spritesString == null) {
+            null
+        } else {
+            Gson().fromJson(spritesString, Sprites::class.java)
+        }
+    }
+
 }

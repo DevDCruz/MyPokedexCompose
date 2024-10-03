@@ -1,7 +1,4 @@
-package com.example.mypokedexcompose.data.dataSource.local
-
-import com.example.mypokedexcompose.data.dataSource.database.berries.BerryDao
-import com.example.mypokedexcompose.data.dataSource.database.berries.BerryEntity
+package com.example.mypokedexcompose.data.dataSource.local.database.berries
 
 class BerryLocalDataSource(
     private val berryDao: BerryDao

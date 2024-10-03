@@ -3,7 +3,7 @@ package com.example.mypokedexcompose.ui.screens.pokedex
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mypokedexcompose.data.pokedex.PokedexRepository
+import com.example.mypokedexcompose.data.dataSource.repository.PokedexRepository
 import com.example.mypokedexcompose.data.pokemon.Pokemon
 import com.example.mypokedexcompose.data.region.RegionMapper
 import com.example.mypokedexcompose.data.region.RegionRepository

@@ -1,10 +1,16 @@
-package com.example.mypokedexcompose.data.items
+package com.example.mypokedexcompose.data.dataSource.remote.backpack
 
+import com.example.mypokedexcompose.data.items.Attribute
+import com.example.mypokedexcompose.data.items.Category
+import com.example.mypokedexcompose.data.items.EffectEntry
+import com.example.mypokedexcompose.data.items.FlavorTextEntry
+import com.example.mypokedexcompose.data.items.GameIndice
+import com.example.mypokedexcompose.data.items.Sprites
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ItemsResult(
+data class ItemResult(
     @SerialName("atributes")
     val attributes: List<Attribute>,
     @SerialName("baby_trigger_for")

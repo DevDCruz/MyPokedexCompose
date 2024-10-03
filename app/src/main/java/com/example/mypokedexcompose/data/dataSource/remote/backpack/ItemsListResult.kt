@@ -1,6 +1,4 @@
-package com.example.mypokedexcompose.data.items
-
-import com.example.mypokedexcompose.data.berries.BerryResult
+package com.example.mypokedexcompose.data.dataSource.remote.backpack
 
 class ItemsListResult (
     val count: Int,

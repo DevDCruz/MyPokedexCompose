@@ -10,21 +10,23 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.mypokedexcompose.App
-import com.example.mypokedexcompose.data.berries.BerryRepository
+import com.example.mypokedexcompose.data.dataSource.repository.BerryRepository
 import com.example.mypokedexcompose.data.dataSource.LocationDataSource
-import com.example.mypokedexcompose.data.dataSource.PokemonMapper
+import com.example.mypokedexcompose.data.dataSource.mappers.PokemonMapper
 import com.example.mypokedexcompose.data.dataSource.RegionDataSource
-import com.example.mypokedexcompose.data.dataSource.database.berries.BerryMapper
-import com.example.mypokedexcompose.data.dataSource.local.BerryLocalDataSource
-import com.example.mypokedexcompose.data.dataSource.local.PokedexLocalDataSource
-import com.example.mypokedexcompose.data.dataSource.local.PokemonLocalDataSource
-import com.example.mypokedexcompose.data.dataSource.remote.backpack.ItemRemoteDataSource
+import com.example.mypokedexcompose.data.dataSource.local.database.backpack.BackPackLocalDataSource
+import com.example.mypokedexcompose.data.dataSource.mappers.BerryMapper
+import com.example.mypokedexcompose.data.dataSource.local.database.berries.BerryLocalDataSource
+import com.example.mypokedexcompose.data.dataSource.local.database.pokedex.PokedexLocalDataSource
+import com.example.mypokedexcompose.data.dataSource.local.database.pokemon.PokemonLocalDataSource
+import com.example.mypokedexcompose.data.dataSource.mappers.ItemsMapper
+import com.example.mypokedexcompose.data.dataSource.remote.backpack.BackPackRemoteDataSource
 import com.example.mypokedexcompose.data.dataSource.remote.berry.BerryRemoteDataSource
 import com.example.mypokedexcompose.data.dataSource.remote.pokedex.PokedexRemoteDataSource
 import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonRemoteDataSource
-import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonRepository
-import com.example.mypokedexcompose.data.items.ItemRepository
-import com.example.mypokedexcompose.data.pokedex.PokedexRepository
+import com.example.mypokedexcompose.data.dataSource.repository.PokemonRepository
+import com.example.mypokedexcompose.data.dataSource.repository.ItemRepository
+import com.example.mypokedexcompose.data.dataSource.repository.PokedexRepository
 import com.example.mypokedexcompose.data.region.RegionMapper
 import com.example.mypokedexcompose.data.region.RegionRepository
 import com.example.mypokedexcompose.ui.screens.backpack.BackPackScreen
@@ -71,7 +73,7 @@ fun Navigation() {
             PokedexLocalDataSource(app.db.pokedexDao()),
             PokemonMapper()
         )
-    val itemRepository = ItemRepository(ItemRemoteDataSource())
+    val itemRepository = ItemRepository(BackPackRemoteDataSource(), BackPackLocalDataSource(app.db.BackPackDao()), ItemsMapper())
     val berryRepository = BerryRepository(
         BerryRemoteDataSource(),
         BerryLocalDataSource(app.db.berryDao()),

@@ -1,8 +1,7 @@
-package com.example.mypokedexcompose.data.dataSource.local
+package com.example.mypokedexcompose.data.dataSource.local.database.pokedex
 
 import android.util.Log
-import com.example.mypokedexcompose.data.dataSource.database.pokedex.PokedexDao
-import com.example.mypokedexcompose.data.dataSource.database.pokemon.PokemonEntity
+import com.example.mypokedexcompose.data.dataSource.local.database.pokemon.PokemonEntity
 
 class PokedexLocalDataSource(private val pokedexDao: PokedexDao) {
 

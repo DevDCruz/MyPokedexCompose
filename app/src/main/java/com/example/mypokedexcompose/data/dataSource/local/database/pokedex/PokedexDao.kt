@@ -1,11 +1,11 @@
-package com.example.mypokedexcompose.data.dataSource.database.pokedex
+package com.example.mypokedexcompose.data.dataSource.local.database.pokedex
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.example.mypokedexcompose.data.dataSource.database.pokemon.PokemonEntity
+import com.example.mypokedexcompose.data.dataSource.local.database.pokemon.PokemonEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

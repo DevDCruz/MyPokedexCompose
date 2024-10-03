@@ -1,8 +1,8 @@
-package com.example.mypokedexcompose.data.pokedex
+package com.example.mypokedexcompose.data.dataSource.repository
 
 import android.util.Log
-import com.example.mypokedexcompose.data.dataSource.PokemonMapper
-import com.example.mypokedexcompose.data.dataSource.local.PokedexLocalDataSource
+import com.example.mypokedexcompose.data.dataSource.mappers.PokemonMapper
+import com.example.mypokedexcompose.data.dataSource.local.database.pokedex.PokedexLocalDataSource
 import com.example.mypokedexcompose.data.dataSource.remote.pokedex.PokedexRemoteDataSource
 import com.example.mypokedexcompose.data.pokemon.Pokemon
 import kotlinx.coroutines.flow.Flow

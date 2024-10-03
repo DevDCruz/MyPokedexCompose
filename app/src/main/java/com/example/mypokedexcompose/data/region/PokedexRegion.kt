@@ -1,4 +1,4 @@
-package com.example.mypokedexcompose.data.pokedex
+package com.example.mypokedexcompose.data.region
 
 enum class PokedexRegion(val displayName: String, val range: IntArray) {
     GENERATION_1("Kanto", intArrayOf(0, 151)),
