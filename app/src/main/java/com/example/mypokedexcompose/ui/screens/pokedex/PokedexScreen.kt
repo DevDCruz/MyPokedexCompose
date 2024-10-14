@@ -1,6 +1,7 @@
 package com.example.mypokedexcompose.ui.screens.pokedex
 
 
+import android.Manifest
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -10,11 +11,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -32,6 +34,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,15 +48,17 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.mypokedexcompose.R
-import com.example.mypokedexcompose.data.pokedex.Region
+import com.example.mypokedexcompose.data.region.PokedexRegion
 import com.example.mypokedexcompose.data.pokemon.Pokemon
 import com.example.mypokedexcompose.ui.common.CircularProgressFun
 import com.example.mypokedexcompose.ui.common.Constants
+import com.example.mypokedexcompose.ui.common.PermissionRequestEffect
 import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
 import com.example.mypokedexcompose.ui.screens.Screen
 import com.example.mypokedexcompose.ui.theme.DarkRed
 import com.example.mypokedexcompose.ui.theme.DarkRedII
 import com.example.mypokedexcompose.ui.theme.LightRed
+import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -63,14 +68,20 @@ fun PokedexScreen(
     vm: PokedexViewModel = viewModel(),
     onBack: () -> Unit
 ) {
-    val pokedexState = RememberPokedexState(savedStateHandle = vm.savedStateHandle, viewModel = vm)
+    val pokedexState = RememberPokedexState(
+        savedStateHandle = vm.savedStateHandle,
+        viewModel = vm
+    )
     val state by vm.state.collectAsState()
-    var location by remember { mutableStateOf("") }
-    val region by pokedexState.selectedRegion.collectAsState()
+    val coroutineScope = rememberCoroutineScope()
 
-    pokedexState.AskRegionEffect {
-        vm.onUiReady()
-        location = it
+
+    PermissionRequestEffect(permission = Manifest.permission.ACCESS_COARSE_LOCATION) { permissionGranted ->
+        if (permissionGranted) {
+            coroutineScope.launch {
+                vm.updateRegionBasedOnLocation(pokedexState)
+            }
+        }
     }
 
     Screen {
@@ -82,7 +93,7 @@ fun PokedexScreen(
             topBar = {
 
                 TopAppBar(
-                    title = { Text(text = stringResource(id = R.string.app_name) + " - $location") },
+                    title = { Text(text = stringResource(id = R.string.app_name)) },
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = DarkRed,
                         scrolledContainerColor = DarkRedII
@@ -119,17 +130,14 @@ fun PokedexScreen(
                     state = lazyLisState,
                     contentPadding = padding
                 ) {
-                    itemsIndexed(state.pokemons) { index, pokemon ->
+                    items(state.pokemons) { pokemon ->
 
-                        val pokedexNumber = region.range[0] + index + 1
                         PokedexItem(
                             pokemon = pokemon,
                             onClick = {
                                 onClick(pokemon)
                                 pokedexState.savedScrollPosition(lazyLisState.firstVisibleItemIndex)
-                            },
-                            pokedexNumber = pokedexNumber,
-                            sprite = Constants.SPRITE_DEFAULT_URL
+                            }
                         )
                     }
                 }
@@ -140,7 +148,7 @@ fun PokedexScreen(
 
 
 @Composable
-fun PokedexItem(pokemon: Pokemon, onClick: () -> Unit, pokedexNumber: Int, sprite: String) {
+fun PokedexItem(pokemon: Pokemon, onClick: () -> Unit) {
 
     Row(
         modifier = Modifier
@@ -150,14 +158,14 @@ fun PokedexItem(pokemon: Pokemon, onClick: () -> Unit, pokedexNumber: Int, sprit
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
-            model = "$sprite$pokedexNumber.png",
+            model = "${Constants.SPRITE_DEFAULT_URL}${pokemon.id}.png",
             contentDescription = pokemon.name,
             modifier = Modifier
                 .size(60.dp)
                 .clip(MaterialTheme.shapes.small)
         )
         Text(
-            text = "$pokedexNumber - ",
+            text = "${pokemon.id} - ",
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.padding(8.dp)
         )
@@ -168,23 +176,31 @@ fun PokedexItem(pokemon: Pokemon, onClick: () -> Unit, pokedexNumber: Int, sprit
                 .padding(8.dp)
                 .weight(1f)
         )
+        if (pokemon.favorite) {
+            Icon(
+                imageVector = Icons.Default.Favorite,
+                contentDescription = stringResource(id = R.string.favorite),
+                tint = DarkRedII,
+                modifier = Modifier.padding(8.dp)
+            )
+        }
     }
 }
 
 @Composable
 fun DropDownMenu(pokedexViewModel: PokedexViewModel, pokedexState: PokedexState) {
-    var selectedText by remember { mutableStateOf(pokedexState.selectedRegion.value.displayName) }
+    val selectedText by pokedexState.selectedPokedexRegion.collectAsState()
     var expanded by remember { mutableStateOf(false) }
-    val regions = Region.entries.toTypedArray()
+    val pokedexRegions = PokedexRegion.entries.toTypedArray()
 
     OutlinedTextField(
-        value = selectedText,
-        onValueChange = { selectedText = it },
+        value = selectedText.displayName,
+        onValueChange = { },
         enabled = false,
         readOnly = true,
         modifier = Modifier
             .clickable { expanded = true }
-            .size(width = 80.dp, height = 60.dp),
+            .size(width = 100.dp, height = 60.dp),
         label = {
             Text(
                 text = "Regions",
@@ -205,17 +221,16 @@ fun DropDownMenu(pokedexViewModel: PokedexViewModel, pokedexState: PokedexState)
         onDismissRequest = { expanded = false },
         modifier = Modifier.background(DarkRedII)
     ) {
-        regions.forEach { region ->
+        pokedexRegions.forEach { region ->
             DropdownMenuItem(
                 text = { Text(text = region.displayName) },
                 onClick = {
-                    selectedText = region.displayName
-                    pokedexState.updateSelectedGeneration(region)
                     pokedexState.onClikedRegion(region, pokedexViewModel)
+                    pokedexState.updateSelectedGeneration(region)
                     expanded = false
                 },
                 modifier = Modifier
-                    .size(width = 80.dp, height = 30.dp)
+                    .size(width = 90.dp, height = 30.dp)
             )
         }
     }
