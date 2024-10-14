@@ -13,27 +13,35 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.mypokedexcompose.R
-import com.example.mypokedexcompose.data.Pokemon
+import com.example.mypokedexcompose.data.pokemon.Pokemon
 import com.example.mypokedexcompose.ui.common.CircularProgressFun
+import com.example.mypokedexcompose.ui.common.Constants
+import com.example.mypokedexcompose.ui.common.PropertyPokemonDetail
 import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
-import com.example.mypokedexcompose.ui.screens.home.Screen
+import com.example.mypokedexcompose.ui.screens.Screen
 import com.example.mypokedexcompose.ui.theme.DarkRed
 import com.example.mypokedexcompose.ui.theme.DarkRedII
 import com.example.mypokedexcompose.ui.theme.LightRed
@@ -42,17 +50,23 @@ import com.example.mypokedexcompose.ui.theme.LightRed
 @Composable
 fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
 
-    val state = vm.state
+    val state by vm.state.collectAsState()
+    val detailState = rememberDetailState()
+
+    state.message?.let {
+        detailState.ShowMessageEffect(message = it) {
+            vm.onMessageShown()
+        }
+    }
 
     Screen {
-        val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
         Scaffold(
             topBar = {
                 TopAppBar(
                     title = {
                         Text(
-                            text = changefirstCharToUpperCase(state.pokemon?.name ?: ""),
+                            text = (state.pokemon?.name ?: "").changefirstCharToUpperCase(),
                             style = MaterialTheme.typography.headlineLarge
                         )
                     },
@@ -60,43 +74,55 @@ fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
                         containerColor = DarkRed,
                         scrolledContainerColor = DarkRedII
                     ),
-                    scrollBehavior = scrollBehavior,
+                    scrollBehavior = detailState.scrollBehavior,
                     navigationIcon = {
                         IconButton(onClick = onBack) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                                contentDescription = stringResource(id = R.string.back)
+                                contentDescription = stringResource(R.string.back)
                             )
                         }
                     },
                 )
             },
+            floatingActionButton = {
+                FloatingActionButton(
+                    onClick = { vm.onFavoriteClick() },
+                    containerColor = DarkRedII
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.FavoriteBorder,
+                        contentDescription = stringResource(id = R.string.favorite),
+                        modifier = Modifier.background(color = DarkRedII)
+                    )
+                }
+            },
+            snackbarHost = { SnackbarHost(hostState = detailState.snackbarHostState) },
             modifier = Modifier
-                .nestedScroll(scrollBehavior.nestedScrollConnection)
+                .nestedScroll(detailState.scrollBehavior.nestedScrollConnection)
                 .background(DarkRed),
             contentWindowInsets = WindowInsets.safeDrawing
         ) { padding ->
 
             if (state.loading) {
                 CircularProgressFun(padding)
-            }
+            } else {
 
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = padding.calculateTopPadding())
-                    .verticalScroll(rememberScrollState())
-                    .background(DarkRed)
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(top = padding.calculateTopPadding())
+                        .verticalScroll(rememberScrollState())
+                        .background(DarkRed)
+                ) {
 
+                    state.pokemon?.let { pokemon ->
 
-            ) {
+                        DeatilPokemonItem(pokemon)
 
-                state.pokemon?.let { pokemon ->
-
-                    DeatilPokemonItem(pokemon, state.sprite ?: "")
-
-                } ?: kotlin.run {
-                    Text(text = "Pokemon not found")
+                    } ?: kotlin.run {
+                        Text(text = "Pokemon not found")
+                    }
                 }
             }
         }
@@ -104,11 +130,10 @@ fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
 }
 
 @Composable
-fun DeatilPokemonItem(pokemon: Pokemon, sprite: String) {
-
+fun DeatilPokemonItem(pokemon: Pokemon) {
     Column {
         AsyncImage(
-            model = "${sprite}${pokemon.id}.png",
+            model = "${Constants.SPRITE_OFFICIAL_ARTWORK_URL}${pokemon.id}.png",
             contentDescription = pokemon.name,
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -125,37 +150,17 @@ fun DeatilPokemonItem(pokemon: Pokemon, sprite: String) {
                 .background(LightRed, shape = RoundedCornerShape(16.dp))
         ) {
             Text(
-                text = "Nº Pokedex: ${pokemon.id}",
-                modifier = Modifier.padding(16.dp),
-                style = MaterialTheme.typography.headlineMedium
-            )
-            Text(
-                text = "Type: ${getPokemonType(pokemon)}",
-                modifier = Modifier.padding(16.dp),
-                style = MaterialTheme.typography.headlineMedium
-            )
-            Text(
-                text = "Height: ${pokemon.height}",
-                modifier = Modifier.padding(16.dp),
-                style = MaterialTheme.typography.headlineMedium
-            )
-            Text(
-                text = "Weight: ${pokemon.weight}",
+                text = buildAnnotatedString {
+                    PropertyPokemonDetail(name = "Type", value = getPokemonType(pokemon))
+                    PropertyPokemonDetail(name = "Nº Pokedex", value = pokemon.id.toString())
+                    PropertyPokemonDetail(name = "Height", value = pokemon.height.toString())
+                    PropertyPokemonDetail(name = "Weight", value = pokemon.weight.toString(), true)
+                },
                 modifier = Modifier.padding(16.dp),
                 style = MaterialTheme.typography.headlineMedium
             )
         }
-
-    }
-
-}
-
-fun getPokemonType(pokemon: Pokemon): String {
-    return if (pokemon.types?.size!! > 1) {
-        changefirstCharToUpperCase(pokemon.types[0].type.name) +
-                " - " + changefirstCharToUpperCase(pokemon.types[1].type.name)
-
-    } else {
-        changefirstCharToUpperCase(pokemon.types[0].type.name)
     }
 }
+
+

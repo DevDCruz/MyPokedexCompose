@@ -1,4 +1,4 @@
-package com.example.mypokedexcompose.data.detail.pokemonresult
+package com.example.mypokedexcompose.data.pokemon
 
 
 import kotlinx.serialization.SerialName

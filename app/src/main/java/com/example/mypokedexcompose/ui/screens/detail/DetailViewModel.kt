@@ -1,28 +1,30 @@
 package com.example.mypokedexcompose.ui.screens.detail
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mypokedexcompose.data.Pokemon
-import com.example.mypokedexcompose.data.detail.pokemonresult.PokemonRepository
+import com.example.mypokedexcompose.data.pokemon.Pokemon
+import com.example.mypokedexcompose.data.pokemon.PokemonRepository
+import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class DetailViewModel(private val name: String) : ViewModel() {
 
+
     private val repository = PokemonRepository()
 
-    var state by mutableStateOf(UiState())
-        private set
+    private val _state = MutableStateFlow(UiState())
+    val state: StateFlow<UiState> get() = _state.asStateFlow()
 
     init {
         viewModelScope.launch {
-            state = UiState(loading = true)
-            state = UiState(
+            _state.value = UiState(loading = true)
+            _state.value = UiState(
 
                 pokemon = repository.fetchPokemon(name),
-                sprite = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/",
                 loading = false
             )
 
@@ -32,6 +34,21 @@ class DetailViewModel(private val name: String) : ViewModel() {
     data class UiState(
         val loading: Boolean = false,
         val pokemon: Pokemon? = null,
-        val sprite: String? = null
+        val message: String? = null
     )
+
+fun onFavoriteClick() {
+    _state.update {it.copy(message = "Pokemon added to favorites")}
+}
+
+    fun onMessageShown() {
+        _state.update { it.copy(message = null) }
+    }
+}
+
+fun getPokemonType(pokemon: Pokemon): String {
+
+    val types = pokemon.types ?: return "Unknown Type"
+
+    return types.joinToString(" - ") { it.type.name.changefirstCharToUpperCase() }
 }

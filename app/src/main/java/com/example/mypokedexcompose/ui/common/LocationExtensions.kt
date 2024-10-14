@@ -29,6 +29,7 @@ suspend fun Context.getRegion(): String {
     return addresses?.firstOrNull()?.countryCode ?: DEFAULT_REGION
 
 }
+
 @SuppressLint("MissingPermission")
 suspend fun FusedLocationProviderClient.lastLocation(): Location? {
     return suspendCancellableCoroutine { continuation ->
@@ -47,10 +48,12 @@ suspend fun Geocoder.getFromLocationCompat(
     @IntRange maxResults: Int
 ): List<Address> = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
     suspendCancellableCoroutine { continuation ->
-        getFromLocation(latitude, longitude, maxResults){
+        getFromLocation(latitude, longitude, maxResults) {
             continuation.resume(it)
         }
-    }} else {
-        withContext(Dispatchers.IO) {
-            getFromLocation(latitude, longitude, maxResults) } ?: emptyList()
+    }
+} else {
+    withContext(Dispatchers.IO) {
+        getFromLocation(latitude, longitude, maxResults)
+    } ?: emptyList()
 }
