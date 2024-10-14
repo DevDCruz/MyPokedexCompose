@@ -9,14 +9,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.lifecycle.SavedStateHandle
 import com.example.mypokedexcompose.data.region.PokedexRegion
-import com.example.mypokedexcompose.data.region.RegionMapper
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 class PokedexState @OptIn(ExperimentalMaterial3Api::class) constructor(
     val scrollBehavior: TopAppBarScrollBehavior,
-    private val savedStateHandle: SavedStateHandle,
-    private val regionMapper: RegionMapper
+    private val savedStateHandle: SavedStateHandle
 ) {
 
     private val _selectedPokedexRegion = MutableStateFlow(PokedexRegion.ALL_GENERATIONS)
@@ -61,8 +59,7 @@ fun RememberPokedexState(
     val pokedexState = remember(scrollBehavior) {
         PokedexState(
             scrollBehavior,
-            savedStateHandle,
-            RegionMapper()
+            savedStateHandle
         )
     }
 
