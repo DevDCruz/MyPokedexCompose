@@ -8,6 +8,7 @@ import com.example.mypokedexcompose.data.pokemon.Pokemon
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import java.util.Random
 
 class PokemonRepository(
@@ -16,8 +17,10 @@ class PokemonRepository(
     private val pokemonMapper: PokemonMapper
 ) {
 
-    suspend fun fetchPokemonDetails(name: String): Flow<Pokemon?> = flow {
+    fun fetchPokemonDetails(name: String): Flow<Pokemon?> = flow {
         val localPokemonDetail = pokemonLocalDataSource.getPokemonByName(name).firstOrNull()
+        Log.d("PokemonRepository", "Local Pokemon detail fetched: $localPokemonDetail")
+
         if (localPokemonDetail != null && localPokemonDetail.isDetailFetched) {
             Log.d(
                 "PokemonRepository",
@@ -29,18 +32,15 @@ class PokemonRepository(
             val newLocalPokemonDetail = pokemonMapper.fromRemoteToEntity(remotePokemonDetail)
             newLocalPokemonDetail.isDetailFetched = true
             pokemonLocalDataSource.savePokemon(newLocalPokemonDetail)
-            Log.d(
-                "PokemonRepository",
-                "Pokemon details fetched from remote API for ${newLocalPokemonDetail.name}"
-            )
             emit(pokemonMapper.toDomain(newLocalPokemonDetail))
         }
+        pokemonLocalDataSource.getPokemonByName(name)
+            .map { pokemonEntity -> pokemonEntity?.let { pokemonMapper.toDomain(it) } }
+            .collect { emit(it) }
     }
 
     suspend fun fetchRandomPokemon(): Flow<Pokemon?> = flow {
-
         val localPokemon = pokemonLocalDataSource.getPokemonById(generateRandomId()).firstOrNull()
-
         if (localPokemon != null) {
             emit(pokemonMapper.toDomain(localPokemon))
         } else {
@@ -51,15 +51,15 @@ class PokemonRepository(
         }
     }
 
-    suspend fun toggleFavorite(pokemon: Pokemon): Flow<Pokemon?> = flow {
-        pokemonLocalDataSource.getPokemonByName(pokemon.name)
-            .firstOrNull()?.let { currentPokemonEntity ->
-                val updatedPokemonEntity =
-                    currentPokemonEntity.copy(favorite = !currentPokemonEntity.favorite)
-                pokemonLocalDataSource.savePokemon(updatedPokemonEntity)
-                emit(pokemonMapper.toDomain(updatedPokemonEntity))
-            } ?: emit(null)
+    suspend fun toggleFavorite(pokemon: Pokemon) {
+        val currentEntity = pokemonLocalDataSource.getPokemonByName(pokemon.name).firstOrNull()
+        if (currentEntity != null) {
+            val updatedPokemon = currentEntity.copy(
+                favorite = !pokemon.favorite,
+                isDetailFetched = currentEntity.isDetailFetched
+            )
+            pokemonLocalDataSource.savePokemon(updatedPokemon)
+        }
     }
 }
-
 private fun generateRandomId(): Int = Random().nextInt(1025)
