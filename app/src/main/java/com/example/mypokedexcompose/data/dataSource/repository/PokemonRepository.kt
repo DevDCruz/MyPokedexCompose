@@ -1,8 +1,8 @@
 package com.example.mypokedexcompose.data.dataSource.repository
 
 import android.util.Log
-import com.example.mypokedexcompose.data.dataSource.mappers.PokemonMapper
 import com.example.mypokedexcompose.data.dataSource.local.database.pokemon.PokemonLocalDataSource
+import com.example.mypokedexcompose.data.dataSource.mappers.PokemonMapper
 import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonRemoteDataSource
 import com.example.mypokedexcompose.data.pokemon.Pokemon
 import kotlinx.coroutines.flow.Flow
@@ -52,15 +52,13 @@ class PokemonRepository(
     }
 
     suspend fun toggleFavorite(pokemon: Pokemon): Flow<Pokemon?> = flow {
-        val currentPokemonEntity =
-            pokemonLocalDataSource.getPokemonByName(pokemon.name).firstOrNull()
-        val updatedPokemonEntity =
-            currentPokemonEntity?.copy(favorite = !currentPokemonEntity.favorite)
-        if (updatedPokemonEntity != null) {
-            pokemonLocalDataSource.savePokemon(updatedPokemonEntity)
-        }
-        val updatedFromDB = pokemonLocalDataSource.getPokemonByName(pokemon.name).firstOrNull()
-        emit(updatedFromDB?.let { pokemonMapper.toDomain(it) })
+        pokemonLocalDataSource.getPokemonByName(pokemon.name)
+            .firstOrNull()?.let { currentPokemonEntity ->
+                val updatedPokemonEntity =
+                    currentPokemonEntity.copy(favorite = !currentPokemonEntity.favorite)
+                pokemonLocalDataSource.savePokemon(updatedPokemonEntity)
+                emit(pokemonMapper.toDomain(updatedPokemonEntity))
+            } ?: emit(null)
     }
 }
 

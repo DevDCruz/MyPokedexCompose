@@ -35,7 +35,6 @@ class DetailViewModel(
         val pokemon: Pokemon? = null
     )
 
-
     fun onFavoriteClicked() {
         state.value.pokemon?.let { currentPokemon ->
             viewModelScope.launch {
@@ -48,8 +47,6 @@ class DetailViewModel(
 }
 
 fun getPokemonType(pokemon: Pokemon): String {
-
     val types = pokemon.types ?: return "Unknown Type"
-
     return types.joinToString(" - ") { it.type.name.changefirstCharToUpperCase() }
 }
