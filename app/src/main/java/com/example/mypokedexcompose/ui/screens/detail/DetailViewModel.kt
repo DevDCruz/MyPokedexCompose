@@ -5,10 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.mypokedexcompose.data.dataSource.repository.PokemonRepository
 import com.example.mypokedexcompose.data.pokemon.Pokemon
 import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
