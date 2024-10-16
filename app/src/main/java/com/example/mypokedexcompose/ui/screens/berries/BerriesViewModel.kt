@@ -4,18 +4,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypokedexcompose.data.berries.Berry
 import com.example.mypokedexcompose.data.dataSource.repository.BerryRepository
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class BerriesViewModel(
     private val repository: BerryRepository
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(UiState())
-    val state: StateFlow<UiState> get() = _state.asStateFlow()
+    val state: StateFlow<UiState> = repository.berries
+        .map { berries -> UiState(berries = berries) }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = UiState(loading = true)
+        )
 
     init {
         viewModelScope.launch {
@@ -25,11 +31,10 @@ class BerriesViewModel(
 
     private suspend fun fetchAllBerries() {
         viewModelScope.launch {
-            _state.value = UiState(loading = true)
             repository.fetchAllBerries()
 
             repository.berries.collect { berries ->
-                _state.value = UiState(berries = berries, loading = false)
+                UiState(berries = berries, loading = false)
             }
         }
     }
