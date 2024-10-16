@@ -33,10 +33,4 @@ class BackPackViewModel(
         val itemDetail = repository.fetchItemByName(name)
         return itemDetail.firstOrNull()
     }
-
-    data class UiState(
-        val loading: Boolean = false,
-        val items: List<Item> = emptyList(),
-        val item: Item? = null
-    )
 }
