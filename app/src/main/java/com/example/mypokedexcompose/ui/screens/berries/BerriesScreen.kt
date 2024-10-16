@@ -2,8 +2,16 @@ package com.example.mypokedexcompose.ui.screens.berries
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -15,9 +23,10 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mypokedexcompose.data.berries.Berry
+import com.example.mypokedexcompose.ui.common.AcScaffold
 import com.example.mypokedexcompose.ui.common.DropDownCustomItem
 import com.example.mypokedexcompose.ui.common.PropertyDetailItem
-import com.example.mypokedexcompose.ui.screens.ListScreen
+import com.example.mypokedexcompose.ui.theme.DarkRed
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -29,16 +38,36 @@ fun BerriesScreen(
     val berriesState = remeberBerriesState()
 
 
-    ListScreen(
-        title = "Berries",
-        items = state.berries,
-        onBack = { onBack() },
-        loading = state.loading,
-        scrollBehavior = berriesState.scrollBehavior,
-        lazyListState = berriesState.lazyListState
-
-    ) { berry, berryIndex ->
-        DropDownBerry(berry, berryIndex)
+    AcScaffold(
+        state = state,
+        topBar = {
+            TopAppBar(
+                title = { Text("Berries") },
+                navigationIcon = {
+                    IconButton(onClick = onBack) {
+                        Icon(
+                            Icons.AutoMirrored.Default.ArrowBack,
+                            contentDescription = "Back"
+                        )
+                    }
+                },
+                colors = topAppBarColors(
+                    containerColor = DarkRed,
+                    scrolledContainerColor = DarkRed
+                ),
+                scrollBehavior = berriesState.scrollBehavior
+            )
+        },
+        containerColor = DarkRed
+    ) { padding, berries ->
+        LazyColumn(
+            state = berriesState.lazyListState,
+            contentPadding = padding
+        ) {
+            itemsIndexed(berries) { index, berry ->
+                DropDownBerry(berry, index +1)
+            }
+        }
     }
 }
 
@@ -73,7 +102,11 @@ fun DropDownBerry(
                     value = berryDetail?.smoothness?.toString() ?: ""
                 )
                 PropertyDetailItem(name = "ID", value = berryDetail?.id?.toString() ?: "")
-                PropertyDetailItem(name = "Size", value = berryDetail?.size?.toString() ?: "", true)
+                PropertyDetailItem(
+                    name = "Size",
+                    value = berryDetail?.size?.toString() ?: "",
+                    true
+                )
             })
         }
     }

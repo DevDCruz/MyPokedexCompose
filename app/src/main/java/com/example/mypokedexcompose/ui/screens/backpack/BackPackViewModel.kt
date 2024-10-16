@@ -3,7 +3,7 @@ package com.example.mypokedexcompose.ui.screens.backpack
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypokedexcompose.data.Result
-import com.example.mypokedexcompose.data.StateAsResultIn
+import com.example.mypokedexcompose.data.stateAsResultIn
 import com.example.mypokedexcompose.data.dataSource.repository.ItemRepository
 import com.example.mypokedexcompose.data.items.Item
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +15,7 @@ class BackPackViewModel(
 ) : ViewModel() {
 
     val state: StateFlow<Result<List<Item>>> = repository.items
-        .StateAsResultIn(viewModelScope)
+        .stateAsResultIn(viewModelScope)
 
     init {
         viewModelScope.launch {

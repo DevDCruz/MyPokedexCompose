@@ -14,7 +14,7 @@ sealed interface Result<out T> {
     data object Loading : Result<Nothing>
 }
 
-fun <T> Flow<T>.StateAsResultIn(scope: CoroutineScope): StateFlow<Result<T>> =
+fun <T> Flow<T>.stateAsResultIn(scope: CoroutineScope): StateFlow<Result<T>> =
     map<T, Result<T>> { Result.Success(it) }
         .catch { emit(Result.Error(it)) }
         .stateIn(
