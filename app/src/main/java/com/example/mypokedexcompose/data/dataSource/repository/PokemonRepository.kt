@@ -19,7 +19,6 @@ class PokemonRepository(
 
     fun fetchPokemonDetails(name: String): Flow<Pokemon?> = flow {
         val localPokemonDetail = pokemonLocalDataSource.getPokemonByName(name).firstOrNull()
-        Log.d("PokemonRepository", "Local Pokemon detail fetched: $localPokemonDetail")
 
         if (localPokemonDetail != null && localPokemonDetail.isDetailFetched) {
             Log.d(
@@ -28,6 +27,7 @@ class PokemonRepository(
             )
             emit(pokemonMapper.toDomain(localPokemonDetail))
         } else {
+            Log.d("PokemonRepository", "Pokemon details fetched from remote for $name")
             val remotePokemonDetail = pokemonRemoteDataSource.fetchPokemon(name)
             val newLocalPokemonDetail = pokemonMapper.fromRemoteToEntity(remotePokemonDetail)
             newLocalPokemonDetail.isDetailFetched = true
