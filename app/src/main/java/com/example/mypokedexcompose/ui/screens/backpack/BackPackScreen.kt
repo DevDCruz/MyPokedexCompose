@@ -4,8 +4,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -20,9 +28,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.mypokedexcompose.data.items.Item
+import com.example.mypokedexcompose.ui.common.AcScaffold
 import com.example.mypokedexcompose.ui.common.DropDownCustomItem
 import com.example.mypokedexcompose.ui.common.PropertyDetailItem
-import com.example.mypokedexcompose.ui.screens.ListScreen
+import com.example.mypokedexcompose.ui.theme.DarkRed
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,16 +42,36 @@ fun BackPackScreen(
     val state by vm.state.collectAsState()
     val backPackState = remeberBackPackState()
 
-    ListScreen(
-        title = "BackPack",
-        items = state.items,
-        onBack = { onBack() },
-        loading = state.loading,
-        scrollBehavior = backPackState.scrollBehavior,
-        lazyListState = backPackState.lazyListState
-
-    ) { item, itemIndex ->
-        DropDownBackPack(item, itemIndex)
+    AcScaffold(
+        state = state,
+        topBar = {
+            TopAppBar(
+                title = { Text("BackPack") },
+                navigationIcon = {
+                    IconButton(onClick = onBack) {
+                        Icon(
+                            Icons.AutoMirrored.Default.ArrowBack,
+                            contentDescription = "Back"
+                        )
+                    }
+                },
+                colors = topAppBarColors(
+                    containerColor = DarkRed,
+                    scrolledContainerColor = DarkRed
+                ),
+                scrollBehavior = backPackState.scrollBehavior
+            )
+        },
+        containerColor = DarkRed
+    ) { padding, items ->
+        LazyColumn(
+            state = backPackState.lazyListState,
+            contentPadding = padding
+        ) {
+            itemsIndexed(items) { index, item ->
+                DropDownBackPack(item = item, itemIndex = index + 1)
+            }
+        }
     }
 }
 
