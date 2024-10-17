@@ -24,11 +24,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -48,9 +47,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.mypokedexcompose.R
-import com.example.mypokedexcompose.data.region.PokedexRegion
 import com.example.mypokedexcompose.data.pokemon.Pokemon
-import com.example.mypokedexcompose.ui.common.CircularProgressFun
+import com.example.mypokedexcompose.data.region.PokedexRegion
+import com.example.mypokedexcompose.ui.common.AcScaffold
 import com.example.mypokedexcompose.ui.common.Constants
 import com.example.mypokedexcompose.ui.common.PermissionRequestEffect
 import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
@@ -89,63 +88,49 @@ fun PokedexScreen(
             initialFirstVisibleItemIndex = pokedexState.scrollPosition
         )
 
-        Scaffold(
+        AcScaffold(
+            state = state,
             topBar = {
-
                 TopAppBar(
-                    title = { Text(text = stringResource(id = R.string.app_name)) },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = DarkRed,
-                        scrolledContainerColor = DarkRedII
-                    ),
-                    scrollBehavior = pokedexState.scrollBehavior,
+                    title = { Text("Pokedex") },
                     navigationIcon = {
                         IconButton(onClick = onBack) {
                             Icon(
-                                imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                                contentDescription = stringResource(id = R.string.back)
+                                Icons.AutoMirrored.Default.ArrowBack,
+                                contentDescription = "Back"
                             )
                         }
                     },
                     actions = {
-                        DropDownMenu(vm, pokedexState)
+                        DropDownMenu(pokedexViewModel = vm, pokedexState = pokedexState)
                     },
+                    colors = topAppBarColors(
+                        containerColor = DarkRed,
+                        scrolledContainerColor = DarkRed
+                    ),
+                    scrollBehavior = pokedexState.scrollBehavior
                 )
             },
+            containerColor = DarkRed,
             modifier = Modifier
                 .nestedScroll(pokedexState.scrollBehavior.nestedScrollConnection),
             contentWindowInsets = WindowInsets.safeDrawing,
-
-            ) { padding ->
-
-            if (state.loading) {
-                CircularProgressFun(padding = padding)
-            } else {
-
-                LazyColumn(
-
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(DarkRed),
-                    state = lazyLisState,
-                    contentPadding = padding
-                ) {
-                    items(state.pokemons) { pokemon ->
-
-                        PokedexItem(
-                            pokemon = pokemon,
-                            onClick = {
-                                onClick(pokemon)
-                                pokedexState.savedScrollPosition(lazyLisState.firstVisibleItemIndex)
-                            }
-                        )
-                    }
+        ) { padding, pokemons ->
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(DarkRed),
+                state = lazyLisState,
+                contentPadding = padding
+            ) {
+                items(pokemons.pokemons ?: emptyList()) { pokemon ->
+                    PokedexItem(pokemon, onClick = { onClick(pokemon) })
                 }
             }
+
         }
     }
 }
-
 
 @Composable
 fun PokedexItem(pokemon: Pokemon, onClick: () -> Unit) {
