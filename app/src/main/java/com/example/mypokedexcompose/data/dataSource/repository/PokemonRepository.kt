@@ -6,6 +6,7 @@ import com.example.mypokedexcompose.data.dataSource.mappers.PokemonMapper
 import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonRemoteDataSource
 import com.example.mypokedexcompose.data.pokemon.Pokemon
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
@@ -17,7 +18,7 @@ class PokemonRepository(
     private val pokemonMapper: PokemonMapper
 ) {
 
-    fun fetchPokemonDetails(name: String): Flow<Pokemon?> = flow {
+    fun fetchPokemonDetails(name: String): Flow<Pokemon> = flow {
         val localPokemonDetail = pokemonLocalDataSource.getPokemonByName(name).firstOrNull()
 
         if (localPokemonDetail != null && localPokemonDetail.isDetailFetched) {
@@ -38,6 +39,7 @@ class PokemonRepository(
             .map { pokemonEntity -> pokemonEntity?.let { pokemonMapper.toDomain(it) } }
             .collect { emit(it) }
     }
+        .filterNotNull()
 
     suspend fun fetchRandomPokemon(): Flow<Pokemon?> = flow {
         val localPokemon = pokemonLocalDataSource.getPokemonById(generateRandomId()).firstOrNull()
