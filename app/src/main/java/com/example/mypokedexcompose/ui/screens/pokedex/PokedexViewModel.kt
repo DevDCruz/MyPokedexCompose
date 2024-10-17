@@ -35,7 +35,6 @@ class PokedexViewModel(
         .flatMapLatest { repository.pokemons }
         .combine(selectedRegionFlow) { pokemons, selectedPokedexRegion ->
             val filteredPokemons = pokemons.filter { it.id in selectedPokedexRegion.range[0]..selectedPokedexRegion.range[1]  }
-            savedStateHandle["pokemons"] = filteredPokemons
             UiState(filteredPokemons, selectedPokedexRegion)
         }.stateAsResultIn(viewModelScope)
 
