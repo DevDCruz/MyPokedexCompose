@@ -11,29 +11,29 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.mypokedexcompose.App
-import com.example.mypokedexcompose.data.dataSource.GeocoderRegionDataSource
-import com.example.mypokedexcompose.data.dataSource.PlayServicesLocationDataSource
-import com.example.mypokedexcompose.data.dataSource.local.backpack.BackPackRoomDataSource
-import com.example.mypokedexcompose.data.dataSource.local.berries.BerryRoomDataSource
-import com.example.mypokedexcompose.data.dataSource.local.pokedex.PokedexRoomDataSource
-import com.example.mypokedexcompose.data.dataSource.local.pokemon.PokemonRoomDataSource
 import com.example.mypokedexcompose.data.dataSource.mappers.BerryMapper
 import com.example.mypokedexcompose.data.dataSource.mappers.ItemsMapper
 import com.example.mypokedexcompose.data.dataSource.mappers.PokemonMapper
-import com.example.mypokedexcompose.data.dataSource.remote.backpack.BackPackRemoteDataSource
-import com.example.mypokedexcompose.data.dataSource.remote.backpack.ItemClient
-import com.example.mypokedexcompose.data.dataSource.remote.berry.BerryClient
-import com.example.mypokedexcompose.data.dataSource.remote.berry.BerryRemoteDataSource
-import com.example.mypokedexcompose.data.dataSource.remote.pokedex.PokedexClient
-import com.example.mypokedexcompose.data.dataSource.remote.pokedex.PokedexServerDataSource
-import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonClient
-import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonRemoteDataSource
 import com.example.mypokedexcompose.data.dataSource.repository.BackPpackItemRepository
 import com.example.mypokedexcompose.data.dataSource.repository.BerryRepository
 import com.example.mypokedexcompose.data.dataSource.repository.PokedexRepository
 import com.example.mypokedexcompose.data.dataSource.repository.PokemonRepository
 import com.example.mypokedexcompose.data.region.RegionMapper
 import com.example.mypokedexcompose.data.region.RegionRepository
+import com.example.mypokedexcompose.framework.GeocoderRegionDataSource
+import com.example.mypokedexcompose.framework.PlayServicesLocationDataSource
+import com.example.mypokedexcompose.framework.database.backpack.BackPackRoomDataSource
+import com.example.mypokedexcompose.framework.database.berries.BerryRoomDataSource
+import com.example.mypokedexcompose.framework.database.pokedex.PokedexRoomDataSource
+import com.example.mypokedexcompose.framework.database.pokemon.PokemonRoomDataSource
+import com.example.mypokedexcompose.framework.remote.backpack.BackPackServerDataSource
+import com.example.mypokedexcompose.framework.remote.backpack.ItemClient
+import com.example.mypokedexcompose.framework.remote.berries.BerryClient
+import com.example.mypokedexcompose.framework.remote.berries.BerryServerDataSource
+import com.example.mypokedexcompose.framework.remote.pokedex.PokedexClient
+import com.example.mypokedexcompose.framework.remote.pokedex.PokedexServerDataSource
+import com.example.mypokedexcompose.framework.remote.pokemon.PokemonClient
+import com.example.mypokedexcompose.framework.remote.pokemon.PokemonServerDataSource
 import com.example.mypokedexcompose.ui.screens.backpack.BackPackScreen
 import com.example.mypokedexcompose.ui.screens.backpack.BackPackViewModel
 import com.example.mypokedexcompose.ui.screens.berries.BerriesScreen
@@ -90,17 +90,17 @@ fun Navigation() {
             PokemonMapper()
         )
     val backPpackItemRepository = BackPpackItemRepository(
-        BackPackRemoteDataSource(ItemClient),
+        BackPackServerDataSource(ItemClient),
         BackPackRoomDataSource(app.db.BackPackDao()),
         ItemsMapper()
     )
     val berryRepository = BerryRepository(
-        BerryRemoteDataSource(BerryClient),
+        BerryServerDataSource(BerryClient),
         BerryRoomDataSource(app.db.berryDao()),
         BerryMapper()
     )
     val pokemonRepository = PokemonRepository(
-        PokemonRemoteDataSource(PokemonClient),
+        PokemonServerDataSource(PokemonClient),
         PokemonRoomDataSource(app.db.pokemonDao()),
         PokemonMapper()
     )

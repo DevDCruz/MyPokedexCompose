@@ -1,4 +1,4 @@
-package com.example.mypokedexcompose.data.dataSource.remote
+package com.example.mypokedexcompose.framework.remote
 
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

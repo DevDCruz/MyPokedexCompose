@@ -1,17 +1,17 @@
 package com.example.mypokedexcompose.data.dataSource.repository
 
 import android.util.Log
-import com.example.mypokedexcompose.domain.backpackItems.BackpackItem
-import com.example.mypokedexcompose.data.dataSource.local.backpack.BackPackRoomDataSource
 import com.example.mypokedexcompose.data.dataSource.mappers.ItemsMapper
-import com.example.mypokedexcompose.data.dataSource.remote.backpack.BackPackRemoteDataSource
+import com.example.mypokedexcompose.domain.backpackItems.BackpackItem
+import com.example.mypokedexcompose.framework.database.backpack.BackPackRoomDataSource
+import com.example.mypokedexcompose.framework.remote.backpack.BackPackServerDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
 class BackPpackItemRepository(
-    private val backPackRemoteDataSource: BackPackRemoteDataSource,
+    private val backPackServerDataSource: BackPackServerDataSource,
     private val backPackRoomDataSource: BackPackRoomDataSource,
     private val itemMapper: ItemsMapper
 ) {
@@ -21,7 +21,7 @@ class BackPpackItemRepository(
 
     suspend fun fetchBackPackItems() {
         if (backPackRoomDataSource.isEmpty()) {
-            val remoteItems = backPackRemoteDataSource.fetchItems()
+            val remoteItems = backPackServerDataSource.fetchItems()
             val localItems = itemMapper.fromRemoteToEntityList(remoteItems)
             backPackRoomDataSource.saveItems(localItems)
         }
@@ -33,7 +33,7 @@ class BackPpackItemRepository(
             Log.d("ItemRepository", "fetchItemById in local: ${localItem.name}")
             emit(itemMapper.toDomain(localItem))
         } else {
-            val remoteItem = backPackRemoteDataSource.fetchItemByName(name)
+            val remoteItem = backPackServerDataSource.fetchItemByName(name)
             val newLocalITem = itemMapper.fromRemoteToEntity(remoteItem)
             Log.d("ItemRepository", "fetchItemById in remote: ${newLocalITem.name}")
             newLocalITem.isDetailFetched = true

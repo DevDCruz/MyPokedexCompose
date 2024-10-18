@@ -1,10 +1,10 @@
 package com.example.mypokedexcompose.data.dataSource.repository
 
 import android.util.Log
-import com.example.mypokedexcompose.data.dataSource.local.pokemon.PokemonRoomDataSource
 import com.example.mypokedexcompose.data.dataSource.mappers.PokemonMapper
-import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonRemoteDataSource
 import com.example.mypokedexcompose.domain.pokemon.Pokemon
+import com.example.mypokedexcompose.framework.database.pokemon.PokemonRoomDataSource
+import com.example.mypokedexcompose.framework.remote.pokemon.PokemonServerDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.map
 import java.util.Random
 
 class PokemonRepository(
-    private val pokemonRemoteDataSource: PokemonRemoteDataSource,
+    private val pokemonServerDataSource: PokemonServerDataSource,
     private val pokemonRoomDataSource: PokemonRoomDataSource,
     private val pokemonMapper: PokemonMapper
 ) {
@@ -29,7 +29,7 @@ class PokemonRepository(
             emit(pokemonMapper.toDomain(localPokemonDetail))
         } else {
             Log.d("PokemonRepository", "Pokemon details fetched from remote for $name")
-            val remotePokemonDetail = pokemonRemoteDataSource.fetchPokemon(name)
+            val remotePokemonDetail = pokemonServerDataSource.fetchPokemon(name)
             val newLocalPokemonDetail = pokemonMapper.fromRemoteToEntity(remotePokemonDetail)
             newLocalPokemonDetail.isDetailFetched = true
             pokemonRoomDataSource.savePokemon(newLocalPokemonDetail)
@@ -46,7 +46,7 @@ class PokemonRepository(
         if (localPokemon != null) {
             emit(pokemonMapper.toDomain(localPokemon))
         } else {
-            val remotePokemon = pokemonRemoteDataSource.fetchRandomPokemon(generateRandomId())
+            val remotePokemon = pokemonServerDataSource.fetchRandomPokemon(generateRandomId())
             val newLocalPokemon = pokemonMapper.fromRemoteToEntity(remotePokemon)
             pokemonRoomDataSource.savePokemon(newLocalPokemon)
             emit(pokemonMapper.toDomain(newLocalPokemon))
@@ -64,4 +64,5 @@ class PokemonRepository(
         }
     }
 }
+
 private fun generateRandomId(): Int = Random().nextInt(1025)

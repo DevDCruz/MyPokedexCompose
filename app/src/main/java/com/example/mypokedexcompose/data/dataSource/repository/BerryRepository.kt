@@ -1,17 +1,17 @@
 package com.example.mypokedexcompose.data.dataSource.repository
 
 import android.util.Log
-import com.example.mypokedexcompose.domain.berries.Berry
-import com.example.mypokedexcompose.data.dataSource.local.berries.BerryRoomDataSource
 import com.example.mypokedexcompose.data.dataSource.mappers.BerryMapper
-import com.example.mypokedexcompose.data.dataSource.remote.berry.BerryRemoteDataSource
+import com.example.mypokedexcompose.domain.berries.Berry
+import com.example.mypokedexcompose.framework.database.berries.BerryRoomDataSource
+import com.example.mypokedexcompose.framework.remote.berries.BerryServerDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
 class BerryRepository(
-    private val berryRemoteDataSource: BerryRemoteDataSource,
+    private val berryServerDataSource: BerryServerDataSource,
     private val berryRoomDataSource: BerryRoomDataSource,
     private val berryMapper: BerryMapper
 ) {
@@ -21,7 +21,7 @@ class BerryRepository(
 
     suspend fun fetchBerries() {
         if (berryRoomDataSource.isEmpty()) {
-            val remoteBerries = berryRemoteDataSource.fetchBerries()
+            val remoteBerries = berryServerDataSource.fetchBerries()
             val localBerries = berryMapper.fromRemoteToEntityList(remoteBerries)
             berryRoomDataSource.saveBerries(localBerries)
         }
@@ -33,7 +33,7 @@ class BerryRepository(
             Log.d("BerryRepository", "fetchBerryByName in local: ${localBerry.name}")
             emit(berryMapper.toDomain(localBerry))
         } else {
-            val remoteBerry = berryRemoteDataSource.fetchBerryByName(name)
+            val remoteBerry = berryServerDataSource.fetchBerryByName(name)
             val newLocalBerry = berryMapper.fromRemoteToEntity(remoteBerry)
             Log.d("BerryRepository", "fetchBerryByName in remote: ${newLocalBerry.name}")
             newLocalBerry.isDetailFetched = true

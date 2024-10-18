@@ -1,4 +1,4 @@
-package com.example.mypokedexcompose.data.dataSource.local.pokedex
+package com.example.mypokedexcompose.framework.database.pokedex
 
 import androidx.room.Dao
 import androidx.room.Insert

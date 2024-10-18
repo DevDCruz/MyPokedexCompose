@@ -1,5 +1,6 @@
-package com.example.mypokedexcompose.data.dataSource.remote.backpack
+package com.example.mypokedexcompose.framework.remote.backpack
 
+import com.example.mypokedexcompose.data.dataSource.remote.backpack.ItemsListResult
 import com.example.mypokedexcompose.domain.backpackItems.BackpackItem
 import retrofit2.http.GET
 import retrofit2.http.Path
