@@ -3,10 +3,9 @@ package com.example.mypokedexcompose.ui.screens.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypokedexcompose.data.Result
-import com.example.mypokedexcompose.data.dataSource.repository.PokemonRepository
 import com.example.mypokedexcompose.data.ifSuccess
-import com.example.mypokedexcompose.domain.pokemon.Pokemon
 import com.example.mypokedexcompose.data.stateAsResultIn
+import com.example.mypokedexcompose.domain.pokemon.Pokemon
 import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
 import com.example.mypokedexcompose.usecases.FetchPokemonByNameUseCase
 import com.example.mypokedexcompose.usecases.ToggleFavoriteUseCase
