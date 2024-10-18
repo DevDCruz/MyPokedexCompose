@@ -1,9 +1,9 @@
 package com.example.mypokedexcompose.data.region
 
-import com.example.mypokedexcompose.data.dataSource.RegionDataSource
+import com.example.mypokedexcompose.data.dataSource.GeocoderRegionDataSource
 
-class RegionRepository(private val regionDataSource: RegionDataSource) {
+class RegionRepository(private val geocoderRegionDataSource: GeocoderRegionDataSource) {
 
-    suspend fun findLastRegion(): String = regionDataSource.findLastRegion()
+    suspend fun findLastRegion(): String = geocoderRegionDataSource.findLastRegion()
 
 }

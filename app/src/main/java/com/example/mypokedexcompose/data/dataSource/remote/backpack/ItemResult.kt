@@ -11,13 +11,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ItemResult(
-    @SerialName("atributes")
     val attributes: List<Attribute>,
     @SerialName("baby_trigger_for")
     val babyTriggerFor: String,
-    @SerialName("category")
     val category: Category,
-    @SerialName("cost")
     val cost: Int,
     @SerialName("effect_entries")
     val effectEntries: List<EffectEntry>,
@@ -31,14 +28,9 @@ data class ItemResult(
     val gameIndices: List<GameIndice>,
     @SerialName("held_by_pokemon")
     val heldByPokemon: List<String>,
-    @SerialName("id")
     val id: Int,
-    @SerialName("machines")
     val machines: List<String>,
-    @SerialName("name")
     val name: String,
-    @SerialName("names")
     val names: List<String>,
-    @SerialName("sprites")
     val sprites: Sprites
 )

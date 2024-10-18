@@ -11,7 +11,4 @@ interface ItemService {
 
     @GET("item/{name}")
     suspend fun getItemByName(@Path("name") name: String): BackpackItem
-
-    @GET("item/{id}")
-    suspend fun getItemById(@Path("id") id: Int): BackpackItem
 }

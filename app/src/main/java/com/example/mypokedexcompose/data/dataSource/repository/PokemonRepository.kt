@@ -1,7 +1,7 @@
 package com.example.mypokedexcompose.data.dataSource.repository
 
 import android.util.Log
-import com.example.mypokedexcompose.data.dataSource.local.pokemon.PokemonLocalDataSource
+import com.example.mypokedexcompose.data.dataSource.local.pokemon.PokemonRoomDataSource
 import com.example.mypokedexcompose.data.dataSource.mappers.PokemonMapper
 import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonRemoteDataSource
 import com.example.mypokedexcompose.domain.pokemon.Pokemon
@@ -14,12 +14,12 @@ import java.util.Random
 
 class PokemonRepository(
     private val pokemonRemoteDataSource: PokemonRemoteDataSource,
-    private val pokemonLocalDataSource: PokemonLocalDataSource,
+    private val pokemonRoomDataSource: PokemonRoomDataSource,
     private val pokemonMapper: PokemonMapper
 ) {
 
     fun fetchPokemonByName(name: String): Flow<Pokemon> = flow {
-        val localPokemonDetail = pokemonLocalDataSource.getPokemonByName(name).firstOrNull()
+        val localPokemonDetail = pokemonRoomDataSource.getPokemonByName(name).firstOrNull()
 
         if (localPokemonDetail != null && localPokemonDetail.isDetailFetched) {
             Log.d(
@@ -32,35 +32,35 @@ class PokemonRepository(
             val remotePokemonDetail = pokemonRemoteDataSource.fetchPokemon(name)
             val newLocalPokemonDetail = pokemonMapper.fromRemoteToEntity(remotePokemonDetail)
             newLocalPokemonDetail.isDetailFetched = true
-            pokemonLocalDataSource.savePokemon(newLocalPokemonDetail)
+            pokemonRoomDataSource.savePokemon(newLocalPokemonDetail)
             emit(pokemonMapper.toDomain(newLocalPokemonDetail))
         }
-        pokemonLocalDataSource.getPokemonByName(name)
+        pokemonRoomDataSource.getPokemonByName(name)
             .map { pokemonEntity -> pokemonEntity?.let { pokemonMapper.toDomain(it) } }
             .collect { emit(it) }
     }
         .filterNotNull()
 
     suspend fun fetchRandomPokemon(): Flow<Pokemon?> = flow {
-        val localPokemon = pokemonLocalDataSource.getPokemonById(generateRandomId()).firstOrNull()
+        val localPokemon = pokemonRoomDataSource.getPokemonById(generateRandomId()).firstOrNull()
         if (localPokemon != null) {
             emit(pokemonMapper.toDomain(localPokemon))
         } else {
             val remotePokemon = pokemonRemoteDataSource.fetchRandomPokemon(generateRandomId())
             val newLocalPokemon = pokemonMapper.fromRemoteToEntity(remotePokemon)
-            pokemonLocalDataSource.savePokemon(newLocalPokemon)
+            pokemonRoomDataSource.savePokemon(newLocalPokemon)
             emit(pokemonMapper.toDomain(newLocalPokemon))
         }
     }
 
     suspend fun toggleFavorite(pokemon: Pokemon) {
-        val currentEntity = pokemonLocalDataSource.getPokemonByName(pokemon.name).firstOrNull()
+        val currentEntity = pokemonRoomDataSource.getPokemonByName(pokemon.name).firstOrNull()
         if (currentEntity != null) {
             val updatedPokemon = currentEntity.copy(
                 favorite = !pokemon.favorite,
                 isDetailFetched = currentEntity.isDetailFetched
             )
-            pokemonLocalDataSource.savePokemon(updatedPokemon)
+            pokemonRoomDataSource.savePokemon(updatedPokemon)
         }
     }
 }

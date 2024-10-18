@@ -2,16 +2,15 @@ package com.example.mypokedexcompose.data.dataSource.remote.backpack
 
 import com.example.mypokedexcompose.domain.backpackItems.BackpackItem
 
-class BackPackRemoteDataSource {
+class BackPackRemoteDataSource(
+    private val itemClient: ItemClient
+) {
 
-    suspend fun fetchItems(): List<ItemResult> = ItemClient.instance
+    suspend fun fetchItems(): List<ItemResult> = itemClient.instance
         .fetchItems(304)
         .results
 
-    suspend fun fetchItemById(id: Int): BackpackItem = ItemClient.instance
-        .getItemById(id)
-
-    suspend fun fetchItemByName(name: String): BackpackItem = ItemClient.instance
+    suspend fun fetchItemByName(name: String): BackpackItem = itemClient.instance
         .getItemByName(name)
 
 }
