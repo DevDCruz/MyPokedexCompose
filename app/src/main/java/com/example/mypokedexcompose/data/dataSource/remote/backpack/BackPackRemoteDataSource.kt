@@ -1,6 +1,6 @@
 package com.example.mypokedexcompose.data.dataSource.remote.backpack
 
-import com.example.mypokedexcompose.data.items.Item
+import com.example.mypokedexcompose.domain.backpackItems.BackpackItem
 
 class BackPackRemoteDataSource {
 
@@ -8,10 +8,10 @@ class BackPackRemoteDataSource {
         .fetchItems(304)
         .results
 
-    suspend fun fetchItemById(id: Int): Item = ItemClient.instance
+    suspend fun fetchItemById(id: Int): BackpackItem = ItemClient.instance
         .getItemById(id)
 
-    suspend fun fetchItemByName(name: String): Item = ItemClient.instance
+    suspend fun fetchItemByName(name: String): BackpackItem = ItemClient.instance
         .getItemByName(name)
 
 }

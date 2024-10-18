@@ -10,23 +10,23 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.mypokedexcompose.App
-import com.example.mypokedexcompose.data.dataSource.repository.BerryRepository
 import com.example.mypokedexcompose.data.dataSource.LocationDataSource
-import com.example.mypokedexcompose.data.dataSource.mappers.PokemonMapper
 import com.example.mypokedexcompose.data.dataSource.RegionDataSource
-import com.example.mypokedexcompose.data.dataSource.local.database.backpack.BackPackLocalDataSource
+import com.example.mypokedexcompose.data.dataSource.local.backpack.BackPackLocalDataSource
+import com.example.mypokedexcompose.data.dataSource.local.berries.BerryLocalDataSource
+import com.example.mypokedexcompose.data.dataSource.local.pokedex.PokedexLocalDataSource
+import com.example.mypokedexcompose.data.dataSource.local.pokemon.PokemonLocalDataSource
 import com.example.mypokedexcompose.data.dataSource.mappers.BerryMapper
-import com.example.mypokedexcompose.data.dataSource.local.database.berries.BerryLocalDataSource
-import com.example.mypokedexcompose.data.dataSource.local.database.pokedex.PokedexLocalDataSource
-import com.example.mypokedexcompose.data.dataSource.local.database.pokemon.PokemonLocalDataSource
 import com.example.mypokedexcompose.data.dataSource.mappers.ItemsMapper
+import com.example.mypokedexcompose.data.dataSource.mappers.PokemonMapper
 import com.example.mypokedexcompose.data.dataSource.remote.backpack.BackPackRemoteDataSource
 import com.example.mypokedexcompose.data.dataSource.remote.berry.BerryRemoteDataSource
 import com.example.mypokedexcompose.data.dataSource.remote.pokedex.PokedexRemoteDataSource
 import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonRemoteDataSource
-import com.example.mypokedexcompose.data.dataSource.repository.PokemonRepository
-import com.example.mypokedexcompose.data.dataSource.repository.ItemRepository
+import com.example.mypokedexcompose.data.dataSource.repository.BackPpackItemRepository
+import com.example.mypokedexcompose.data.dataSource.repository.BerryRepository
 import com.example.mypokedexcompose.data.dataSource.repository.PokedexRepository
+import com.example.mypokedexcompose.data.dataSource.repository.PokemonRepository
 import com.example.mypokedexcompose.data.region.RegionMapper
 import com.example.mypokedexcompose.data.region.RegionRepository
 import com.example.mypokedexcompose.ui.screens.backpack.BackPackScreen
@@ -39,17 +39,26 @@ import com.example.mypokedexcompose.ui.screens.home.HomeScreen
 import com.example.mypokedexcompose.ui.screens.home.HomeViewModel
 import com.example.mypokedexcompose.ui.screens.pokedex.PokedexScreen
 import com.example.mypokedexcompose.ui.screens.pokedex.PokedexViewModel
+import com.example.mypokedexcompose.usecases.FetchBackPackItemByNameUseCase
+import com.example.mypokedexcompose.usecases.FetchBackpackItemsUseCase
+import com.example.mypokedexcompose.usecases.FetchBerriesUseCase
+import com.example.mypokedexcompose.usecases.GetBackPackItemsUseCase
+import com.example.mypokedexcompose.usecases.GetchBerriesUseCase
+import com.example.mypokedexcompose.usecases.FetchBerryByNameUseCase
+import com.example.mypokedexcompose.usecases.FetchPokedexForRegionUseCase
+import com.example.mypokedexcompose.usecases.FetchPokedexUseCase
+import com.example.mypokedexcompose.usecases.GetchPokedexUseCase
+import com.example.mypokedexcompose.usecases.FetchPokemonByNameUseCase
+import com.example.mypokedexcompose.usecases.ToggleFavoriteUseCase
 
 sealed class NavScreen(val route: String) {
     data object Home : NavScreen("home")
     data object Detail : NavScreen("detail/{${NavArs.POKEMON_NAME.key}}") {
         fun createRoute(pokemonName: String) = "detail/$pokemonName"
     }
-
     data object Pokedex : NavScreen("pokedex")
     data object BackPack : NavScreen("backpack")
     data object Berries : NavScreen("berries")
-
 }
 
 enum class NavArs(val key: String) {
@@ -73,7 +82,11 @@ fun Navigation() {
             PokedexLocalDataSource(app.db.pokedexDao()),
             PokemonMapper()
         )
-    val itemRepository = ItemRepository(BackPackRemoteDataSource(), BackPackLocalDataSource(app.db.BackPackDao()), ItemsMapper())
+    val backPpackItemRepository = BackPpackItemRepository(
+        BackPackRemoteDataSource(),
+        BackPackLocalDataSource(app.db.BackPackDao()),
+        ItemsMapper()
+    )
     val berryRepository = BerryRepository(
         BerryRemoteDataSource(),
         BerryLocalDataSource(app.db.berryDao()),
@@ -104,7 +117,9 @@ fun Navigation() {
                     PokedexViewModel(
                         SavedStateHandle(),
                         regionRepository,
-                        pokedexRepository,
+                        GetchPokedexUseCase(pokedexRepository),
+                        FetchPokedexUseCase(pokedexRepository),
+                        FetchPokedexForRegionUseCase(pokedexRepository),
                         RegionMapper()
                     )
                 },
@@ -114,7 +129,11 @@ fun Navigation() {
         composable(NavScreen.Berries.route) {
             BerriesScreen(
                 viewModel {
-                    BerriesViewModel(berryRepository)
+                    BerriesViewModel(
+                        GetchBerriesUseCase(berryRepository),
+                        FetchBerryByNameUseCase(berryRepository),
+                        FetchBerriesUseCase(berryRepository)
+                    )
                 },
                 onBack = { navControler.popBackStack() }
             )
@@ -122,7 +141,11 @@ fun Navigation() {
         composable(NavScreen.BackPack.route) {
             BackPackScreen(
                 viewModel {
-                    BackPackViewModel(itemRepository)
+                    BackPackViewModel(
+                        GetBackPackItemsUseCase(backPpackItemRepository),
+                        FetchBackPackItemByNameUseCase(backPpackItemRepository),
+                        FetchBackpackItemsUseCase(backPpackItemRepository)
+                    )
                 },
                 onBack = { navControler.popBackStack() }
             )
@@ -137,7 +160,8 @@ fun Navigation() {
             DetailScreen(
                 viewModel {
                     DetailViewModel(
-                        pokemonRepository,
+                        FetchPokemonByNameUseCase(pokemonRepository),
+                        ToggleFavoriteUseCase(pokemonRepository),
                         pokemonName
                     )
                 },

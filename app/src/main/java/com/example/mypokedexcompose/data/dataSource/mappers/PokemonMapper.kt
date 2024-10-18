@@ -1,8 +1,8 @@
 package com.example.mypokedexcompose.data.dataSource.mappers
 
-import com.example.mypokedexcompose.data.dataSource.local.database.pokemon.PokemonEntity
+import com.example.mypokedexcompose.data.dataSource.local.pokemon.PokemonEntity
 import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonResult
-import com.example.mypokedexcompose.data.pokemon.Pokemon
+import com.example.mypokedexcompose.domain.pokemon.Pokemon
 
 class PokemonMapper {
     fun toDomain(pokemonEntity: PokemonEntity): Pokemon {

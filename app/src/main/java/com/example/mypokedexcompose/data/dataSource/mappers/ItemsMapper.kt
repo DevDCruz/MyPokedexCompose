@@ -1,12 +1,12 @@
 package com.example.mypokedexcompose.data.dataSource.mappers
 
-import com.example.mypokedexcompose.data.dataSource.local.database.backpack.ItemEntity
+import com.example.mypokedexcompose.data.dataSource.local.backpack.ItemEntity
 import com.example.mypokedexcompose.data.dataSource.remote.backpack.ItemResult
-import com.example.mypokedexcompose.data.items.Item
+import com.example.mypokedexcompose.domain.backpackItems.BackpackItem
 
 class ItemsMapper {
-    fun toDomain(itemEntity: ItemEntity): Item {
-        return Item(
+    fun toDomain(itemEntity: ItemEntity): BackpackItem {
+        return BackpackItem(
             attributes = itemEntity.attributes,
             category = itemEntity.category,
             cost = itemEntity.cost,
@@ -16,26 +16,26 @@ class ItemsMapper {
         )
     }
 
-    fun toEntity(item: Item): ItemEntity {
+    fun toEntity(backpackItem: BackpackItem): ItemEntity {
         return ItemEntity(
-            attributes = item.attributes,
-            category = item.category,
-            cost = item.cost,
-            id = item.id,
-            name = item.name,
-            sprites = item.sprites,
-            favorite = item.favorite
+            attributes = backpackItem.attributes,
+            category = backpackItem.category,
+            cost = backpackItem.cost,
+            id = backpackItem.id,
+            name = backpackItem.name,
+            sprites = backpackItem.sprites,
+            favorite = backpackItem.favorite
         )
     }
 
-    fun fromRemoteToEntity(itemResult: Item): ItemEntity {
+    fun fromRemoteToEntity(backpackItemResult: BackpackItem): ItemEntity {
         return ItemEntity(
-            attributes = itemResult.attributes,
-            category = itemResult.category,
-            cost = itemResult.cost,
-            id = itemResult.id,
-            name = itemResult.name,
-            sprites = itemResult.sprites
+            attributes = backpackItemResult.attributes,
+            category = backpackItemResult.category,
+            cost = backpackItemResult.cost,
+            id = backpackItemResult.id,
+            name = backpackItemResult.name,
+            sprites = backpackItemResult.sprites
         )
     }
 
@@ -53,11 +53,11 @@ class ItemsMapper {
         }
     }
 
-    fun toEntityList(items: List<Item>): List<ItemEntity> {
-        return items.map { toEntity(it) }
+    fun toEntityList(backpackItems: List<BackpackItem>): List<ItemEntity> {
+        return backpackItems.map { toEntity(it) }
     }
 
-    fun toDomainList(items: List<ItemEntity>): List<Item> {
+    fun toDomainList(items: List<ItemEntity>): List<BackpackItem> {
         return items.map { toDomain(it) }
     }
 }

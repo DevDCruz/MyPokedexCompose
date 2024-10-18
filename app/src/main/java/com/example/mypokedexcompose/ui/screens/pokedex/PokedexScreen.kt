@@ -47,7 +47,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.mypokedexcompose.R
-import com.example.mypokedexcompose.data.pokemon.Pokemon
+import com.example.mypokedexcompose.domain.pokemon.Pokemon
 import com.example.mypokedexcompose.data.region.PokedexRegion
 import com.example.mypokedexcompose.ui.common.AcScaffold
 import com.example.mypokedexcompose.ui.common.Constants

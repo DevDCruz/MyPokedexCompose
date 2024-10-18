@@ -1,11 +1,11 @@
 package com.example.mypokedexcompose.data.dataSource.remote.backpack
 
-import com.example.mypokedexcompose.data.items.Attribute
-import com.example.mypokedexcompose.data.items.Category
-import com.example.mypokedexcompose.data.items.EffectEntry
-import com.example.mypokedexcompose.data.items.FlavorTextEntry
-import com.example.mypokedexcompose.data.items.GameIndice
-import com.example.mypokedexcompose.data.items.Sprites
+import com.example.mypokedexcompose.domain.backpackItems.Attribute
+import com.example.mypokedexcompose.domain.backpackItems.Category
+import com.example.mypokedexcompose.domain.backpackItems.EffectEntry
+import com.example.mypokedexcompose.domain.backpackItems.FlavorTextEntry
+import com.example.mypokedexcompose.domain.backpackItems.GameIndice
+import com.example.mypokedexcompose.domain.backpackItems.Sprites
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

@@ -1,10 +1,10 @@
 package com.example.mypokedexcompose.data.dataSource.repository
 
 import android.util.Log
-import com.example.mypokedexcompose.data.dataSource.local.database.pokemon.PokemonLocalDataSource
+import com.example.mypokedexcompose.data.dataSource.local.pokemon.PokemonLocalDataSource
 import com.example.mypokedexcompose.data.dataSource.mappers.PokemonMapper
 import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonRemoteDataSource
-import com.example.mypokedexcompose.data.pokemon.Pokemon
+import com.example.mypokedexcompose.domain.pokemon.Pokemon
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
@@ -18,7 +18,7 @@ class PokemonRepository(
     private val pokemonMapper: PokemonMapper
 ) {
 
-    fun fetchPokemonDetails(name: String): Flow<Pokemon> = flow {
+    fun fetchPokemonByName(name: String): Flow<Pokemon> = flow {
         val localPokemonDetail = pokemonLocalDataSource.getPokemonByName(name).firstOrNull()
 
         if (localPokemonDetail != null && localPokemonDetail.isDetailFetched) {
