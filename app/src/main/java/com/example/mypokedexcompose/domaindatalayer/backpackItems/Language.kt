@@ -1,9 +1,9 @@
-package com.example.mypokedexcompose.domain.berries
+package com.example.mypokedexcompose.domaindatalayer.backpackItems
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class NaturalGiftType(
+data class Language(
     val name: String,
     val url: String
 )

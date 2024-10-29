@@ -1,6 +1,6 @@
 package com.example.mypokedexcompose.usecases
 
-import com.example.mypokedexcompose.domain.backpackItems.BackpackItem
+import com.example.mypokedexcompose.domaindatalayer.backpackItems.BackpackItem
 import com.example.mypokedexcompose.data.dataSource.repository.BackPpackItemRepository
 import kotlinx.coroutines.flow.Flow
 

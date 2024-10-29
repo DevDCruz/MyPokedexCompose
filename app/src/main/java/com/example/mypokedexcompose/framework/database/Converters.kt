@@ -1,12 +1,12 @@
 package com.example.mypokedexcompose.framework.database
 
 import androidx.room.TypeConverter
-import com.example.mypokedexcompose.domain.berries.Firmness
-import com.example.mypokedexcompose.domain.berries.Flavor
-import com.example.mypokedexcompose.domain.backpackItems.Attribute
-import com.example.mypokedexcompose.domain.backpackItems.Category
-import com.example.mypokedexcompose.domain.backpackItems.Sprites
-import com.example.mypokedexcompose.domain.pokemon.Type
+import com.example.mypokedexcompose.domaindatalayer.berries.Firmness
+import com.example.mypokedexcompose.domaindatalayer.berries.Flavor
+import com.example.mypokedexcompose.domaindatalayer.backpackItems.Attribute
+import com.example.mypokedexcompose.domaindatalayer.backpackItems.Category
+import com.example.mypokedexcompose.domaindatalayer.backpackItems.Sprites
+import com.example.mypokedexcompose.domaindatalayer.pokemon.Type
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

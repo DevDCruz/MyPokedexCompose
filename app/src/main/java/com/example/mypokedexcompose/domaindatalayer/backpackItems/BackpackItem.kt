@@ -1,4 +1,4 @@
-package com.example.mypokedexcompose.domain.backpackItems
+package com.example.mypokedexcompose.domaindatalayer.backpackItems
 
 
 data class BackpackItem(

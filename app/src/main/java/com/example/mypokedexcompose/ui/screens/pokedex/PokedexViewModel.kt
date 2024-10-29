@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypokedexcompose.data.Result
-import com.example.mypokedexcompose.domain.pokemon.Pokemon
+import com.example.mypokedexcompose.domaindatalayer.pokemon.Pokemon
 import com.example.mypokedexcompose.data.region.PokedexRegion
 import com.example.mypokedexcompose.data.region.RegionMapper
 import com.example.mypokedexcompose.data.region.RegionRepository

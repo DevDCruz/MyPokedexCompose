@@ -1,4 +1,4 @@
-package com.example.mypokedexcompose.domain.berries
+package com.example.mypokedexcompose.domaindatalayer.berries
 
 import kotlinx.serialization.Serializable
 

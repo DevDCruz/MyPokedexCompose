@@ -1,9 +1,9 @@
 package com.example.mypokedexcompose.data.dataSource.remote.berry
 
-import com.example.mypokedexcompose.domain.berries.Firmness
-import com.example.mypokedexcompose.domain.berries.Flavor
-import com.example.mypokedexcompose.domain.berries.Item
-import com.example.mypokedexcompose.domain.berries.NaturalGiftType
+import com.example.mypokedexcompose.domaindatalayer.berries.Firmness
+import com.example.mypokedexcompose.domaindatalayer.berries.Flavor
+import com.example.mypokedexcompose.domaindatalayer.berries.Item
+import com.example.mypokedexcompose.domaindatalayer.berries.NaturalGiftType
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

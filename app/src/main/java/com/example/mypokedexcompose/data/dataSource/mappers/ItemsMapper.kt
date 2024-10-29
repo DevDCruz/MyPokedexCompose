@@ -2,7 +2,7 @@ package com.example.mypokedexcompose.data.dataSource.mappers
 
 import com.example.mypokedexcompose.data.dataSource.local.backpack.ItemEntity
 import com.example.mypokedexcompose.data.dataSource.remote.backpack.ItemResult
-import com.example.mypokedexcompose.domain.backpackItems.BackpackItem
+import com.example.mypokedexcompose.domaindatalayer.backpackItems.BackpackItem
 
 class ItemsMapper {
     fun toDomain(itemEntity: ItemEntity): BackpackItem {

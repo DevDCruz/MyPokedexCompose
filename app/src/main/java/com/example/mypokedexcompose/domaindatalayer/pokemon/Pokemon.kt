@@ -1,4 +1,4 @@
-package com.example.mypokedexcompose.domain.pokemon
+package com.example.mypokedexcompose.domaindatalayer.pokemon
 
 
 data class Pokemon(

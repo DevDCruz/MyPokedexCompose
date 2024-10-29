@@ -3,7 +3,7 @@ package com.example.mypokedexcompose.ui.screens.berries
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypokedexcompose.data.Result
-import com.example.mypokedexcompose.domain.berries.Berry
+import com.example.mypokedexcompose.domaindatalayer.berries.Berry
 import com.example.mypokedexcompose.data.stateAsResultIn
 import com.example.mypokedexcompose.usecases.FetchBerriesUseCase
 import com.example.mypokedexcompose.usecases.FetchBerryByNameUseCase

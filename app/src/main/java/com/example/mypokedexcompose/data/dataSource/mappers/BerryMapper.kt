@@ -1,6 +1,6 @@
 package com.example.mypokedexcompose.data.dataSource.mappers
 
-import com.example.mypokedexcompose.domain.berries.Berry
+import com.example.mypokedexcompose.domaindatalayer.berries.Berry
 import com.example.mypokedexcompose.data.dataSource.remote.berry.BerryResult
 import com.example.mypokedexcompose.data.dataSource.local.berries.BerryEntity
 

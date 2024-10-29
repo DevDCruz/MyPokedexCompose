@@ -17,6 +17,7 @@ kotlinxSerialization = "1.6.3"
 converterGson = "2.9.0"
 roomktx = "2.6.1"
 ksp = "2.0.0-1.0.21"
+jetbrainsKotlinJvm = "2.0.0"
 
 
 [libraries]
@@ -51,3 +52,4 @@ jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "k
 kotlinxSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
