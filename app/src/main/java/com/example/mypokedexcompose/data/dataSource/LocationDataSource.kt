@@ -1,6 +1,6 @@
 package com.example.mypokedexcompose.data.dataSource
 
-import android.location.Location
+import com.example.mypokedexcompose.domain.Location
 
 interface LocationDataSource {
     suspend fun findLastLocation(): Location?

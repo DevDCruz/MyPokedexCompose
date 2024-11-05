@@ -1,19 +1,20 @@
 package com.example.mypokedexcompose.framework
 
 import android.location.Geocoder
-import android.location.Location
+import com.example.mypokedexcompose.data.dataSource.LocationDataSource
 import com.example.mypokedexcompose.data.dataSource.RegionDataSource
+import com.example.mypokedexcompose.domain.Location
 import com.example.mypokedexcompose.ui.common.Constants.DEFAULT_REGION
 import com.example.mypokedexcompose.ui.common.getFromLocationCompat
 
 class GeocoderRegionDataSource(
     private val geocoder: Geocoder,
-    private val playServicesLocationDataSource: PlayServicesLocationDataSource
+    private val locationDataSource: LocationDataSource
 ) :
     RegionDataSource {
 
     override suspend fun findLastRegion(): String =
-        playServicesLocationDataSource.findLastLocation()?.toRegion() ?: DEFAULT_REGION
+        locationDataSource.findLastLocation()?.toRegion() ?: DEFAULT_REGION
 
     override suspend fun Location.toRegion(): String {
         val addresses = geocoder.getFromLocationCompat(latitude, longitude, 1)
