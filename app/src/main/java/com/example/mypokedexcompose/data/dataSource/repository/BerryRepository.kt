@@ -2,7 +2,7 @@ package com.example.mypokedexcompose.data.dataSource.repository
 
 import android.util.Log
 import com.example.mypokedexcompose.data.dataSource.mappers.BerryMapper
-import com.example.mypokedexcompose.domaindatalayer.berries.Berry
+import com.example.mypokedexcompose.domain.berries.Berry
 import com.example.mypokedexcompose.framework.database.berries.BerryRoomDataSource
 import com.example.mypokedexcompose.framework.remote.berries.BerryServerDataSource
 import kotlinx.coroutines.flow.Flow

@@ -1,9 +1,9 @@
-package com.example.mypokedexcompose.domaindatalayer.backpackItems
+package com.example.mypokedexcompose.domain.berries
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Attribute(
+data class Item(
     val name: String,
     val url: String
 )

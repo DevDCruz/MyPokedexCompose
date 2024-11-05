@@ -1,6 +1,6 @@
 package com.example.mypokedexcompose.usecases
 
-import com.example.mypokedexcompose.domaindatalayer.berries.Berry
+import com.example.mypokedexcompose.domain.berries.Berry
 import com.example.mypokedexcompose.data.dataSource.repository.BerryRepository
 import kotlinx.coroutines.flow.Flow
 

@@ -2,7 +2,7 @@ package com.example.mypokedexcompose.data.dataSource.repository
 
 import android.util.Log
 import com.example.mypokedexcompose.data.dataSource.mappers.PokemonMapper
-import com.example.mypokedexcompose.domaindatalayer.pokemon.Pokemon
+import com.example.mypokedexcompose.domain.pokemon.Pokemon
 import com.example.mypokedexcompose.framework.database.pokemon.PokemonRoomDataSource
 import com.example.mypokedexcompose.framework.remote.pokemon.PokemonServerDataSource
 import kotlinx.coroutines.flow.Flow

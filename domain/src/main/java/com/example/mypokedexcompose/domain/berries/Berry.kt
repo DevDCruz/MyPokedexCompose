@@ -1,4 +1,4 @@
-package com.example.mypokedexcompose.domaindatalayer.berries
+package com.example.mypokedexcompose.domain.berries
 
 data class Berry(
     val firmness: Firmness?,

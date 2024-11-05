@@ -2,7 +2,7 @@ package com.example.mypokedexcompose.data.dataSource.local.pokemon
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.mypokedexcompose.domaindatalayer.pokemon.Type
+import com.example.mypokedexcompose.domain.pokemon.Type
 
 @Entity
 data class PokemonEntity(

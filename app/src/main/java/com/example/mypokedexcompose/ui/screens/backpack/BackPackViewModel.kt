@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypokedexcompose.data.Result
-import com.example.mypokedexcompose.domaindatalayer.backpackItems.BackpackItem
+import com.example.mypokedexcompose.domain.backpackItems.BackpackItem
 import com.example.mypokedexcompose.data.stateAsResultIn
 import com.example.mypokedexcompose.usecases.FetchBackPackItemByNameUseCase
 import com.example.mypokedexcompose.usecases.FetchBackpackItemsUseCase

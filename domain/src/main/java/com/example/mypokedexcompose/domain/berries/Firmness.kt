@@ -1,9 +1,9 @@
-package com.example.mypokedexcompose.domaindatalayer.berries
+package com.example.mypokedexcompose.domain.berries
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Item(
+data class Firmness(
     val name: String,
     val url: String
 )

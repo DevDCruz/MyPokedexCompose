@@ -1,7 +1,7 @@
 package com.example.mypokedexcompose.data.dataSource.remote.pokemon
 
 
-import com.example.mypokedexcompose.domaindatalayer.pokemon.Type
+import com.example.mypokedexcompose.domain.pokemon.Type
 
 data class PokemonResult(
     val height: Int,

@@ -2,7 +2,7 @@ package com.example.mypokedexcompose.framework.remote.backpack
 
 import com.example.mypokedexcompose.data.dataSource.remote.backpack.BackPackRemoteDataSource
 import com.example.mypokedexcompose.data.dataSource.remote.backpack.ItemResult
-import com.example.mypokedexcompose.domaindatalayer.backpackItems.BackpackItem
+import com.example.mypokedexcompose.domain.backpackItems.BackpackItem
 
 class BackPackServerDataSource(
     private val itemClient: ItemClient

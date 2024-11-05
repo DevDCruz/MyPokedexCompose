@@ -1,9 +1,9 @@
-package com.example.mypokedexcompose.domaindatalayer.backpackItems
+package com.example.mypokedexcompose.domain.backpackItems
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Category(
+data class VersionGroup(
     val name: String,
     val url: String
 )
