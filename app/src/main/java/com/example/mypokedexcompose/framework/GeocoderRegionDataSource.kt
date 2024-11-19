@@ -9,9 +9,9 @@ import com.example.mypokedexcompose.ui.common.getFromLocationCompat
 
 class GeocoderRegionDataSource(
     private val geocoder: Geocoder,
-    private val locationDataSource: LocationDataSource
+    private val locationDataSource: com.example.mypokedexcompose.data.dataSource.LocationDataSource
 ) :
-    RegionDataSource {
+    com.example.mypokedexcompose.data.dataSource.RegionDataSource {
 
     override suspend fun findLastRegion(): String =
         locationDataSource.findLastLocation()?.toRegion() ?: DEFAULT_REGION

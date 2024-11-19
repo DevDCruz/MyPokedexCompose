@@ -7,14 +7,14 @@ import com.example.mypokedexcompose.data.ifSuccess
 import com.example.mypokedexcompose.data.stateAsResultIn
 import com.example.mypokedexcompose.domain.pokemon.Pokemon
 import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
-import com.example.mypokedexcompose.usecases.FetchPokemonByNameUseCase
-import com.example.mypokedexcompose.usecases.ToggleFavoriteUseCase
+import com.example.mypokedexcompose.usecase.FetchPokemonByNameUseCase
+import com.example.mypokedexcompose.usecase.ToggleFavoriteUseCase
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class DetailViewModel(
-    fetchPokemonByNameUseCase: FetchPokemonByNameUseCase,
-    private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
+    fetchPokemonByNameUseCase: com.example.mypokedexcompose.usecase.FetchPokemonByNameUseCase,
+    private val toggleFavoriteUseCase: com.example.mypokedexcompose.usecase.ToggleFavoriteUseCase,
     name: String
 ) : ViewModel() {
 

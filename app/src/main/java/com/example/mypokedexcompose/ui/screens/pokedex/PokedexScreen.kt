@@ -178,7 +178,7 @@ fun PokedexItem(pokemon: Pokemon, onClick: () -> Unit) {
 fun DropDownMenu(pokedexViewModel: PokedexViewModel, pokedexState: PokedexState) {
     val selectedText by pokedexState.selectedPokedexRegion.collectAsState()
     var expanded by remember { mutableStateOf(false) }
-    val pokedexRegions = PokedexRegion.entries.toTypedArray()
+    val pokedexRegions = com.example.mypokedexcompose.data.region.PokedexRegion.entries.toTypedArray()
 
     OutlinedTextField(
         value = selectedText.displayName,

@@ -58,7 +58,7 @@ fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
             TopAppBar(
                 title = {
                     val pokemonName = when (state) {
-                        is Result.Success<Pokemon> -> (state as Result.Success<Pokemon>).data.name
+                        is com.example.mypokedexcompose.data.Result.Success<Pokemon> -> (state as com.example.mypokedexcompose.data.Result.Success<Pokemon>).data.name
                         else -> ""
                     }
                     Text(
@@ -84,7 +84,7 @@ fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
         floatingActionButton = {
 
             val favorite = when (state) {
-                is Result.Success<Pokemon> -> (state as Result.Success<Pokemon>).data.favorite
+                is com.example.mypokedexcompose.data.Result.Success<Pokemon> -> (state as com.example.mypokedexcompose.data.Result.Success<Pokemon>).data.favorite
                 else -> false
             }
 

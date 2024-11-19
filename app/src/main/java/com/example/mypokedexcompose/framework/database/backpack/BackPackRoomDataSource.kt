@@ -1,9 +1,11 @@
 package com.example.mypokedexcompose.framework.database.backpack
 
-import com.example.mypokedexcompose.data.dataSource.local.backpack.BackPackLocalDataSource
+
+import com.example.mypokedexcompose.data.dataSource.local.backpack.BackPackRoomDataSource
 import com.example.mypokedexcompose.data.dataSource.local.backpack.ItemEntity
 
-class BackPackRoomDataSource(private val dao: BackPackDao) : BackPackLocalDataSource {
+class BackPackRoomDataSource(private val dao: BackPackDao) :
+    BackPackRoomDataSource {
 
     override val items = dao.fetchItems()
     override fun getItemByName(name: String) = dao.fetchItemByName(name)

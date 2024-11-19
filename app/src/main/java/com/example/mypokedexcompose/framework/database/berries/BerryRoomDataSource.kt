@@ -1,11 +1,11 @@
 package com.example.mypokedexcompose.framework.database.berries
 
 import com.example.mypokedexcompose.data.dataSource.local.berries.BerryEntity
-import com.example.mypokedexcompose.data.dataSource.local.berries.BerryLocalDataSource
+import com.example.mypokedexcompose.data.dataSource.local.berries.BerryRoomDataSource
 
 class BerryRoomDataSource(
     private val berryDao: BerryDao
-) : BerryLocalDataSource {
+) : BerryRoomDataSource {
     override val berries = berryDao.fetchBerries()
     override fun getBerryByName(name: String) = berryDao.fetchBerryByName(name)
     override suspend fun isEmpty() = berryDao.countBerries() == 0

@@ -3,23 +3,22 @@ package com.example.mypokedexcompose.ui.screens.backpack
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mypokedexcompose.data.Result
 import com.example.mypokedexcompose.domain.backpackItems.BackpackItem
 import com.example.mypokedexcompose.data.stateAsResultIn
-import com.example.mypokedexcompose.usecases.FetchBackPackItemByNameUseCase
-import com.example.mypokedexcompose.usecases.FetchBackpackItemsUseCase
-import com.example.mypokedexcompose.usecases.GetBackPackItemsUseCase
+import com.example.mypokedexcompose.usecase.FetchBackPackItemByNameUseCase
+import com.example.mypokedexcompose.usecase.FetchBackpackItemsUseCase
+import com.example.mypokedexcompose.usecase.GetBackPackItemsUseCase
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
 class BackPackViewModel(
-    getBackPackItemsUseCase: GetBackPackItemsUseCase,
-    private val fetchBackPackItemByNameUseCase: FetchBackPackItemByNameUseCase,
-    private val fetchBackpackItemsUseCase: FetchBackpackItemsUseCase
+    getBackPackItemsUseCase: com.example.mypokedexcompose.usecase.GetBackPackItemsUseCase,
+    private val fetchBackPackItemByNameUseCase: com.example.mypokedexcompose.usecase.FetchBackPackItemByNameUseCase,
+    private val fetchBackpackItemsUseCase: com.example.mypokedexcompose.usecase.FetchBackpackItemsUseCase
 ) : ViewModel() {
 
-    val state: StateFlow<Result<List<BackpackItem>>> = getBackPackItemsUseCase()
+    val state: StateFlow<com.example.mypokedexcompose.data.Result<List<BackpackItem>>> = getBackPackItemsUseCase()
         .stateAsResultIn(viewModelScope)
 
     init {
