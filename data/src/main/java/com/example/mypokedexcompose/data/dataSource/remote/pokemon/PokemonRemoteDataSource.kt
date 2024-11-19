@@ -1,6 +1,6 @@
 package com.example.mypokedexcompose.data.dataSource.remote.pokemon
 
-interface PokemonServerDataSource {
+interface PokemonRemoteDataSource {
     suspend fun fetchPokemon(name: String): PokemonResult
 
     suspend fun fetchRandomPokemon(id: Int): PokemonResult

@@ -2,7 +2,7 @@ package com.example.mypokedexcompose.data.dataSource.local.backpack
 
 import kotlinx.coroutines.flow.Flow
 
-interface BackPackRoomDataSource {
+interface BackPackLocalDataSource {
 
     val items: Flow<List<ItemEntity>>
 

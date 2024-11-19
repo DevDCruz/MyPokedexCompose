@@ -3,7 +3,7 @@ package com.example.mypokedexcompose.data.dataSource.local.pokedex
 import com.example.mypokedexcompose.data.dataSource.local.pokemon.PokemonEntity
 import kotlinx.coroutines.flow.Flow
 
-interface PokedexRoomDataSource {
+interface PokedexLocalDataSource {
 
     val pokemons: Flow<List<PokemonEntity>>
 

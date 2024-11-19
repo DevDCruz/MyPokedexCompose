@@ -2,7 +2,7 @@ package com.example.mypokedexcompose.data.dataSource.local.berries
 
 import kotlinx.coroutines.flow.Flow
 
-interface BerryRoomDataSource {
+interface BerryLocalDataSource {
 
     val berries: Flow<List<BerryEntity>>
 

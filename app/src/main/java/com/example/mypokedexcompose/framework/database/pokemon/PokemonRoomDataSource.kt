@@ -1,11 +1,11 @@
 package com.example.mypokedexcompose.framework.database.pokemon
 
 import com.example.mypokedexcompose.data.dataSource.local.pokemon.PokemonEntity
-import com.example.mypokedexcompose.data.dataSource.local.pokemon.PokemonRoomDataSource
+import com.example.mypokedexcompose.data.dataSource.local.pokemon.PokemonLocalDataSource
 
 class PokemonRoomDataSource(
     private val pokemonDao: PokemonDao
-) : PokemonRoomDataSource {
+) : PokemonLocalDataSource {
 
     override fun getPokemonByName(name: String) = pokemonDao.getPokemonByName(name)
 

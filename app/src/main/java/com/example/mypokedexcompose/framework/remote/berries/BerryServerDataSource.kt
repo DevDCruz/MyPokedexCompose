@@ -1,11 +1,11 @@
 package com.example.mypokedexcompose.framework.remote.berries
 
 import com.example.mypokedexcompose.data.dataSource.remote.berry.BerryResult
-import com.example.mypokedexcompose.data.dataSource.remote.berry.BerryServerDataSource
+import com.example.mypokedexcompose.data.dataSource.remote.berry.BerryRemoteDataSource
 
 class BerryServerDataSource(
     private val berryClient: BerryClient
-) : BerryServerDataSource {
+) : BerryRemoteDataSource {
     override suspend fun fetchBerries(): List<BerryResult> = berryClient.instance
         .fetchBerries(64)
         .results

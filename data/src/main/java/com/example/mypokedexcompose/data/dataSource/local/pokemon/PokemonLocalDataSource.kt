@@ -2,7 +2,7 @@ package com.example.mypokedexcompose.data.dataSource.local.pokemon
 
 import kotlinx.coroutines.flow.Flow
 
-interface PokemonRoomDataSource {
+interface PokemonLocalDataSource {
 
     fun getPokemonByName(name: String): Flow<PokemonEntity?>
 

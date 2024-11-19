@@ -1,9 +1,9 @@
 package com.example.mypokedexcompose.data.dataSource.repository
 
 
-import com.example.mypokedexcompose.data.dataSource.local.pokemon.PokemonRoomDataSource
+import com.example.mypokedexcompose.data.dataSource.local.pokemon.PokemonLocalDataSource
 import com.example.mypokedexcompose.data.dataSource.mappers.PokemonMapper
-import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonServerDataSource
+import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonRemoteDataSource
 import com.example.mypokedexcompose.domain.repository.IPokemonRepository
 import com.example.mypokedexcompose.domain.pokemon.Pokemon
 import kotlinx.coroutines.flow.Flow
@@ -14,8 +14,8 @@ import kotlinx.coroutines.flow.map
 import java.util.Random
 
 class PokemonRepository(
-    private val pokemonServerDataSource: PokemonServerDataSource,
-    private val pokemonRoomDataSource: PokemonRoomDataSource,
+    private val pokemonServerDataSource: PokemonRemoteDataSource,
+    private val pokemonRoomDataSource: PokemonLocalDataSource,
     private val pokemonMapper: PokemonMapper
 ) : IPokemonRepository {
 

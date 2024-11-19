@@ -42,17 +42,6 @@ import com.example.mypokedexcompose.ui.screens.home.HomeScreen
 import com.example.mypokedexcompose.ui.screens.home.HomeViewModel
 import com.example.mypokedexcompose.ui.screens.pokedex.PokedexScreen
 import com.example.mypokedexcompose.ui.screens.pokedex.PokedexViewModel
-import com.example.mypokedexcompose.usecase.FetchBackPackItemByNameUseCase
-import com.example.mypokedexcompose.usecase.FetchBackpackItemsUseCase
-import com.example.mypokedexcompose.usecase.FetchBerriesUseCase
-import com.example.mypokedexcompose.usecase.FetchBerryByNameUseCase
-import com.example.mypokedexcompose.usecase.FetchPokedexForRegionUseCase
-import com.example.mypokedexcompose.usecase.FetchPokedexUseCase
-import com.example.mypokedexcompose.usecase.FetchPokemonByNameUseCase
-import com.example.mypokedexcompose.usecase.GetBackPackItemsUseCase
-import com.example.mypokedexcompose.usecase.GetchBerriesUseCase
-import com.example.mypokedexcompose.usecase.GetchPokedexUseCase
-import com.example.mypokedexcompose.usecase.ToggleFavoriteUseCase
 import com.google.android.gms.location.LocationServices
 
 sealed class NavScreen(val route: String) {

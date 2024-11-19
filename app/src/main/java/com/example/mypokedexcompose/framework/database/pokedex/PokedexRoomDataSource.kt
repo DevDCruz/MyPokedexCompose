@@ -1,10 +1,10 @@
 package com.example.mypokedexcompose.framework.database.pokedex
 
 import android.util.Log
-import com.example.mypokedexcompose.data.dataSource.local.pokedex.PokedexRoomDataSource
+import com.example.mypokedexcompose.data.dataSource.local.pokedex.PokedexLocalDataSource
 import com.example.mypokedexcompose.data.dataSource.local.pokemon.PokemonEntity
 
-class PokedexRoomDataSource(private val pokedexDao: PokedexDao) : PokedexRoomDataSource {
+class PokedexRoomDataSource(private val pokedexDao: PokedexDao) : PokedexLocalDataSource {
 
     override val pokemons = pokedexDao.fetchPokedex()
 

@@ -2,9 +2,9 @@ package com.example.mypokedexcompose.data.dataSource.repository
 
 
 import android.util.Log
-import com.example.mypokedexcompose.data.dataSource.local.berries.BerryRoomDataSource
+import com.example.mypokedexcompose.data.dataSource.local.berries.BerryLocalDataSource
 import com.example.mypokedexcompose.data.dataSource.mappers.BerryMapper
-import com.example.mypokedexcompose.data.dataSource.remote.berry.BerryServerDataSource
+import com.example.mypokedexcompose.data.dataSource.remote.berry.BerryRemoteDataSource
 import com.example.mypokedexcompose.domain.berries.Berry
 import com.example.mypokedexcompose.domain.repository.IBerryRepository
 import kotlinx.coroutines.flow.Flow
@@ -13,8 +13,8 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
 class BerryRepository(
-    private val berryRoomDataSource: BerryRoomDataSource,
-    private val berryServerDataSource: BerryServerDataSource,
+    private val berryRoomDataSource: BerryLocalDataSource,
+    private val berryServerDataSource: BerryRemoteDataSource,
     private val berryMapper: BerryMapper
 ) : IBerryRepository {
 
