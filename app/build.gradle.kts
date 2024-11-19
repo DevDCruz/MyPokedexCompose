@@ -70,7 +70,7 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.kotlinx.serialization.json)
 
-    //room
+
     implementation(libs.androidx.room.common)
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
