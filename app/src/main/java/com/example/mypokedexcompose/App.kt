@@ -2,7 +2,7 @@ package com.example.mypokedexcompose
 
 import android.app.Application
 import androidx.room.Room
-import com.example.mypokedexcompose.data.dataSource.local.database.PokedexDatabase
+import com.example.mypokedexcompose.framework.database.PokedexDatabase
 
 class App : Application() {
 

@@ -21,4 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "My Pokedex Compose"
 include(":app")
- 
+include(":domain")
+include(":data")
+include(":usecase")

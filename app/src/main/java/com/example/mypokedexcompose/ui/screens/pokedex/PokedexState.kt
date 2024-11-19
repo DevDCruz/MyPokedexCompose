@@ -17,27 +17,27 @@ class PokedexState @OptIn(ExperimentalMaterial3Api::class) constructor(
     private val savedStateHandle: SavedStateHandle
 ) {
 
-    private val _selectedPokedexRegion = MutableStateFlow(PokedexRegion.ALL_GENERATIONS)
-    val selectedPokedexRegion: StateFlow<PokedexRegion> = _selectedPokedexRegion
+    private val _selectedPokedexRegion = MutableStateFlow(com.example.mypokedexcompose.data.region.PokedexRegion.ALL_GENERATIONS)
+    val selectedPokedexRegion: StateFlow<com.example.mypokedexcompose.data.region.PokedexRegion> = _selectedPokedexRegion
 
     var scrollPosition: Int = 0
 
     init {
         scrollPosition = savedStateHandle.get<Int>("scroll_position") ?: 0
-        val savedRegion = savedStateHandle.get<PokedexRegion>("selected_region")
+        val savedRegion = savedStateHandle.get<com.example.mypokedexcompose.data.region.PokedexRegion>("selected_region")
         if (savedRegion != null) {
             _selectedPokedexRegion.value = savedRegion
         } else {
-            _selectedPokedexRegion.value = PokedexRegion.ALL_GENERATIONS
+            _selectedPokedexRegion.value = com.example.mypokedexcompose.data.region.PokedexRegion.ALL_GENERATIONS
         }
     }
 
-    fun updateSelectedGeneration(pokedexRegion: PokedexRegion) {
+    fun updateSelectedGeneration(pokedexRegion: com.example.mypokedexcompose.data.region.PokedexRegion) {
         _selectedPokedexRegion.value = pokedexRegion
         savedStateHandle["selected_region"] = pokedexRegion
     }
 
-    fun onClikedRegion(pokedexRegion: PokedexRegion, viewModel: PokedexViewModel) {
+    fun onClikedRegion(pokedexRegion: com.example.mypokedexcompose.data.region.PokedexRegion, viewModel: PokedexViewModel) {
         updateSelectedGeneration(pokedexRegion)
         viewModel.fetchPokemonsForRegion(pokedexRegion.range)
     }

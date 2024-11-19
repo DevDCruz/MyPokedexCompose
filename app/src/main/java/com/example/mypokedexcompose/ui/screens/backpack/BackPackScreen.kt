@@ -27,7 +27,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
-import com.example.mypokedexcompose.data.items.Item
+import com.example.mypokedexcompose.domain.backpackItems.BackpackItem
 import com.example.mypokedexcompose.ui.common.AcScaffold
 import com.example.mypokedexcompose.ui.common.DropDownCustomItem
 import com.example.mypokedexcompose.ui.common.PropertyDetailItem
@@ -69,7 +69,7 @@ fun BackPackScreen(
             contentPadding = padding
         ) {
             itemsIndexed(items) { index, item ->
-                DropDownBackPack(item = item, itemIndex = index + 1)
+                DropDownBackPack(backpackItem = item, itemIndex = index + 1)
             }
         }
     }
@@ -77,24 +77,24 @@ fun BackPackScreen(
 
 @Composable
 fun DropDownBackPack(
-    item: Item,
+    backpackItem: BackpackItem,
     itemIndex: Int,
     vm: BackPackViewModel = viewModel()
 ) {
-    var itemDetail by remember { mutableStateOf<Item?>(null) }
+    var backpackItemDetail by remember { mutableStateOf<BackpackItem?>(null) }
 
     DropDownCustomItem(
-        title = item.name ?: "",
+        title = backpackItem.name ?: "",
         index = itemIndex,
-        detail = itemDetail,
+        detail = backpackItemDetail,
         onFetchDetails = {
-            vm.fetchItemDetails(item.name ?: "").also { itemDetail = it }
+            vm.fetchItemDetails(backpackItem.name ?: "").also { backpackItemDetail = it }
         },
-        onClearDetails = { itemDetail = null }
+        onClearDetails = { backpackItemDetail = null }
     ) {
         Column(modifier = Modifier.padding(8.dp)) {
             AsyncImage(
-                model = itemDetail?.sprites?.default ?: "",
+                model = backpackItemDetail?.sprites?.default ?: "",
                 contentDescription = "item's sprite",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -104,14 +104,14 @@ fun DropDownBackPack(
                     .align(Alignment.CenterHorizontally)
             )
             Text(buildAnnotatedString {
-                PropertyDetailItem(name = "Name", value = itemDetail?.name ?: "")
+                PropertyDetailItem(name = "Name", value = backpackItemDetail?.name ?: "")
                 PropertyDetailItem(
                     name = "Attributes",
-                    value = itemDetail?.attributes?.joinToString(", ") { it.name } ?: "")
-                PropertyDetailItem(name = "Category", value = itemDetail?.category?.name ?: "")
+                    value = backpackItemDetail?.attributes?.joinToString(", ") { it.name } ?: "")
+                PropertyDetailItem(name = "Category", value = backpackItemDetail?.category?.name ?: "")
                 PropertyDetailItem(
                     name = "Cost",
-                    value = ("${itemDetail?.cost ?: ""} $").toString(),
+                    value = ("${backpackItemDetail?.cost ?: ""} $").toString(),
                     true
                 )
             }, modifier = Modifier.padding(16.dp))

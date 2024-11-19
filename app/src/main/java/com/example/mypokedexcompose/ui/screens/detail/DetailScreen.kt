@@ -36,7 +36,7 @@ import coil.compose.AsyncImage
 import com.example.mypokedexcompose.R
 import  com.example.mypokedexcompose.data.Result
 import com.example.mypokedexcompose.data.ifSuccess
-import com.example.mypokedexcompose.data.pokemon.Pokemon
+import com.example.mypokedexcompose.domain.pokemon.Pokemon
 import com.example.mypokedexcompose.ui.common.AcScaffold
 import com.example.mypokedexcompose.ui.common.Constants
 import com.example.mypokedexcompose.ui.common.PropertyPokemonDetail
@@ -58,7 +58,7 @@ fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
             TopAppBar(
                 title = {
                     val pokemonName = when (state) {
-                        is Result.Success<Pokemon> -> (state as Result.Success<Pokemon>).data.name
+                        is com.example.mypokedexcompose.data.Result.Success<Pokemon> -> (state as com.example.mypokedexcompose.data.Result.Success<Pokemon>).data.name
                         else -> ""
                     }
                     Text(
@@ -84,7 +84,7 @@ fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
         floatingActionButton = {
 
             val favorite = when (state) {
-                is Result.Success<Pokemon> -> (state as Result.Success<Pokemon>).data.favorite
+                is com.example.mypokedexcompose.data.Result.Success<Pokemon> -> (state as com.example.mypokedexcompose.data.Result.Success<Pokemon>).data.favorite
                 else -> false
             }
 

@@ -15,7 +15,7 @@ import com.example.mypokedexcompose.data.Result
 
 @Composable
 fun <T> AcScaffold(
-    state: Result<T>,
+    state: com.example.mypokedexcompose.data.Result<T>,
     modifier: Modifier = Modifier,
     topBar: @Composable () -> Unit = {},
     bottomBar: @Composable () -> Unit = {},
@@ -39,9 +39,9 @@ fun <T> AcScaffold(
         contentWindowInsets = contentWindowInsets
     ){ padding ->
         when (state) {
-            is Result.Success -> content(padding, state.data)
-            is Result.Loading -> { CircularProgressFun(padding = padding) }
-            is Result.Error -> ErrorText(state.error, modifier)
+            is com.example.mypokedexcompose.data.Result.Success -> content(padding, state.data)
+            is com.example.mypokedexcompose.data.Result.Loading -> { CircularProgressFun(padding = padding) }
+            is com.example.mypokedexcompose.data.Result.Error -> ErrorText(state.error, modifier)
         }
     }
 }

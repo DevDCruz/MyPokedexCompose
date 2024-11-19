@@ -1,20 +1,24 @@
 package com.example.mypokedexcompose.ui.screens.backpack
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mypokedexcompose.data.Result
+import com.example.mypokedexcompose.domain.backpackItems.BackpackItem
 import com.example.mypokedexcompose.data.stateAsResultIn
-import com.example.mypokedexcompose.data.dataSource.repository.ItemRepository
-import com.example.mypokedexcompose.data.items.Item
+import com.example.mypokedexcompose.usecase.FetchBackPackItemByNameUseCase
+import com.example.mypokedexcompose.usecase.FetchBackpackItemsUseCase
+import com.example.mypokedexcompose.usecase.GetBackPackItemsUseCase
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
 class BackPackViewModel(
-    private val repository: ItemRepository
+    getBackPackItemsUseCase: com.example.mypokedexcompose.usecase.GetBackPackItemsUseCase,
+    private val fetchBackPackItemByNameUseCase: com.example.mypokedexcompose.usecase.FetchBackPackItemByNameUseCase,
+    private val fetchBackpackItemsUseCase: com.example.mypokedexcompose.usecase.FetchBackpackItemsUseCase
 ) : ViewModel() {
 
-    val state: StateFlow<Result<List<Item>>> = repository.items
+    val state: StateFlow<com.example.mypokedexcompose.data.Result<List<BackpackItem>>> = getBackPackItemsUseCase()
         .stateAsResultIn(viewModelScope)
 
     init {
@@ -23,14 +27,15 @@ class BackPackViewModel(
         }
     }
 
-    private suspend fun fechAllItems() {
+    private fun fechAllItems() {
         viewModelScope.launch {
-            repository.fetchAllItems()
+            fetchBackpackItemsUseCase()
+            Log.d("BackPackViewModel", "fetching All Items")
         }
     }
 
-    suspend fun fetchItemDetails(name: String): Item? {
-        val itemDetail = repository.fetchItemByName(name)
+    suspend fun fetchItemDetails(name: String): BackpackItem? {
+        val itemDetail = fetchBackPackItemByNameUseCase(name)
         return itemDetail.firstOrNull()
     }
 }
