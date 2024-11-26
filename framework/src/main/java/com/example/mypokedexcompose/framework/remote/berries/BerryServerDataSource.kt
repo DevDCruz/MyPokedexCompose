@@ -1,7 +1,7 @@
 package com.example.mypokedexcompose.framework.remote.berries
 
-import com.example.mypokedexcompose.data.dataSource.remote.berry.BerryResult
 import com.example.mypokedexcompose.data.dataSource.remote.berry.BerryRemoteDataSource
+import com.example.mypokedexcompose.data.dataSource.remote.berry.BerryResult
 
 class BerryServerDataSource(
     private val berryClient: BerryClient

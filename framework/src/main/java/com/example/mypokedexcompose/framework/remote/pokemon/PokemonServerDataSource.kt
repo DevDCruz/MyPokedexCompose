@@ -1,7 +1,7 @@
 package com.example.mypokedexcompose.framework.remote.pokemon
 
-import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonResult
 import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonRemoteDataSource
+import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonResult
 
 class PokemonServerDataSource(
     private val pokemonClient: PokemonClient

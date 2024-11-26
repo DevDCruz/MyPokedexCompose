@@ -9,7 +9,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 
 class PlayServicesLocationDataSource(private val fusedLocationClient: FusedLocationProviderClient) :
-    com.example.mypokedexcompose.data.dataSource.LocationDataSource {
+    LocationDataSource {
 
     override suspend fun findLastLocation(): Location? = fusedLocationClient.lastLocation()
 }

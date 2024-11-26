@@ -5,5 +5,5 @@ object Constants {
             "master/sprites/pokemon/other/official-artwork/"
     const val SPRITE_DEFAULT_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"
 
-    const val DEFAULT_REGION = "US"
+
 }
