@@ -20,10 +20,6 @@ import com.example.mypokedexcompose.data.dataSource.repository.PokedexRepository
 import com.example.mypokedexcompose.data.dataSource.repository.PokemonRepository
 import com.example.mypokedexcompose.framework.GeocoderRegionDataSource
 import com.example.mypokedexcompose.framework.PlayServicesLocationDataSource
-import com.example.mypokedexcompose.framework.database.backpack.BackPackRoomDataSource
-import com.example.mypokedexcompose.framework.database.berries.BerryRoomDataSource
-import com.example.mypokedexcompose.framework.database.pokedex.PokedexRoomDataSource
-import com.example.mypokedexcompose.framework.database.pokemon.PokemonRoomDataSource
 import com.example.mypokedexcompose.framework.remote.backpack.BackPackServerDataSource
 import com.example.mypokedexcompose.framework.remote.backpack.ItemClient
 import com.example.mypokedexcompose.framework.remote.berries.BerryClient
@@ -73,22 +69,22 @@ fun Navigation() {
     val pokedexRepository =
         PokedexRepository(
             PokedexServerDataSource(PokedexClient),
-            PokedexRoomDataSource(app.db.pokedexDao()),
+            com.example.mypokedexcompose.framework.database.pokedex.PokedexRoomDataSource(app.db.pokedexDao()),
             PokemonMapper()
         )
     val backPackItemRepository = BackPackItemRepository(
         BackPackServerDataSource(ItemClient),
-        BackPackRoomDataSource(app.db.BackPackDao()),
+        com.example.mypokedexcompose.framework.database.backpack.BackPackRoomDataSource(app.db.BackPackDao()),
         ItemsMapper()
     )
     val berryRepository = BerryRepository(
-        BerryRoomDataSource(app.db.berryDao()),
+        com.example.mypokedexcompose.framework.database.berries.BerryRoomDataSource(app.db.berryDao()),
         BerryServerDataSource(BerryClient),
         BerryMapper()
     )
     val pokemonRepository = PokemonRepository(
         PokemonServerDataSource(PokemonClient),
-        PokemonRoomDataSource(app.db.pokemonDao()),
+        com.example.mypokedexcompose.framework.database.pokemon.PokemonRoomDataSource(app.db.pokemonDao()),
         PokemonMapper()
     )
 

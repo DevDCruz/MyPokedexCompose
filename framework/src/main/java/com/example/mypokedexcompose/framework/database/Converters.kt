@@ -1,5 +1,6 @@
 package com.example.mypokedexcompose.framework.database
 
+
 import androidx.room.TypeConverter
 import com.example.mypokedexcompose.domain.berries.Firmness
 import com.example.mypokedexcompose.domain.berries.Flavor

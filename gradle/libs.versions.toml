@@ -23,6 +23,8 @@ coroutines = "1.7.3"
 roomCommon = "2.6.1"
 appcompat = "1.7.0"
 material = "1.12.0"
+toolsCore = "1.0.0-alpha10"
+firebaseCrashlyticsBuildtools = "3.0.2"
 
 
 [libraries]
@@ -54,6 +56,8 @@ kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-cor
 androidx-room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommon" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-tools-core = { group = "androidx.privacysandbox.tools", name = "tools-core", version.ref = "toolsCore" }
+firebase-crashlytics-buildtools = { group = "com.google.firebase", name = "firebase-crashlytics-buildtools", version.ref = "firebaseCrashlyticsBuildtools" }
 
 
 [plugins]
