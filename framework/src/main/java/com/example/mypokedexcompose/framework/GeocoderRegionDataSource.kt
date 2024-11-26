@@ -10,14 +10,14 @@ class GeocoderRegionDataSource(
     private val locationDataSource: LocationDataSource
 ) :
     RegionDataSource {
-    private val defaultRegion = "US"
+    private val DEFAULT_REGION = "US"
 
     override suspend fun findLastRegion(): String =
-        locationDataSource.findLastLocation()?.toRegion() ?: defaultRegion
+        locationDataSource.findLastLocation()?.toRegion() ?: DEFAULT_REGION
 
     override suspend fun Location.toRegion(): String {
         val addresses = geocoder.getFromLocationCompat(latitude, longitude, 1)
         val region = addresses.firstOrNull()?.countryCode
-        return region ?: defaultRegion
+        return region ?: DEFAULT_REGION
     }
 }
