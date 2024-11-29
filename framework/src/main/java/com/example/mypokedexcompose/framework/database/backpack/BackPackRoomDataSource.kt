@@ -1,12 +1,10 @@
 package com.example.mypokedexcompose.framework.database.backpack
 
 
-import android.util.Log
 import com.example.mypokedexcompose.data.dataSource.local.backpack.BackPackLocalDataSource
 import com.example.mypokedexcompose.domain.backpackItems.BackpackItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 
 class BackPackRoomDataSource(
     private val dao: BackPackDao,
@@ -28,6 +26,5 @@ class BackPackRoomDataSource(
     override suspend fun saveItems(itemDomain: List<BackpackItem>) {
         val items = itemsMapper.fromDomainListToEntityList(itemDomain)
         dao.saveItem(items)
-        val count = dao.countItems()
     }
 }

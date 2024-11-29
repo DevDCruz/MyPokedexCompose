@@ -1,6 +1,5 @@
 package com.example.mypokedexcompose.framework.database.backpack
 
-import android.util.Log
 import com.example.mypokedexcompose.domain.backpackItems.BackpackItem
 import com.example.mypokedexcompose.framework.remote.backpack.ItemResult
 
@@ -42,10 +41,6 @@ class ItemsMapper {
         )
     }
 
-    fun fromRemoteListToDomainList(itemsResults: List<ItemResult>): List<BackpackItem> {
-        return itemsResults.map { fromRemoteToDomain(it) }
-    }
-
     fun fromDomainListToEntityList(backpackItems: List<BackpackItem>): List<ItemEntity> {
         return backpackItems.map { fromDomainToEntity(it) }
     }
@@ -55,32 +50,3 @@ class ItemsMapper {
     }
 }
 
-/*fun fromRemoteListtoDomainList(itemsResults: List<ItemResult>): List<BackpackItem> {
-    return itemsResults.map { fromRemoteToDomain(it) }
-
-}
-
-fun fromRemoteToEntityList(items: List<ItemResult>): List<ItemEntity> {
-    return items.mapIndexed { index, itemResult ->
-        ItemEntity(
-            attributes = itemResult.attributes,
-            category = itemResult.category,
-            cost = itemResult.cost,
-            id = index + 1,
-            name = itemResult.name,
-            sprites = itemResult.sprites,
-            favorite = false
-        )
-    }
-}
-
-fun fromRemoteToEntity(backpackItemResult: BackpackItem): ItemEntity {
-    return ItemEntity(
-        attributes = backpackItemResult.attributes,
-        category = backpackItemResult.category,
-        cost = backpackItemResult.cost,
-        id = backpackItemResult.id,
-        name = backpackItemResult.name,
-        sprites = backpackItemResult.sprites
-    )
-}*/
