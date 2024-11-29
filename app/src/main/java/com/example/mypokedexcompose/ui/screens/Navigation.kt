@@ -12,7 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.mypokedexcompose.App
 import com.example.mypokedexcompose.data.dataSource.mappers.BerryMapper
-import com.example.mypokedexcompose.data.dataSource.mappers.ItemsMapper
+import com.example.mypokedexcompose.framework.database.backpack.ItemsMapper
 import com.example.mypokedexcompose.data.dataSource.mappers.PokemonMapper
 import com.example.mypokedexcompose.data.dataSource.repository.BackPackItemRepository
 import com.example.mypokedexcompose.data.dataSource.repository.BerryRepository
@@ -73,9 +73,9 @@ fun Navigation() {
             PokemonMapper()
         )
     val backPackItemRepository = BackPackItemRepository(
-        BackPackServerDataSource(ItemClient),
-        com.example.mypokedexcompose.framework.database.backpack.BackPackRoomDataSource(app.db.BackPackDao()),
-        ItemsMapper()
+        BackPackServerDataSource(ItemClient, ItemsMapper()),
+        com.example.mypokedexcompose.framework.database.backpack.BackPackRoomDataSource(app.db.BackPackDao(),ItemsMapper()),
+
     )
     val berryRepository = BerryRepository(
         com.example.mypokedexcompose.framework.database.berries.BerryRoomDataSource(app.db.berryDao()),

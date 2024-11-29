@@ -1,10 +1,11 @@
-package com.example.mypokedexcompose.data.dataSource.remote.backpack
+package com.example.mypokedexcompose.framework.remote.backpack
 
 import com.example.mypokedexcompose.domain.backpackItems.Attribute
 import com.example.mypokedexcompose.domain.backpackItems.Category
 import com.example.mypokedexcompose.domain.backpackItems.EffectEntry
 import com.example.mypokedexcompose.domain.backpackItems.FlavorTextEntry
 import com.example.mypokedexcompose.domain.backpackItems.GameIndice
+import com.example.mypokedexcompose.domain.backpackItems.Name
 import com.example.mypokedexcompose.domain.backpackItems.Sprites
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -31,6 +32,6 @@ data class ItemResult(
     val id: Int,
     val machines: List<String>,
     val name: String,
-    val names: List<String>,
+    val names: List<Name>,
     val sprites: Sprites
 )

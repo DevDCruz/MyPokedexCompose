@@ -4,7 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.mypokedexcompose.framework.database.backpack.BackPackDao
-import com.example.mypokedexcompose.data.dataSource.local.backpack.ItemEntity
+import com.example.mypokedexcompose.framework.database.backpack.ItemEntity
 import com.example.mypokedexcompose.framework.database.berries.BerryDao
 import com.example.mypokedexcompose.data.dataSource.local.berries.BerryEntity
 import com.example.mypokedexcompose.framework.database.pokedex.PokedexDao

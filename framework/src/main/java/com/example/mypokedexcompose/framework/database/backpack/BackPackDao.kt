@@ -3,7 +3,6 @@ package com.example.mypokedexcompose.framework.database.backpack
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.example.mypokedexcompose.data.dataSource.local.backpack.ItemEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

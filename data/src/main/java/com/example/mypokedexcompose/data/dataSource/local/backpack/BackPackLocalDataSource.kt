@@ -1,14 +1,15 @@
 package com.example.mypokedexcompose.data.dataSource.local.backpack
 
+import com.example.mypokedexcompose.domain.backpackItems.BackpackItem
 import kotlinx.coroutines.flow.Flow
 
 interface BackPackLocalDataSource {
 
-    val items: Flow<List<ItemEntity>>
+    val items: Flow<List<BackpackItem>>
 
-    fun getItemByName(name: String): Flow<ItemEntity?>
+    fun getItemByName(name: String): Flow<BackpackItem?>
 
-    suspend fun isEmpty(): Boolean
+    suspend fun isNotFetched(): Boolean
 
-    suspend fun saveItems(itemEntity: List<ItemEntity>)
+    suspend fun saveItems(itemDomain: List<BackpackItem>)
 }

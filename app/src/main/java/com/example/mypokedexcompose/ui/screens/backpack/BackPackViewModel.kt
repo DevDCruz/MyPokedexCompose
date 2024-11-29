@@ -13,9 +13,9 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
 class BackPackViewModel(
-    getBackPackItemsUseCase: com.example.mypokedexcompose.usecase.GetBackPackItemsUseCase,
-    private val fetchBackPackItemByNameUseCase: com.example.mypokedexcompose.usecase.FetchBackPackItemByNameUseCase,
-    private val fetchBackpackItemsUseCase: com.example.mypokedexcompose.usecase.FetchBackpackItemsUseCase
+    getBackPackItemsUseCase: GetBackPackItemsUseCase,
+    private val fetchBackPackItemByNameUseCase: FetchBackPackItemByNameUseCase,
+    private val fetchBackpackItemsUseCase: FetchBackpackItemsUseCase
 ) : ViewModel() {
 
     val state: StateFlow<com.example.mypokedexcompose.data.Result<List<BackpackItem>>> = getBackPackItemsUseCase()
