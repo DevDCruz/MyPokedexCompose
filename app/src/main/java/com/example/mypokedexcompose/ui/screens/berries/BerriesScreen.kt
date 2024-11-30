@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.mypokedexcompose.domain.berries.Berry
+import com.example.mypokedexcompose.domain.berries.BerryDomain
 import com.example.mypokedexcompose.ui.common.AcScaffold
 import com.example.mypokedexcompose.ui.common.DropDownCustomItem
 import com.example.mypokedexcompose.ui.common.PropertyDetailItem
@@ -73,11 +73,11 @@ fun BerriesScreen(
 
 @Composable
 fun DropDownBerry(
-    berry: Berry,
+    berry: BerryDomain,
     berryId: Int,
     vm: BerriesViewModel = viewModel()
 ) {
-    var berryDetail by remember { mutableStateOf<Berry?>(null) }
+    var berryDetail by remember { mutableStateOf<BerryDomain?>(null) }
 
     DropDownCustomItem(
         title = berry.name ?: "",

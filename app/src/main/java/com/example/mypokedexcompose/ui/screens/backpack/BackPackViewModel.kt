@@ -3,7 +3,7 @@ package com.example.mypokedexcompose.ui.screens.backpack
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mypokedexcompose.domain.backpackItems.BackpackItem
+import com.example.mypokedexcompose.domain.backpackItems.BackpackItemDomain
 import com.example.mypokedexcompose.data.stateAsResultIn
 import com.example.mypokedexcompose.usecase.FetchBackPackItemByNameUseCase
 import com.example.mypokedexcompose.usecase.FetchBackpackItemsUseCase
@@ -18,7 +18,7 @@ class BackPackViewModel(
     private val fetchBackpackItemsUseCase: FetchBackpackItemsUseCase
 ) : ViewModel() {
 
-    val state: StateFlow<com.example.mypokedexcompose.data.Result<List<BackpackItem>>> = getBackPackItemsUseCase()
+    val state: StateFlow<com.example.mypokedexcompose.data.Result<List<BackpackItemDomain>>> = getBackPackItemsUseCase()
         .stateAsResultIn(viewModelScope)
 
     init {
@@ -34,7 +34,7 @@ class BackPackViewModel(
         }
     }
 
-    suspend fun fetchItemDetails(name: String): BackpackItem? {
+    suspend fun fetchItemDetails(name: String): BackpackItemDomain? {
         val itemDetail = fetchBackPackItemByNameUseCase(name)
         return itemDetail.firstOrNull()
     }

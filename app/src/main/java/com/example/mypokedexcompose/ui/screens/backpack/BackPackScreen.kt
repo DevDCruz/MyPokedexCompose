@@ -27,7 +27,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
-import com.example.mypokedexcompose.domain.backpackItems.BackpackItem
+import com.example.mypokedexcompose.domain.backpackItems.BackpackItemDomain
 import com.example.mypokedexcompose.ui.common.AcScaffold
 import com.example.mypokedexcompose.ui.common.DropDownCustomItem
 import com.example.mypokedexcompose.ui.common.PropertyDetailItem
@@ -77,11 +77,11 @@ fun BackPackScreen(
 
 @Composable
 fun DropDownBackPack(
-    backpackItem: BackpackItem,
+    backpackItem: BackpackItemDomain,
     itemIndex: Int,
     vm: BackPackViewModel = viewModel()
 ) {
-    var backpackItemDetail by remember { mutableStateOf<BackpackItem?>(null) }
+    var backpackItemDetail by remember { mutableStateOf<BackpackItemDomain?>(null) }
 
     DropDownCustomItem(
         title = backpackItem.name ?: "",

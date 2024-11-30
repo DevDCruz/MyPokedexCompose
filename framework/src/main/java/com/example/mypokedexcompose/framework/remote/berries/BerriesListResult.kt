@@ -1,4 +1,4 @@
-package com.example.mypokedexcompose.data.dataSource.remote.berry
+package com.example.mypokedexcompose.framework.remote.berries
 
 data class BerriesListResult(
     val count: Int,

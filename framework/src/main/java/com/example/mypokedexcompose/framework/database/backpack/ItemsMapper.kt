@@ -1,11 +1,11 @@
 package com.example.mypokedexcompose.framework.database.backpack
 
-import com.example.mypokedexcompose.domain.backpackItems.BackpackItem
+import com.example.mypokedexcompose.domain.backpackItems.BackpackItemDomain
 import com.example.mypokedexcompose.framework.remote.backpack.ItemResult
 
 class ItemsMapper {
-    fun fromEntityToDomain(itemEntity: ItemEntity): BackpackItem {
-        return BackpackItem(
+    fun fromEntityToDomain(itemEntity: ItemEntity): BackpackItemDomain {
+        return BackpackItemDomain(
             attributes = itemEntity.attributes,
             category = itemEntity.category,
             cost = itemEntity.cost,
@@ -17,21 +17,21 @@ class ItemsMapper {
         )
     }
 
-    fun fromDomainToEntity(backpackItem: BackpackItem): ItemEntity {
+    fun fromDomainToEntity(backpackItemDomain: BackpackItemDomain): ItemEntity {
         return ItemEntity(
-            attributes = backpackItem.attributes,
-            category = backpackItem.category,
-            cost = backpackItem.cost,
-            id = backpackItem.id,
-            name = backpackItem.name,
-            sprites = backpackItem.sprites,
-            favorite = backpackItem.favorite,
-            detailFetched = backpackItem.detailFetched
+            attributes = backpackItemDomain.attributes,
+            category = backpackItemDomain.category,
+            cost = backpackItemDomain.cost,
+            id = backpackItemDomain.id,
+            name = backpackItemDomain.name,
+            sprites = backpackItemDomain.sprites,
+            favorite = backpackItemDomain.favorite,
+            detailFetched = backpackItemDomain.detailFetched
         )
     }
 
-    fun fromRemoteToDomain(itemResult: ItemResult): BackpackItem {
-        return BackpackItem(
+    fun fromRemoteToDomain(itemResult: ItemResult): BackpackItemDomain {
+        return BackpackItemDomain(
             attributes = itemResult.attributes,
             category = itemResult.category,
             cost = itemResult.cost,
@@ -41,11 +41,11 @@ class ItemsMapper {
         )
     }
 
-    fun fromDomainListToEntityList(backpackItems: List<BackpackItem>): List<ItemEntity> {
-        return backpackItems.map { fromDomainToEntity(it) }
+    fun fromDomainListToEntityList(backpackItemDomains: List<BackpackItemDomain>): List<ItemEntity> {
+        return backpackItemDomains.map { fromDomainToEntity(it) }
     }
 
-    fun fromEntityListToDomainList(items: List<ItemEntity>): List<BackpackItem> {
+    fun fromEntityListToDomainList(items: List<ItemEntity>): List<BackpackItemDomain> {
         return items.map { fromEntityToDomain(it) }
     }
 }

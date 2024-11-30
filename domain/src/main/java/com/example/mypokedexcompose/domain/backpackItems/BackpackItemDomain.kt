@@ -1,7 +1,7 @@
 package com.example.mypokedexcompose.domain.backpackItems
 
 
-data class BackpackItem(
+data class BackpackItemDomain(
     val id: Int,
     val attributes: List<Attribute>?,
     val category: Category?,

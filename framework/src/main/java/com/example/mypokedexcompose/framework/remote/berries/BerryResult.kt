@@ -1,4 +1,4 @@
-package com.example.mypokedexcompose.data.dataSource.remote.berry
+package com.example.mypokedexcompose.framework.remote.berries
 
 import com.example.mypokedexcompose.domain.berries.Firmness
 import com.example.mypokedexcompose.domain.berries.Flavor

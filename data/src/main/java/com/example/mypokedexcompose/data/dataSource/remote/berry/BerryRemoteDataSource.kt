@@ -1,7 +1,9 @@
 package com.example.mypokedexcompose.data.dataSource.remote.berry
 
-interface BerryRemoteDataSource {
-    suspend fun fetchBerries(): List<BerryResult>
+import com.example.mypokedexcompose.domain.berries.BerryDomain
 
-    suspend fun fetchBerryByName(name: String): BerryResult
+interface BerryRemoteDataSource {
+    suspend fun fetchBerries(): List<BerryDomain>
+
+    suspend fun fetchBerryByName(name: String): BerryDomain
 }

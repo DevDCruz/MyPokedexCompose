@@ -1,8 +1,6 @@
 package com.example.mypokedexcompose.framework.remote.berries
 
 
-import com.example.mypokedexcompose.data.dataSource.remote.berry.BerriesListResult
-import com.example.mypokedexcompose.data.dataSource.remote.berry.BerryResult
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

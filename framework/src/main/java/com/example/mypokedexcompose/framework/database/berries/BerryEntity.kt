@@ -1,4 +1,4 @@
-package com.example.mypokedexcompose.data.dataSource.local.berries
+package com.example.mypokedexcompose.framework.database.berries
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -7,12 +7,12 @@ import com.example.mypokedexcompose.domain.berries.Flavor
 
 @Entity
 data class BerryEntity (
-    @PrimaryKey val id: Int?,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val firmness: Firmness?,
     val flavors: List<Flavor>?,
     val name: String?,
     val size: Int?,
     val smoothness: Int?,
     var favorite: Boolean,
-    var isDetailFetched: Boolean = false
+    var detailFetched: Boolean = false
 )
