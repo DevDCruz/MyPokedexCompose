@@ -5,10 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.mypokedexcompose.data.Result
 import com.example.mypokedexcompose.data.ifSuccess
 import com.example.mypokedexcompose.data.stateAsResultIn
-import com.example.mypokedexcompose.domain.pokemon.Pokemon
+import com.example.mypokedexcompose.domain.pokemon.PokemonDomain
 import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
-import com.example.mypokedexcompose.usecase.FetchPokemonByNameUseCase
-import com.example.mypokedexcompose.usecase.ToggleFavoriteUseCase
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
@@ -18,7 +16,7 @@ class DetailViewModel(
     name: String
 ) : ViewModel() {
 
-    val state: StateFlow<Result<Pokemon>> = fetchPokemonByNameUseCase(name)
+    val state: StateFlow<Result<PokemonDomain>> = fetchPokemonByNameUseCase(name)
         .stateAsResultIn(viewModelScope)
 
     fun onFavoriteClicked() {
@@ -30,7 +28,7 @@ class DetailViewModel(
     }
 }
 
-fun getPokemonType(pokemon: Pokemon): String {
+fun getPokemonType(pokemon: PokemonDomain): String {
     val types = pokemon.types ?: return "Unknown Type"
     return types.joinToString(" - ") { it.type.name.changefirstCharToUpperCase() }
 }

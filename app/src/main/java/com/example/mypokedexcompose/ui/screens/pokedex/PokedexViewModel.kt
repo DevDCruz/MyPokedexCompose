@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 class PokedexViewModel(
     val savedStateHandle: SavedStateHandle,
     private val regionRepository: RegionRepository,
-    private val getchPokedexUseCase: com.example.mypokedexcompose.usecase.GetchPokedexUseCase,
+    private val getPokedexUseCase: com.example.mypokedexcompose.usecase.GetPokedexUseCase,
     private val fetchPokedexUseCase: com.example.mypokedexcompose.usecase.FetchPokedexUseCase,
     private val fetchPokedexForRegionUseCase: com.example.mypokedexcompose.usecase.FetchPokedexForRegionUseCase,
     private val regionMapper: RegionMapper
@@ -33,7 +33,7 @@ class PokedexViewModel(
     @OptIn(ExperimentalCoroutinesApi::class)
     val state: StateFlow<Result<UiState>> = onUiReady
         .filter { it }
-        .flatMapLatest { getchPokedexUseCase() }
+        .flatMapLatest { getPokedexUseCase() }
         .combine(selectedRegionFlow) { pokemons, selectedPokedexRegion ->
             val filteredPokemons =
                 pokemons.filter { it.id in selectedPokedexRegion.range[0]..selectedPokedexRegion.range[1] }

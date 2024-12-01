@@ -1,6 +1,7 @@
-package com.example.mypokedexcompose.framework.database.backpack
+package com.example.mypokedexcompose.framework.mappers
 
 import com.example.mypokedexcompose.domain.backpackItems.BackpackItemDomain
+import com.example.mypokedexcompose.framework.database.backpack.ItemEntity
 import com.example.mypokedexcompose.framework.remote.backpack.ItemResult
 
 class ItemsMapper {

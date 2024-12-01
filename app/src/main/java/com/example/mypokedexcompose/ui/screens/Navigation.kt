@@ -115,7 +115,7 @@ fun Navigation() {
                     PokedexViewModel(
                         SavedStateHandle(),
                         regionRepository,
-                        com.example.mypokedexcompose.usecase.GetchPokedexUseCase(pokedexRepository),
+                        com.example.mypokedexcompose.usecase.GetPokedexUseCase(pokedexRepository),
                         com.example.mypokedexcompose.usecase.FetchPokedexUseCase(pokedexRepository),
                         com.example.mypokedexcompose.usecase.FetchPokedexForRegionUseCase(
                             pokedexRepository
@@ -130,7 +130,7 @@ fun Navigation() {
             BerriesScreen(
                 viewModel {
                     BerriesViewModel(
-                        com.example.mypokedexcompose.usecase.GetchBerriesUseCase(berryRepository),
+                        com.example.mypokedexcompose.usecase.GetBerriesUseCase(berryRepository),
                         com.example.mypokedexcompose.usecase.FetchBerryByNameUseCase(berryRepository),
                         com.example.mypokedexcompose.usecase.FetchBerriesUseCase(berryRepository)
                     )

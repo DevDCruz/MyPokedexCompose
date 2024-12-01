@@ -10,12 +10,12 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
 class BerriesViewModel(
-    getchBerriesUseCase: com.example.mypokedexcompose.usecase.GetchBerriesUseCase,
+    getBerriesUseCase: com.example.mypokedexcompose.usecase.GetBerriesUseCase,
     private val fetchberryByNameUseCase: com.example.mypokedexcompose.usecase.FetchBerryByNameUseCase,
     private val fetchBerriesUseCase: com.example.mypokedexcompose.usecase.FetchBerriesUseCase
 ) : ViewModel() {
 
-    val state: StateFlow<Result<List<BerryDomain>>> = getchBerriesUseCase()
+    val state: StateFlow<Result<List<BerryDomain>>> = getBerriesUseCase()
         .stateAsResultIn(viewModelScope)
 
     init {

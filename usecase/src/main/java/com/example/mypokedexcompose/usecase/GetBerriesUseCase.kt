@@ -4,7 +4,7 @@ import com.example.mypokedexcompose.domain.repository.IBerryRepository
 import com.example.mypokedexcompose.domain.berries.BerryDomain
 import kotlinx.coroutines.flow.Flow
 
-class GetchBerriesUseCase(
+class GetBerriesUseCase(
     private val berryRepository: IBerryRepository
 ) {
     operator fun invoke(): Flow<List<BerryDomain>> = berryRepository.berries

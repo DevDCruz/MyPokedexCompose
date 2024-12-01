@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.mypokedexcompose.R
-import com.example.mypokedexcompose.domain.pokemon.Pokemon
+import com.example.mypokedexcompose.domain.pokemon.PokemonDomain
 import com.example.mypokedexcompose.ui.common.CircularProgressFun
 import com.example.mypokedexcompose.ui.common.Constants
 import com.example.mypokedexcompose.ui.screens.NavScreen
@@ -74,7 +74,7 @@ fun HomeScreen(vm: HomeViewModel, navController: NavController) {
 }
 
 @Composable
-fun HomeScreenItem(pokemon: Pokemon, navController: NavController) {
+fun HomeScreenItem(pokemon: PokemonDomain, navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()

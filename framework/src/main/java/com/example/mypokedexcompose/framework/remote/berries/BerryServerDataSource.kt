@@ -3,6 +3,7 @@ package com.example.mypokedexcompose.framework.remote.berries
 import android.util.Log
 import com.example.mypokedexcompose.data.dataSource.remote.berry.BerryRemoteDataSource
 import com.example.mypokedexcompose.domain.berries.BerryDomain
+import com.example.mypokedexcompose.framework.mappers.BerryMapper
 
 class BerryServerDataSource(
     private val berryClient: BerryClient,

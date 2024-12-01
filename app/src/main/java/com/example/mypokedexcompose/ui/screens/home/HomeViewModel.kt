@@ -3,7 +3,7 @@ package com.example.mypokedexcompose.ui.screens.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypokedexcompose.data.dataSource.repository.PokemonRepository
-import com.example.mypokedexcompose.domain.pokemon.Pokemon
+import com.example.mypokedexcompose.domain.pokemon.PokemonDomain
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -34,6 +34,6 @@ class HomeViewModel(
 
     data class UiState(
         val loading: Boolean = false,
-        val pokemon: Pokemon? = null
+        val pokemon: PokemonDomain? = null
     )
 }

@@ -3,6 +3,7 @@ package com.example.mypokedexcompose.framework.database.backpack
 
 import com.example.mypokedexcompose.data.dataSource.local.backpack.BackPackLocalDataSource
 import com.example.mypokedexcompose.domain.backpackItems.BackpackItemDomain
+import com.example.mypokedexcompose.framework.mappers.ItemsMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

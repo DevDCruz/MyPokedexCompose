@@ -34,9 +34,8 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.mypokedexcompose.R
-import  com.example.mypokedexcompose.data.Result
 import com.example.mypokedexcompose.data.ifSuccess
-import com.example.mypokedexcompose.domain.pokemon.Pokemon
+import com.example.mypokedexcompose.domain.pokemon.PokemonDomain
 import com.example.mypokedexcompose.ui.common.AcScaffold
 import com.example.mypokedexcompose.ui.common.Constants
 import com.example.mypokedexcompose.ui.common.PropertyPokemonDetail
@@ -58,7 +57,7 @@ fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
             TopAppBar(
                 title = {
                     val pokemonName = when (state) {
-                        is com.example.mypokedexcompose.data.Result.Success<Pokemon> -> (state as com.example.mypokedexcompose.data.Result.Success<Pokemon>).data.name
+                        is com.example.mypokedexcompose.data.Result.Success<PokemonDomain> -> (state as com.example.mypokedexcompose.data.Result.Success<PokemonDomain>).data.name
                         else -> ""
                     }
                     Text(
@@ -84,7 +83,7 @@ fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
         floatingActionButton = {
 
             val favorite = when (state) {
-                is com.example.mypokedexcompose.data.Result.Success<Pokemon> -> (state as com.example.mypokedexcompose.data.Result.Success<Pokemon>).data.favorite
+                is com.example.mypokedexcompose.data.Result.Success<PokemonDomain> -> (state as com.example.mypokedexcompose.data.Result.Success<PokemonDomain>).data.favorite
                 else -> false
             }
 
@@ -117,7 +116,7 @@ fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
 }
 
 @Composable
-fun DeatilPokemonItem(pokemon: Pokemon) {
+fun DeatilPokemonItem(pokemon: PokemonDomain) {
     Column {
         AsyncImage(
             model = "${Constants.SPRITE_OFFICIAL_ARTWORK_URL}${pokemon.id}.png",
