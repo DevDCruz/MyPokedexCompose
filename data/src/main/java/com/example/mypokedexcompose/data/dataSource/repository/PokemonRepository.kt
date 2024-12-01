@@ -1,7 +1,6 @@
 package com.example.mypokedexcompose.data.dataSource.repository
 
 
-import android.util.Log
 import com.example.mypokedexcompose.data.dataSource.local.pokemon.PokemonLocalDataSource
 import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonRemoteDataSource
 import com.example.mypokedexcompose.domain.pokemon.PokemonDomain
@@ -21,20 +20,16 @@ class PokemonRepository(
         val localPokemonDetail = pokemonRoomDataSource.getPokemonByName(name).firstOrNull()
 
         if (localPokemonDetail != null && localPokemonDetail.detailFetched) {
-            Log.d(
-                "PokemonRepository",
-                "Pokemon details fetched from local DB for ${localPokemonDetail.name}"
-            )
             emit(localPokemonDetail)
         } else {
-            Log.d("PokemonRepository", "Pokemon details fetched from remote for $name")
             val remotePokemonDetail = pokemonServerDataSource.fetchPokemon(name)
 
             remotePokemonDetail.detailFetched = true
             pokemonRoomDataSource.savePokemon(remotePokemonDetail)
             emit(remotePokemonDetail)
         }
-        pokemonRoomDataSource.getPokemonByName(name).collect { pokemon -> pokemon?.let{ emit(it) } }
+        pokemonRoomDataSource.getPokemonByName(name)
+            .collect { pokemon -> pokemon?.let { emit(it) } }
     }
         .filterNotNull()
 
