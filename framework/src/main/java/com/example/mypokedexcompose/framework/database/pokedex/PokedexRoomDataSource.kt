@@ -1,6 +1,5 @@
 package com.example.mypokedexcompose.framework.database.pokedex
 
-import android.util.Log
 import com.example.mypokedexcompose.data.dataSource.local.pokedex.PokedexLocalDataSource
 import com.example.mypokedexcompose.domain.pokemon.PokemonDomain
 import com.example.mypokedexcompose.framework.mappers.PokemonMapper
@@ -17,7 +16,6 @@ class PokedexRoomDataSource(
     override suspend fun savePokemons(pokemonEntity: List<PokemonDomain>) {
         val pokemons = pokemonEntity.map { pokemon -> pokemonMapper.fromDomainToEntity(pokemon) }
         pokedexDao.savePokemons(pokemons)
-        val newCount = countPokemons()
     }
 
     override suspend fun countPokemons(): Int {
