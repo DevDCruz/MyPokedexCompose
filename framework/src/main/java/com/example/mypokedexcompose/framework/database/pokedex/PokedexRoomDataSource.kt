@@ -2,25 +2,31 @@ package com.example.mypokedexcompose.framework.database.pokedex
 
 import android.util.Log
 import com.example.mypokedexcompose.data.dataSource.local.pokedex.PokedexLocalDataSource
-import com.example.mypokedexcompose.data.dataSource.local.pokemon.PokemonEntity
+import com.example.mypokedexcompose.domain.pokemon.PokemonDomain
+import com.example.mypokedexcompose.framework.mappers.PokemonMapper
+import kotlinx.coroutines.flow.map
 
-class PokedexRoomDataSource(private val pokedexDao: PokedexDao) : PokedexLocalDataSource {
+class PokedexRoomDataSource(
+    private val pokedexDao: PokedexDao,
+    private val pokemonMapper: PokemonMapper
+) : PokedexLocalDataSource {
 
     override val pokemons = pokedexDao.fetchPokedex()
+        .map { pokemons -> pokemonMapper.fromEntityListToDomainList(pokemons) }
 
-    override suspend fun savePokemons(pokemonEntity: List<PokemonEntity>) {
-        Log.d("PokedexLocalDataSource", "savingPokemons: ${pokemonEntity.size}")
-        pokedexDao.savePokemons(pokemonEntity)
+    override suspend fun savePokemons(pokemonEntity: List<PokemonDomain>) {
+        val pokemons = pokemonEntity.map { pokemon -> pokemonMapper.fromDomainToEntity(pokemon) }
+        pokedexDao.savePokemons(pokemons)
         val newCount = countPokemons()
-        Log.d("PokedexLocalDataSource", "newCount: $newCount")
     }
 
     override suspend fun countPokemons(): Int {
         val count = pokedexDao.countPokemons()
-        Log.d("PokedexLocalDataSource", "countPokemons: $count")
         return count
     }
 
-    override suspend fun getPokedexForRegion(offset: Int, limit: Int): List<PokemonEntity> =
-        pokedexDao.fetchRegionalPokedex(offset, limit)
+    override suspend fun getPokedexForRegion(offset: Int, limit: Int): List<PokemonDomain> {
+        val pokemons = pokedexDao.fetchRegionalPokedex(offset, limit)
+        return pokemons.map { pokemon -> pokemonMapper.fromEntityToDomain(pokemon) }
+    }
 }

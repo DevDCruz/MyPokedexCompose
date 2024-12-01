@@ -8,10 +8,7 @@ import com.example.mypokedexcompose.data.region.PokedexRegion
 import com.example.mypokedexcompose.data.region.RegionMapper
 import com.example.mypokedexcompose.data.region.RegionRepository
 import com.example.mypokedexcompose.data.stateAsResultIn
-import com.example.mypokedexcompose.domain.pokemon.Pokemon
-import com.example.mypokedexcompose.usecase.FetchPokedexForRegionUseCase
-import com.example.mypokedexcompose.usecase.FetchPokedexUseCase
-import com.example.mypokedexcompose.usecase.GetchPokedexUseCase
+import com.example.mypokedexcompose.domain.pokemon.PokemonDomain
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -64,7 +61,7 @@ class PokedexViewModel(
     }
 
     data class UiState(
-        val pokemons: List<Pokemon>? = null,
+        val pokemons: List<PokemonDomain>? = null,
         val selectedPokedexRegion: PokedexRegion = PokedexRegion.ALL_GENERATIONS
     )
 }

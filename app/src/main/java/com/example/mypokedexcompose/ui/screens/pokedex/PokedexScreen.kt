@@ -47,7 +47,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.mypokedexcompose.R
-import com.example.mypokedexcompose.domain.pokemon.Pokemon
+import com.example.mypokedexcompose.domain.pokemon.PokemonDomain
 import com.example.mypokedexcompose.ui.common.AcScaffold
 import com.example.mypokedexcompose.ui.common.Constants
 import com.example.mypokedexcompose.ui.common.PermissionRequestEffect
@@ -62,7 +62,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PokedexScreen(
-    onClick: (Pokemon) -> Unit,
+    onClick: (PokemonDomain) -> Unit,
     vm: PokedexViewModel = viewModel(),
     onBack: () -> Unit
 ) {
@@ -134,7 +134,7 @@ fun PokedexScreen(
 }
 
 @Composable
-fun PokedexItem(pokemon: Pokemon, onClick: () -> Unit) {
+fun PokedexItem(pokemon: PokemonDomain, onClick: () -> Unit) {
 
     Row(
         modifier = Modifier

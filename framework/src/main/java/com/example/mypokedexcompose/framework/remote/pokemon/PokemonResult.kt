@@ -1,4 +1,4 @@
-package com.example.mypokedexcompose.data.dataSource.remote.pokemon
+package com.example.mypokedexcompose.framework.remote.pokemon
 
 
 import com.example.mypokedexcompose.domain.pokemon.Type

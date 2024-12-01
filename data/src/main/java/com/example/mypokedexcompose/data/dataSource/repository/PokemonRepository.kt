@@ -1,65 +1,59 @@
 package com.example.mypokedexcompose.data.dataSource.repository
 
 
+import android.util.Log
 import com.example.mypokedexcompose.data.dataSource.local.pokemon.PokemonLocalDataSource
-import com.example.mypokedexcompose.data.dataSource.mappers.PokemonMapper
 import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonRemoteDataSource
+import com.example.mypokedexcompose.domain.pokemon.PokemonDomain
 import com.example.mypokedexcompose.domain.repository.IPokemonRepository
-import com.example.mypokedexcompose.domain.pokemon.Pokemon
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 import java.util.Random
 
 class PokemonRepository(
     private val pokemonServerDataSource: PokemonRemoteDataSource,
-    private val pokemonRoomDataSource: PokemonLocalDataSource,
-    private val pokemonMapper: PokemonMapper
+    private val pokemonRoomDataSource: PokemonLocalDataSource
 ) : IPokemonRepository {
 
-    override fun fetchPokemonByName(name: String): Flow<Pokemon> = flow {
+    override fun fetchPokemonByName(name: String): Flow<PokemonDomain> = flow {
         val localPokemonDetail = pokemonRoomDataSource.getPokemonByName(name).firstOrNull()
 
-        if (localPokemonDetail != null && localPokemonDetail.isDetailFetched) {
-            /*Log.d(
+        if (localPokemonDetail != null && localPokemonDetail.detailFetched) {
+            Log.d(
                 "PokemonRepository",
                 "Pokemon details fetched from local DB for ${localPokemonDetail.name}"
-            )*/
-            emit(pokemonMapper.toDomain(localPokemonDetail))
+            )
+            emit(localPokemonDetail)
         } else {
-            //Log.d("PokemonRepository", "Pokemon details fetched from remote for $name")
+            Log.d("PokemonRepository", "Pokemon details fetched from remote for $name")
             val remotePokemonDetail = pokemonServerDataSource.fetchPokemon(name)
-            val newLocalPokemonDetail = pokemonMapper.fromRemoteToEntity(remotePokemonDetail)
-            newLocalPokemonDetail.isDetailFetched = true
-            pokemonRoomDataSource.savePokemon(newLocalPokemonDetail)
-            emit(pokemonMapper.toDomain(newLocalPokemonDetail))
+
+            remotePokemonDetail.detailFetched = true
+            pokemonRoomDataSource.savePokemon(remotePokemonDetail)
+            emit(remotePokemonDetail)
         }
-        pokemonRoomDataSource.getPokemonByName(name)
-            .map { pokemonEntity -> pokemonEntity?.let { pokemonMapper.toDomain(it) } }
-            .collect { emit(it) }
+        pokemonRoomDataSource.getPokemonByName(name).collect { pokemon -> pokemon?.let{ emit(it) } }
     }
         .filterNotNull()
 
-    override suspend fun fetchRandomPokemon(): Flow<Pokemon?> = flow {
+    override suspend fun fetchRandomPokemon(): Flow<PokemonDomain?> = flow {
         val localPokemon = pokemonRoomDataSource.getPokemonById(generateRandomId()).firstOrNull()
         if (localPokemon != null) {
-            emit(pokemonMapper.toDomain(localPokemon))
+            emit(localPokemon)
         } else {
             val remotePokemon = pokemonServerDataSource.fetchRandomPokemon(generateRandomId())
-            val newLocalPokemon = pokemonMapper.fromRemoteToEntity(remotePokemon)
-            pokemonRoomDataSource.savePokemon(newLocalPokemon)
-            emit(pokemonMapper.toDomain(newLocalPokemon))
+            emit(remotePokemon)
         }
     }
 
-    override suspend fun toggleFavorite(pokemon: Pokemon) {
-        val currentEntity = pokemonRoomDataSource.getPokemonByName(pokemon.name).firstOrNull()
+    override suspend fun toggleFavorite(pokemonDomain: PokemonDomain) {
+        val currentEntity = pokemonRoomDataSource.getPokemonByName(pokemonDomain.name).firstOrNull()
         if (currentEntity != null) {
             val updatedPokemon = currentEntity.copy(
-                favorite = !pokemon.favorite,
-                isDetailFetched = currentEntity.isDetailFetched
+                favorite = !pokemonDomain.favorite,
+                detailFetched = currentEntity.detailFetched
             )
             pokemonRoomDataSource.savePokemon(updatedPokemon)
         }

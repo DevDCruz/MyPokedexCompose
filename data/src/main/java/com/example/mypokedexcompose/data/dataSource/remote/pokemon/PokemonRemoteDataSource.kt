@@ -1,9 +1,11 @@
 package com.example.mypokedexcompose.data.dataSource.remote.pokemon
 
-interface PokemonRemoteDataSource {
-    suspend fun fetchPokemon(name: String): PokemonResult
+import com.example.mypokedexcompose.domain.pokemon.PokemonDomain
 
-    suspend fun fetchRandomPokemon(id: Int): PokemonResult
+interface PokemonRemoteDataSource {
+    suspend fun fetchPokemon(name: String): PokemonDomain
+
+    suspend fun fetchRandomPokemon(id: Int): PokemonDomain
 }
 
 

@@ -9,7 +9,7 @@ import com.example.mypokedexcompose.framework.database.berries.BerryDao
 import com.example.mypokedexcompose.framework.database.berries.BerryEntity
 import com.example.mypokedexcompose.framework.database.pokedex.PokedexDao
 import com.example.mypokedexcompose.framework.database.pokemon.PokemonDao
-import com.example.mypokedexcompose.data.dataSource.local.pokemon.PokemonEntity
+import com.example.mypokedexcompose.framework.database.pokemon.PokemonEntity
 
 @Database(
     entities = [PokemonEntity::class, BerryEntity::class, ItemEntity::class],

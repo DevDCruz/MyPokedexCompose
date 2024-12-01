@@ -11,18 +11,18 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.mypokedexcompose.App
-import com.example.mypokedexcompose.data.dataSource.mappers.PokemonMapper
 import com.example.mypokedexcompose.data.dataSource.repository.BackPackItemRepository
 import com.example.mypokedexcompose.data.dataSource.repository.BerryRepository
 import com.example.mypokedexcompose.data.dataSource.repository.PokedexRepository
 import com.example.mypokedexcompose.data.dataSource.repository.PokemonRepository
 import com.example.mypokedexcompose.framework.GeocoderRegionDataSource
 import com.example.mypokedexcompose.framework.PlayServicesLocationDataSource
-import com.example.mypokedexcompose.framework.database.backpack.ItemsMapper
+import com.example.mypokedexcompose.framework.mappers.BerryMapper
+import com.example.mypokedexcompose.framework.mappers.ItemsMapper
+import com.example.mypokedexcompose.framework.mappers.PokemonMapper
 import com.example.mypokedexcompose.framework.remote.backpack.BackPackServerDataSource
 import com.example.mypokedexcompose.framework.remote.backpack.ItemClient
 import com.example.mypokedexcompose.framework.remote.berries.BerryClient
-import com.example.mypokedexcompose.framework.remote.berries.BerryMapper
 import com.example.mypokedexcompose.framework.remote.berries.BerryServerDataSource
 import com.example.mypokedexcompose.framework.remote.pokedex.PokedexClient
 import com.example.mypokedexcompose.framework.remote.pokedex.PokedexServerDataSource
@@ -68,9 +68,11 @@ fun Navigation() {
     )
     val pokedexRepository =
         PokedexRepository(
-            PokedexServerDataSource(PokedexClient),
-            com.example.mypokedexcompose.framework.database.pokedex.PokedexRoomDataSource(app.db.pokedexDao()),
-            PokemonMapper()
+            PokedexServerDataSource(PokedexClient, PokemonMapper()),
+            com.example.mypokedexcompose.framework.database.pokedex.PokedexRoomDataSource(
+                app.db.pokedexDao(),
+                PokemonMapper()
+            ),
         )
     val backPackItemRepository = BackPackItemRepository(
         BackPackServerDataSource(ItemClient, ItemsMapper()),
@@ -86,13 +88,14 @@ fun Navigation() {
             BerryMapper()
         ),
         BerryServerDataSource(BerryClient, BerryMapper()),
-        )
-    val pokemonRepository = PokemonRepository(
-        PokemonServerDataSource(PokemonClient),
-        com.example.mypokedexcompose.framework.database.pokemon.PokemonRoomDataSource(app.db.pokemonDao()),
-        PokemonMapper()
     )
-
+    val pokemonRepository = PokemonRepository(
+        PokemonServerDataSource(PokemonClient, PokemonMapper()),
+        com.example.mypokedexcompose.framework.database.pokemon.PokemonRoomDataSource(
+            app.db.pokemonDao(),
+            PokemonMapper()
+        ),
+        )
 
     NavHost(navController = navControler, startDestination = NavScreen.Home.route) {
         composable(NavScreen.Home.route) {
