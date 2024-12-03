@@ -49,7 +49,9 @@ dependencies {
     implementation(libs.play.services.location)
     ksp(libs.room.compiler)
 
-
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.compose)
+    
     implementation(libs.retrofit.converter.kotlinx.serialization)
     implementation(libs.converter.gson)
     implementation(libs.kotlinx.serialization.json)

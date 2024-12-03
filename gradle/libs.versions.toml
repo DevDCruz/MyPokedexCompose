@@ -8,7 +8,7 @@ junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.6"
 activityCompose = "1.9.2"
-composeBom = "2024.09.02"
+composeBom = "2024.11.00"
 playServicesLocation = "21.3.0"
 coil = "2.6.0"
 retrofit = "2.11.0"
@@ -24,7 +24,7 @@ roomCommon = "2.6.1"
 appcompat = "1.7.0"
 material = "1.12.0"
 toolsCore = "1.0.0-alpha10"
-firebaseCrashlyticsBuildtools = "3.0.2"
+koin-bom = "3.5.6"
 
 
 [libraries]
@@ -57,7 +57,11 @@ androidx-room-common = { group = "androidx.room", name = "room-common", version.
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-tools-core = { group = "androidx.privacysandbox.tools", name = "tools-core", version.ref = "toolsCore" }
-firebase-crashlytics-buildtools = { group = "com.google.firebase", name = "firebase-crashlytics-buildtools", version.ref = "firebaseCrashlyticsBuildtools" }
+koin-bom = { group = "io.insert-koin", name = "koin-bom", version.ref = "koin-bom" }
+koin-core = { group = "io.insert-koin", name = "koin-core" }
+koin-android = { group = "io.insert-koin", name = "koin-android" }
+koin-compose = { group = "io.insert-koin", name = "koin-compose" }
+
 
 
 [plugins]

@@ -15,8 +15,14 @@ import com.example.mypokedexcompose.data.dataSource.repository.BackPackItemRepos
 import com.example.mypokedexcompose.data.dataSource.repository.BerryRepository
 import com.example.mypokedexcompose.data.dataSource.repository.PokedexRepository
 import com.example.mypokedexcompose.data.dataSource.repository.PokemonRepository
+import com.example.mypokedexcompose.data.region.RegionMapper
+import com.example.mypokedexcompose.data.region.RegionRepository
 import com.example.mypokedexcompose.framework.GeocoderRegionDataSource
 import com.example.mypokedexcompose.framework.PlayServicesLocationDataSource
+import com.example.mypokedexcompose.framework.database.backpack.BackPackRoomDataSource
+import com.example.mypokedexcompose.framework.database.berries.BerryRoomDataSource
+import com.example.mypokedexcompose.framework.database.pokedex.PokedexRoomDataSource
+import com.example.mypokedexcompose.framework.database.pokemon.PokemonRoomDataSource
 import com.example.mypokedexcompose.framework.mappers.BerryMapper
 import com.example.mypokedexcompose.framework.mappers.ItemsMapper
 import com.example.mypokedexcompose.framework.mappers.PokemonMapper
@@ -38,6 +44,17 @@ import com.example.mypokedexcompose.ui.screens.home.HomeScreen
 import com.example.mypokedexcompose.ui.screens.home.HomeViewModel
 import com.example.mypokedexcompose.ui.screens.pokedex.PokedexScreen
 import com.example.mypokedexcompose.ui.screens.pokedex.PokedexViewModel
+import com.example.mypokedexcompose.usecase.FetchBackPackItemByNameUseCase
+import com.example.mypokedexcompose.usecase.FetchBackpackItemsUseCase
+import com.example.mypokedexcompose.usecase.FetchBerriesUseCase
+import com.example.mypokedexcompose.usecase.FetchBerryByNameUseCase
+import com.example.mypokedexcompose.usecase.FetchPokedexForRegionUseCase
+import com.example.mypokedexcompose.usecase.FetchPokedexUseCase
+import com.example.mypokedexcompose.usecase.FetchPokemonByNameUseCase
+import com.example.mypokedexcompose.usecase.GetBackPackItemsUseCase
+import com.example.mypokedexcompose.usecase.GetBerriesUseCase
+import com.example.mypokedexcompose.usecase.GetPokedexUseCase
+import com.example.mypokedexcompose.usecase.ToggleFavoriteUseCase
 import com.google.android.gms.location.LocationServices
 
 sealed class NavScreen(val route: String) {
@@ -60,7 +77,7 @@ fun Navigation() {
     val navControler = rememberNavController()
     val app = LocalContext.current.applicationContext as App
 
-    val regionRepository = com.example.mypokedexcompose.data.region.RegionRepository(
+    val regionRepository = RegionRepository(
         GeocoderRegionDataSource(
             Geocoder(app),
             PlayServicesLocationDataSource(LocationServices.getFusedLocationProviderClient(app))
@@ -69,21 +86,17 @@ fun Navigation() {
     val pokedexRepository =
         PokedexRepository(
             PokedexServerDataSource(PokedexClient, PokemonMapper()),
-            com.example.mypokedexcompose.framework.database.pokedex.PokedexRoomDataSource(
-                app.db.pokedexDao(),
-                PokemonMapper()
+            PokedexRoomDataSource(app.db.pokedexDao(), PokemonMapper()
             ),
         )
     val backPackItemRepository = BackPackItemRepository(
         BackPackServerDataSource(ItemClient, ItemsMapper()),
-        com.example.mypokedexcompose.framework.database.backpack.BackPackRoomDataSource(
-            app.db.BackPackDao(),
-            ItemsMapper()
+        BackPackRoomDataSource(app.db.BackPackDao(), ItemsMapper()
         ),
 
         )
     val berryRepository = BerryRepository(
-        com.example.mypokedexcompose.framework.database.berries.BerryRoomDataSource(
+        BerryRoomDataSource(
             app.db.berryDao(),
             BerryMapper()
         ),
@@ -91,11 +104,9 @@ fun Navigation() {
     )
     val pokemonRepository = PokemonRepository(
         PokemonServerDataSource(PokemonClient, PokemonMapper()),
-        com.example.mypokedexcompose.framework.database.pokemon.PokemonRoomDataSource(
-            app.db.pokemonDao(),
-            PokemonMapper()
+        PokemonRoomDataSource(app.db.pokemonDao(), PokemonMapper()
         ),
-        )
+    )
 
     NavHost(navController = navControler, startDestination = NavScreen.Home.route) {
         composable(NavScreen.Home.route) {
@@ -115,12 +126,12 @@ fun Navigation() {
                     PokedexViewModel(
                         SavedStateHandle(),
                         regionRepository,
-                        com.example.mypokedexcompose.usecase.GetPokedexUseCase(pokedexRepository),
-                        com.example.mypokedexcompose.usecase.FetchPokedexUseCase(pokedexRepository),
-                        com.example.mypokedexcompose.usecase.FetchPokedexForRegionUseCase(
+                        GetPokedexUseCase(pokedexRepository),
+                        FetchPokedexUseCase(pokedexRepository),
+                        FetchPokedexForRegionUseCase(
                             pokedexRepository
                         ),
-                        com.example.mypokedexcompose.data.region.RegionMapper()
+                        RegionMapper()
                     )
                 },
                 onBack = { navControler.popBackStack() }
@@ -130,9 +141,9 @@ fun Navigation() {
             BerriesScreen(
                 viewModel {
                     BerriesViewModel(
-                        com.example.mypokedexcompose.usecase.GetBerriesUseCase(berryRepository),
-                        com.example.mypokedexcompose.usecase.FetchBerryByNameUseCase(berryRepository),
-                        com.example.mypokedexcompose.usecase.FetchBerriesUseCase(berryRepository)
+                        GetBerriesUseCase(berryRepository),
+                        FetchBerryByNameUseCase(berryRepository),
+                        FetchBerriesUseCase(berryRepository)
                     )
                 },
                 onBack = { navControler.popBackStack() }
@@ -142,13 +153,13 @@ fun Navigation() {
             BackPackScreen(
                 viewModel {
                     BackPackViewModel(
-                        com.example.mypokedexcompose.usecase.GetBackPackItemsUseCase(
+                        GetBackPackItemsUseCase(
                             backPackItemRepository
                         ),
-                        com.example.mypokedexcompose.usecase.FetchBackPackItemByNameUseCase(
+                        FetchBackPackItemByNameUseCase(
                             backPackItemRepository
                         ),
-                        com.example.mypokedexcompose.usecase.FetchBackpackItemsUseCase(
+                        FetchBackpackItemsUseCase(
                             backPackItemRepository
                         )
                     )
@@ -166,10 +177,10 @@ fun Navigation() {
             DetailScreen(
                 viewModel {
                     DetailViewModel(
-                        com.example.mypokedexcompose.usecase.FetchPokemonByNameUseCase(
+                        FetchPokemonByNameUseCase(
                             pokemonRepository
                         ),
-                        com.example.mypokedexcompose.usecase.ToggleFavoriteUseCase(pokemonRepository),
+                        ToggleFavoriteUseCase(pokemonRepository),
                         pokemonName
                     )
                 },

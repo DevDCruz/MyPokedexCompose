@@ -12,4 +12,7 @@ java {
 dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.coroutines.core)
+
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.core)
 }
