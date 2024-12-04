@@ -59,8 +59,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 androidx-tools-core = { group = "androidx.privacysandbox.tools", name = "tools-core", version.ref = "toolsCore" }
 koin-bom = { group = "io.insert-koin", name = "koin-bom", version.ref = "koin-bom" }
 koin-core = { group = "io.insert-koin", name = "koin-core" }
-koin-android = { group = "io.insert-koin", name = "koin-android" }
-koin-compose = { group = "io.insert-koin", name = "koin-compose" }
+koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose" }
 
 
 
