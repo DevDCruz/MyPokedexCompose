@@ -7,7 +7,7 @@ import com.example.mypokedexcompose.framework.mappers.ItemsMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class BackPackRoomDataSource(
+internal class BackPackRoomDataSource(
     private val dao: BackPackDao,
     private val itemsMapper: ItemsMapper
 ) :

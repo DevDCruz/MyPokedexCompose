@@ -4,8 +4,8 @@ import com.example.mypokedexcompose.data.dataSource.remote.backpack.BackPackRemo
 import com.example.mypokedexcompose.domain.backpackItems.BackpackItemDomain
 import com.example.mypokedexcompose.framework.mappers.ItemsMapper
 
-class BackPackServerDataSource(
-    private val itemClient: ItemClient,
+internal class BackPackServerDataSource(
+    private val itemClient: BackPackItemClient,
     private val itemsMapper: ItemsMapper
 ) : BackPackRemoteDataSource {
 

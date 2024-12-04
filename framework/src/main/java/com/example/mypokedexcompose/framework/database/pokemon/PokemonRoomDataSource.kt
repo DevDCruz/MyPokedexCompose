@@ -6,7 +6,7 @@ import com.example.mypokedexcompose.framework.mappers.PokemonMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class PokemonRoomDataSource(
+internal class PokemonRoomDataSource(
     private val pokemonDao: PokemonDao,
     private val pokemonMapper: PokemonMapper
 ) : PokemonLocalDataSource {

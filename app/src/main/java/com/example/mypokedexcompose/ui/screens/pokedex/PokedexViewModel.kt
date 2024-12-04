@@ -56,7 +56,7 @@ class PokedexViewModel(
 
     suspend fun updateRegionBasedOnLocation(pokedexState: PokedexState) {
         val region = regionMapper.mapLocationtoPokedexRegion(regionRepository.findLastRegion())
-        fetchPokemonsForRegion(region.range)
+        fetchPokedexForRegionUseCase(region.range)
         pokedexState.updateSelectedGeneration(region)
     }
 

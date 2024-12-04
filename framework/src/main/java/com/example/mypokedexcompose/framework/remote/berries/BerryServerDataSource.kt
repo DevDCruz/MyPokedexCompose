@@ -5,7 +5,7 @@ import com.example.mypokedexcompose.data.dataSource.remote.berry.BerryRemoteData
 import com.example.mypokedexcompose.domain.berries.BerryDomain
 import com.example.mypokedexcompose.framework.mappers.BerryMapper
 
-class BerryServerDataSource(
+internal class BerryServerDataSource(
     private val berryClient: BerryClient,
     private val berryMapper: BerryMapper
 ) : BerryRemoteDataSource {

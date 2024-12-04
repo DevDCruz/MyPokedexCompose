@@ -1,9 +1,8 @@
-package com.example.mypokedexcompose.framework
+package com.example.mypokedexcompose.framework.region
 
 import android.annotation.SuppressLint
 import com.example.mypokedexcompose.data.dataSource.LocationDataSource
 import com.example.mypokedexcompose.domain.Location
-import android.location.Location as AndroidLocation
 import com.google.android.gms.location.FusedLocationProviderClient
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
@@ -25,4 +24,4 @@ private suspend fun FusedLocationProviderClient.lastLocation(): Location? {
     }
 }
 
-private fun AndroidLocation.toDomainLocation(): Location = Location(latitude, longitude)
+private fun android.location.Location.toDomainLocation(): Location = Location(latitude, longitude)

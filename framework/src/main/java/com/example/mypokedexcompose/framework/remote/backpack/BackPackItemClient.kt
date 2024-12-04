@@ -2,6 +2,6 @@ package com.example.mypokedexcompose.framework.remote.backpack
 
 import com.example.mypokedexcompose.framework.remote.ApiClient
 
-object ItemClient {
+object BackPackItemClient {
     val instance: ItemService = ApiClient.createService(ItemService::class.java)
 }

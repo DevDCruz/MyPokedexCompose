@@ -1,4 +1,4 @@
-package com.example.mypokedexcompose.framework
+package com.example.mypokedexcompose.framework.region
 
 import android.location.Address
 import android.location.Geocoder

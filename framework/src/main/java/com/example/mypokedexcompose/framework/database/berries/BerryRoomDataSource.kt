@@ -6,7 +6,7 @@ import com.example.mypokedexcompose.framework.mappers.BerryMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class BerryRoomDataSource(
+internal class BerryRoomDataSource(
     private val berryDao: BerryDao,
     private val berryMapper: BerryMapper
 ) : BerryLocalDataSource {

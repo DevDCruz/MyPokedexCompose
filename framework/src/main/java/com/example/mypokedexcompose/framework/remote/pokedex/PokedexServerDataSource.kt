@@ -4,7 +4,7 @@ import com.example.mypokedexcompose.data.dataSource.remote.pokedex.PokedexRemote
 import com.example.mypokedexcompose.domain.pokemon.PokemonDomain
 import com.example.mypokedexcompose.framework.mappers.PokemonMapper
 
-class PokedexServerDataSource(
+internal class PokedexServerDataSource(
     private val pokedexClient: PokedexClient,
     private val pokemonMapper: PokemonMapper
 ) : PokedexRemoteDataSource {
