@@ -1,8 +1,6 @@
 package com.example.mypokedexcompose
 
 import android.app.Application
-import androidx.room.Room
-import com.example.mypokedexcompose.framework.database.PokedexDatabase
 import com.example.mypokedexcompose.framework.frameworkModules
 import com.example.mypokedexcompose.usecase.useCaseModules
 import dataModules
