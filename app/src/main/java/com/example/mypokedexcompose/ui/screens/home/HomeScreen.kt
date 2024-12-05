@@ -40,10 +40,13 @@ import com.example.mypokedexcompose.ui.screens.Screen
 import com.example.mypokedexcompose.ui.theme.DarkRed
 import com.example.mypokedexcompose.ui.theme.DarkRedII
 import com.example.mypokedexcompose.ui.theme.LightRed
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(vm: HomeViewModel, navController: NavController) {
+fun HomeScreen(vm: HomeViewModel = koinViewModel(),
+               navController: NavController
+) {
     val state by vm.state.collectAsState()
 
     Screen {

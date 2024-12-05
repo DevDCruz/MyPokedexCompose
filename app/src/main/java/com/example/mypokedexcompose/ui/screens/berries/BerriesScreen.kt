@@ -27,11 +27,12 @@ import com.example.mypokedexcompose.ui.common.AcScaffold
 import com.example.mypokedexcompose.ui.common.DropDownCustomItem
 import com.example.mypokedexcompose.ui.common.PropertyDetailItem
 import com.example.mypokedexcompose.ui.theme.DarkRed
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BerriesScreen(
-    vm: BerriesViewModel = viewModel(),
+    vm: BerriesViewModel = koinViewModel(),
     onBack: () -> Unit
 ) {
     val state by vm.state.collectAsState()

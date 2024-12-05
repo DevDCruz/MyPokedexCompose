@@ -4,7 +4,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface ItemService {
+interface BackpackItemService {
     @GET("item")
     suspend fun fetchItems(@Query("limit") limit: Int): ItemsListResult
 

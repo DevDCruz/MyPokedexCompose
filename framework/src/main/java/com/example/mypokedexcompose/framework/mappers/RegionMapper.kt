@@ -1,4 +1,6 @@
-package com.example.mypokedexcompose.data.region
+package com.example.mypokedexcompose.framework.mappers
+
+import com.example.mypokedexcompose.data.region.PokedexRegion
 
 class RegionMapper {
     fun mapLocationtoPokedexRegion(location: String): PokedexRegion {

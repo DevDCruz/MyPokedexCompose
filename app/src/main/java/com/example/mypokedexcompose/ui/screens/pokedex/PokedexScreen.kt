@@ -57,13 +57,14 @@ import com.example.mypokedexcompose.ui.theme.DarkRed
 import com.example.mypokedexcompose.ui.theme.DarkRedII
 import com.example.mypokedexcompose.ui.theme.LightRed
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PokedexScreen(
     onClick: (PokemonDomain) -> Unit,
-    vm: PokedexViewModel = viewModel(),
+    vm: PokedexViewModel = koinViewModel(),
     onBack: () -> Unit
 ) {
     val pokedexState = RememberPokedexState(

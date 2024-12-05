@@ -43,11 +43,14 @@ import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
 import com.example.mypokedexcompose.ui.theme.DarkRed
 import com.example.mypokedexcompose.ui.theme.DarkRedII
 import com.example.mypokedexcompose.ui.theme.LightRed
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
-
+fun DetailScreen(
+    vm: DetailViewModel = koinViewModel(),
+    onBack: () -> Unit
+) {
     val state by vm.state.collectAsState()
     val detailState = rememberDetailState()
 
@@ -108,9 +111,9 @@ fun DetailScreen(vm: DetailViewModel, onBack: () -> Unit) {
         LazyColumn(
             contentPadding = padding
         ) {
-           state.ifSuccess {
-               item { DeatilPokemonItem(pokemon) }
-           }
+            state.ifSuccess {
+                item { DeatilPokemonItem(pokemon) }
+            }
         }
     }
 }
