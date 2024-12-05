@@ -5,8 +5,10 @@ import com.example.mypokedexcompose.data.dataSource.LocationDataSource
 import com.example.mypokedexcompose.domain.Location
 import com.google.android.gms.location.FusedLocationProviderClient
 import kotlinx.coroutines.suspendCancellableCoroutine
+import org.koin.core.annotation.Factory
 import kotlin.coroutines.resume
 
+@Factory
 class PlayServicesLocationDataSource(private val fusedLocationClient: FusedLocationProviderClient) :
     LocationDataSource {
 

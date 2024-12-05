@@ -11,7 +11,9 @@ import com.example.mypokedexcompose.usecase.FetchPokemonByNameUseCase
 import com.example.mypokedexcompose.usecase.ToggleFavoriteUseCase
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import org.koin.android.annotation.KoinViewModel
 
+@KoinViewModel
 class DetailViewModel(
     fetchPokemonByNameUseCase: FetchPokemonByNameUseCase,
     private val toggleFavoriteUseCase: ToggleFavoriteUseCase,

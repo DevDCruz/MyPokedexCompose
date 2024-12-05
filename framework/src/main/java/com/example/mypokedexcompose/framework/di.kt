@@ -34,11 +34,17 @@ import com.example.mypokedexcompose.framework.remote.pokemon.PokemonServerDataSo
 import com.example.mypokedexcompose.framework.remote.pokemon.PokemonService
 import com.google.android.gms.location.LocationServices
 import okhttp3.OkHttpClient
+import org.koin.core.annotation.ComponentScan
+import org.koin.core.annotation.Module
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
+@Module
+@ComponentScan
+class FrameworkDataSourcesModule
 
 val frameworkRoomModule = module {
     single { Room.databaseBuilder(get(), PokedexDatabase::class.java, "pokedex.db").build() }
@@ -62,31 +68,8 @@ val frameworkRetrofitModule = module {
     single { get<Retrofit>().create(BackpackItemService::class.java) }
 }
 
-val frameworkPokemonModule = module {
-
-    factoryOf(::PokemonRoomDataSource) bind PokemonLocalDataSource::class
-    factoryOf(::PokemonServerDataSource) bind PokemonRemoteDataSource::class
-}
-
-val frameworkPokedexModule = module {
-    factoryOf(::PokedexRoomDataSource) bind PokedexLocalDataSource::class
-    factoryOf(::PokedexServerDataSource) bind PokedexRemoteDataSource::class
-}
-
-val frameworkBerryModule = module {
-    factoryOf(::BerryRoomDataSource) bind BerryLocalDataSource::class
-    factoryOf(::BerryServerDataSource) bind BerryRemoteDataSource::class
-}
-
-val frameworkBackPackItemModule = module {
-    factoryOf(::BackPackRoomDataSource) bind BackPackLocalDataSource::class
-    factoryOf(::BackPackServerDataSource) bind BackPackRemoteDataSource::class
-}
-
 val frameworkRegionModule = module {
-    factoryOf(::PlayServicesLocationDataSource) bind LocationDataSource::class
     factory { LocationServices.getFusedLocationProviderClient(get<Context>()) }
-    factoryOf(::GeocoderRegionDataSource) bind RegionDataSource::class
     factory { Geocoder(get()) }
 }
 

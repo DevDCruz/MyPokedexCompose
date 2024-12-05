@@ -4,7 +4,9 @@ import com.example.mypokedexcompose.data.dataSource.local.pokedex.PokedexLocalDa
 import com.example.mypokedexcompose.domain.pokemon.PokemonDomain
 import com.example.mypokedexcompose.framework.mappers.PokemonMapper
 import kotlinx.coroutines.flow.map
+import org.koin.core.annotation.Factory
 
+@Factory
 internal class PokedexRoomDataSource(
     private val pokedexDao: PokedexDao,
     private val pokemonMapper: PokemonMapper

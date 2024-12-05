@@ -51,7 +51,10 @@ dependencies {
 
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.compose)
-    
+    implementation(libs.koin.annotations)
+    ksp(libs.koin.compiler)
+
+
     implementation(libs.retrofit.converter.kotlinx.serialization)
     implementation(libs.converter.gson)
     implementation(libs.kotlinx.serialization.json)

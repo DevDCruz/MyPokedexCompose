@@ -5,7 +5,9 @@ import com.example.mypokedexcompose.domain.berries.BerryDomain
 import com.example.mypokedexcompose.framework.mappers.BerryMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import org.koin.core.annotation.Factory
 
+@Factory
 internal class BerryRoomDataSource(
     private val berryDao: BerryDao,
     private val berryMapper: BerryMapper

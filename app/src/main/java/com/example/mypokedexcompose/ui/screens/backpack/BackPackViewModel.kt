@@ -11,7 +11,9 @@ import com.example.mypokedexcompose.usecase.GetBackPackItemsUseCase
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
+import org.koin.android.annotation.KoinViewModel
 
+@KoinViewModel
 class BackPackViewModel(
     getBackPackItemsUseCase: GetBackPackItemsUseCase,
     private val fetchBackPackItemByNameUseCase: FetchBackPackItemByNameUseCase,

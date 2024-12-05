@@ -74,6 +74,8 @@ dependencies {
 
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.compose)
+    implementation(libs.koin.annotations)
+    ksp(libs.koin.compiler)
 
     implementation(libs.androidx.room.common)
     implementation(libs.room.ktx)

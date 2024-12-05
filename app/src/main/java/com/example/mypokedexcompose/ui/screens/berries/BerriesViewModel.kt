@@ -8,7 +8,9 @@ import com.example.mypokedexcompose.data.stateAsResultIn
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
+import org.koin.android.annotation.KoinViewModel
 
+@KoinViewModel
 class BerriesViewModel(
     getBerriesUseCase: com.example.mypokedexcompose.usecase.GetBerriesUseCase,
     private val fetchberryByNameUseCase: com.example.mypokedexcompose.usecase.FetchBerryByNameUseCase,

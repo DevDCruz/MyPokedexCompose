@@ -4,7 +4,9 @@ import android.location.Geocoder
 import com.example.mypokedexcompose.data.dataSource.LocationDataSource
 import com.example.mypokedexcompose.data.dataSource.RegionDataSource
 import com.example.mypokedexcompose.domain.Location
+import org.koin.core.annotation.Factory
 
+@Factory
 class GeocoderRegionDataSource(
     private val geocoder: Geocoder,
     private val locationDataSource: LocationDataSource

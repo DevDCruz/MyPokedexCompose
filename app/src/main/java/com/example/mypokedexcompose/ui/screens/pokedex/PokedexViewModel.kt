@@ -16,7 +16,9 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
+import org.koin.android.annotation.KoinViewModel
 
+@KoinViewModel
 class PokedexViewModel(
     val savedStateHandle: SavedStateHandle,
     private val regionRepository: RegionRepository,

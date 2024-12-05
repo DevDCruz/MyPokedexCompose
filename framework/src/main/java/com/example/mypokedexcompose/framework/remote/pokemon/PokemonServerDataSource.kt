@@ -3,7 +3,9 @@ package com.example.mypokedexcompose.framework.remote.pokemon
 import com.example.mypokedexcompose.data.dataSource.remote.pokemon.PokemonRemoteDataSource
 import com.example.mypokedexcompose.domain.pokemon.PokemonDomain
 import com.example.mypokedexcompose.framework.mappers.PokemonMapper
+import org.koin.core.annotation.Factory
 
+@Factory
 internal class PokemonServerDataSource(
     private val pokemonService: PokemonService,
     private val pokemonMapper: PokemonMapper

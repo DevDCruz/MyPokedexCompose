@@ -8,7 +8,9 @@ import com.example.mypokedexcompose.domain.repository.IBackPackItemRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
+import org.koin.core.annotation.Factory
 
+@Factory
 class BackPackItemRepository(
     private val backPackServerDataSource: BackPackRemoteDataSource,
     private val backPackLocalDataSource: BackPackLocalDataSource

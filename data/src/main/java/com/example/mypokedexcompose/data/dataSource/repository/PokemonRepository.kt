@@ -9,8 +9,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
+import org.koin.core.annotation.Factory
 import java.util.Random
 
+@Factory
 class PokemonRepository(
     private val pokemonServerDataSource: PokemonRemoteDataSource,
     private val pokemonRoomDataSource: PokemonLocalDataSource
