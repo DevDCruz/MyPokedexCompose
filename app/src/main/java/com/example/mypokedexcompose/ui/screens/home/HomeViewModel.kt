@@ -2,7 +2,6 @@ package com.example.mypokedexcompose.ui.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mypokedexcompose.data.dataSource.repository.PokemonRepository
 import com.example.mypokedexcompose.domain.pokemon.PokemonDomain
 import com.example.mypokedexcompose.usecase.FetchRandomPokemonUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +16,6 @@ class HomeViewModel(
     fetchRandomPokemonUseCase: FetchRandomPokemonUseCase
 
 ) : ViewModel() {
-
 
     private val _state = MutableStateFlow(UiState())
     val state: StateFlow<UiState> get() = _state.asStateFlow()
