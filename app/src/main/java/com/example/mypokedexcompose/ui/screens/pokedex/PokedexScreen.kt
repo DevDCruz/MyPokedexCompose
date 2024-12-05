@@ -46,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.mypokedexcompose.R
+import com.example.mypokedexcompose.data.region.PokedexRegion
 import com.example.mypokedexcompose.domain.pokemon.PokemonDomain
 import com.example.mypokedexcompose.ui.common.AcScaffold
 import com.example.mypokedexcompose.ui.common.Constants
@@ -177,7 +178,7 @@ fun PokedexItem(pokemon: PokemonDomain, onClick: () -> Unit) {
 fun DropDownMenu(pokedexViewModel: PokedexViewModel, pokedexState: PokedexState) {
     val selectedText by pokedexState.selectedPokedexRegion.collectAsState()
     var expanded by remember { mutableStateOf(false) }
-    val pokedexRegions = com.example.mypokedexcompose.data.region.PokedexRegion.entries.toTypedArray()
+    val pokedexRegions = PokedexRegion.entries.toTypedArray()
 
     OutlinedTextField(
         value = selectedText.displayName,
