@@ -26,10 +26,3 @@ val useCaseBackPackItemModule = module {
     factoryOf(::GetBackPackItemsUseCase)
     factoryOf(::FetchBackPackItemByNameUseCase)
 }
-
-val useCaseModules = listOf(
-    useCasePokemonModule,
-    useCasePokedexModule,
-    useCaseBerryModule,
-    useCaseBackPackItemModule
-)

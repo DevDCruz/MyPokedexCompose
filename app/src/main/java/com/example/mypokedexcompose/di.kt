@@ -27,11 +27,3 @@ val viewModelBackPackModule = module {
 val viewModelBerryModule = module {
     viewModelOf(::BerriesViewModel)
 }
-
-val viewModelModules = listOf(
-    viewModelPokedexModule,
-    viewModelHomeModule,
-    viewModelDetailModule,
-    viewModelBackPackModule,
-    viewModelBerryModule
-)
