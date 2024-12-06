@@ -1,7 +1,6 @@
 package com.example.mypokedexcompose.framework
 
 import android.app.Application
-import android.content.Context
 import android.location.Geocoder
 import androidx.room.Room
 import com.example.mypokedexcompose.data.dataSource.LocationDataSource
