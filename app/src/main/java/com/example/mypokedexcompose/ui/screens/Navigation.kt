@@ -60,11 +60,7 @@ fun Navigation() {
         composable(
             route = NavScreen.Detail.route,
             arguments = listOf(navArgument(NavArs.POKEMON_NAME.key) { type = NavType.StringType })
-        ) { backStackEntry ->
-            val pokemonName =
-                requireNotNull(backStackEntry.arguments?.getString(NavArs.POKEMON_NAME.key))
-            DetailScreen(
-
+        ) { DetailScreen(
                 onBack = { navControler.popBackStack() }
             )
         }

@@ -17,7 +17,7 @@ class DetailViewModelModule {
     @ViewModelScoped
     @Named("pokemonName")
     fun providePokemonId(savedStateHandle: SavedStateHandle): String {
-        return savedStateHandle[NavArs.POKEMON_NAME.toString()] ?: ""
+        return savedStateHandle[NavArs.POKEMON_NAME.key] ?: ""
 
     }
 }

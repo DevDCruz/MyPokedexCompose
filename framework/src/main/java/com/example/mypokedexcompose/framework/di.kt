@@ -23,6 +23,8 @@ import com.example.mypokedexcompose.framework.mappers.BerryMapper
 import com.example.mypokedexcompose.framework.mappers.ItemsMapper
 import com.example.mypokedexcompose.framework.mappers.PokemonMapper
 import com.example.mypokedexcompose.framework.mappers.RegionMapper
+import com.example.mypokedexcompose.framework.region.GeocoderRegionDataSource
+import com.example.mypokedexcompose.framework.region.PlayServicesLocationDataSource
 import com.example.mypokedexcompose.framework.remote.backpack.BackPackServerDataSource
 import com.example.mypokedexcompose.framework.remote.backpack.BackpackItemService
 import com.example.mypokedexcompose.framework.remote.berries.BerryServerDataSource
@@ -100,6 +102,7 @@ internal object FrameworkRetrofitModule {
 @Module
 @InstallIn(SingletonComponent::class)
 internal abstract class FrameworkLocalDataSourceModule {
+
     @Binds
     abstract fun bindPokedexLocalDataSource(pokedexLocalDataSource: PokedexRoomDataSource): PokedexLocalDataSource
 
@@ -131,10 +134,10 @@ internal abstract class FrameworkLocalDataSourceModule {
 internal abstract class FrameworkRegionBindsModule {
 
     @Binds
-    abstract fun bindLocationDataSource(locationDataSource: LocationDataSource): LocationDataSource
+    abstract fun bindLocationDataSource(locationDataSource: PlayServicesLocationDataSource): LocationDataSource
 
     @Binds
-    abstract fun bindRegionDataSource(regionDataSource: RegionDataSource): RegionDataSource
+    abstract fun bindRegionDataSource(regionDataSource: GeocoderRegionDataSource): RegionDataSource
 
 }
 
@@ -142,13 +145,13 @@ internal abstract class FrameworkRegionBindsModule {
 @InstallIn(SingletonComponent::class)
 internal class FrameworkRegionModule {
     @Provides
-    fun provideFusedLocationDataSource(context: Context): FusedLocationProviderClient {
-        return LocationServices.getFusedLocationProviderClient(context)
+    fun provideFusedLocationDataSource(app: Application): FusedLocationProviderClient {
+        return LocationServices.getFusedLocationProviderClient(app)
     }
 
     @Provides
-    fun provideGeocoder(context: Context): Geocoder {
-        return Geocoder(context)
+    fun provideGeocoder(app: Application): Geocoder {
+        return Geocoder(app)
     }
 }
 
