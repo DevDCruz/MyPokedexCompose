@@ -26,6 +26,7 @@ class App : Application() {
             modules(
                 DatasModule().module,
                 FrameworkDataSourcesModule().module,
+                ViewModelsModule().module,
                 frameworkRoomModule,
                 frameworkRetrofitModule,
                 frameworkRegionModule,
