@@ -44,6 +44,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.example.mypokedexcompose.R
 import com.example.mypokedexcompose.data.region.PokedexRegion
@@ -57,14 +58,13 @@ import com.example.mypokedexcompose.ui.theme.DarkRed
 import com.example.mypokedexcompose.ui.theme.DarkRedII
 import com.example.mypokedexcompose.ui.theme.LightRed
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.koinViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PokedexScreen(
     onClick: (PokemonDomain) -> Unit,
-    vm: PokedexViewModel = koinViewModel(),
+    vm: PokedexViewModel = hiltViewModel(),
     onBack: () -> Unit
 ) {
     val pokedexState = RememberPokedexState(

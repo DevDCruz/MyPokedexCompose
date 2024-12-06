@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.mypokedexcompose.domain.backpackItems.BackpackItemDomain
@@ -32,12 +33,11 @@ import com.example.mypokedexcompose.ui.common.AcScaffold
 import com.example.mypokedexcompose.ui.common.DropDownCustomItem
 import com.example.mypokedexcompose.ui.common.PropertyDetailItem
 import com.example.mypokedexcompose.ui.theme.DarkRed
-import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BackPackScreen(
-    vm: BackPackViewModel = koinViewModel(),
+    vm: BackPackViewModel = hiltViewModel(),
     onBack: () -> Unit
 ) {
     val state by vm.state.collectAsState()
@@ -109,7 +109,10 @@ fun DropDownBackPack(
                 PropertyDetailItem(
                     name = "Attributes",
                     value = backpackItemDetail?.attributes?.joinToString(", ") { it.name } ?: "")
-                PropertyDetailItem(name = "Category", value = backpackItemDetail?.category?.name ?: "")
+                PropertyDetailItem(
+                    name = "Category",
+                    value = backpackItemDetail?.category?.name ?: ""
+                )
                 PropertyDetailItem(
                     name = "Cost",
                     value = ("${backpackItemDetail?.cost ?: ""} $").toString(),

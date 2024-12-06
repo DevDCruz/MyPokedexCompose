@@ -6,10 +6,9 @@ import com.example.mypokedexcompose.domain.backpackItems.BackpackItemDomain
 import com.example.mypokedexcompose.framework.mappers.ItemsMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import org.koin.core.annotation.Factory
+import javax.inject.Inject
 
-@Factory
-internal class BackPackRoomDataSource(
+internal class BackPackRoomDataSource @Inject constructor(
     private val dao: BackPackDao,
     private val itemsMapper: ItemsMapper
 ) :

@@ -1,10 +1,10 @@
 package com.example.mypokedexcompose.data.region
 
 import com.example.mypokedexcompose.data.dataSource.RegionDataSource
-import org.koin.core.annotation.Factory
+import javax.inject.Inject
 
-@Factory
-class RegionRepository(private val geocoderRegionDataSource: RegionDataSource) {
+
+class RegionRepository @Inject constructor(private val geocoderRegionDataSource: RegionDataSource) {
 
     suspend fun findLastRegion(): String = geocoderRegionDataSource.findLastRegion()
 

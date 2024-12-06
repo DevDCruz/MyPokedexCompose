@@ -3,18 +3,22 @@ package com.example.mypokedexcompose.ui.screens.berries
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypokedexcompose.data.Result
-import com.example.mypokedexcompose.domain.berries.BerryDomain
 import com.example.mypokedexcompose.data.stateAsResultIn
+import com.example.mypokedexcompose.domain.berries.BerryDomain
+import com.example.mypokedexcompose.usecase.FetchBerriesUseCase
+import com.example.mypokedexcompose.usecase.FetchBerryByNameUseCase
+import com.example.mypokedexcompose.usecase.GetBerriesUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
-import org.koin.android.annotation.KoinViewModel
+import javax.inject.Inject
 
-@KoinViewModel
-class BerriesViewModel(
-    getBerriesUseCase: com.example.mypokedexcompose.usecase.GetBerriesUseCase,
-    private val fetchberryByNameUseCase: com.example.mypokedexcompose.usecase.FetchBerryByNameUseCase,
-    private val fetchBerriesUseCase: com.example.mypokedexcompose.usecase.FetchBerriesUseCase
+@HiltViewModel
+class BerriesViewModel @Inject constructor(
+    getBerriesUseCase: GetBerriesUseCase,
+    private val fetchberryByNameUseCase: FetchBerryByNameUseCase,
+    private val fetchBerriesUseCase: FetchBerriesUseCase
 ) : ViewModel() {
 
     val state: StateFlow<Result<List<BerryDomain>>> = getBerriesUseCase()

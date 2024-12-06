@@ -1,12 +1,11 @@
 package com.example.mypokedexcompose.usecase
 
-import com.example.mypokedexcompose.domain.repository.IBackPackItemRepository
 import com.example.mypokedexcompose.domain.backpackItems.BackpackItemDomain
+import com.example.mypokedexcompose.domain.repository.IBackPackItemRepository
 import kotlinx.coroutines.flow.Flow
-import org.koin.core.annotation.Factory
+import javax.inject.Inject
 
-@Factory
-class GetBackPackItemsUseCase(
+class GetBackPackItemsUseCase @Inject constructor(
     private val backPackItemRepository: IBackPackItemRepository
 ) {
     operator fun invoke(): Flow<List<BackpackItemDomain>> = backPackItemRepository.backPackItems

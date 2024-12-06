@@ -11,8 +11,6 @@ import com.example.mypokedexcompose.ui.screens.berries.BerriesScreen
 import com.example.mypokedexcompose.ui.screens.detail.DetailScreen
 import com.example.mypokedexcompose.ui.screens.home.HomeScreen
 import com.example.mypokedexcompose.ui.screens.pokedex.PokedexScreen
-import org.koin.androidx.compose.koinViewModel
-import org.koin.core.parameter.parametersOf
 
 sealed class NavScreen(val route: String) {
     data object Home : NavScreen("home")
@@ -66,7 +64,7 @@ fun Navigation() {
             val pokemonName =
                 requireNotNull(backStackEntry.arguments?.getString(NavArs.POKEMON_NAME.key))
             DetailScreen(
-               koinViewModel(parameters = { parametersOf(pokemonName) }),
+
                 onBack = { navControler.popBackStack() }
             )
         }

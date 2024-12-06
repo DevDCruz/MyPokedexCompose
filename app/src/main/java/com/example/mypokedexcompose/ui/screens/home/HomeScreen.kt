@@ -29,6 +29,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.mypokedexcompose.R
@@ -40,12 +41,12 @@ import com.example.mypokedexcompose.ui.screens.Screen
 import com.example.mypokedexcompose.ui.theme.DarkRed
 import com.example.mypokedexcompose.ui.theme.DarkRedII
 import com.example.mypokedexcompose.ui.theme.LightRed
-import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(vm: HomeViewModel = koinViewModel(),
-               navController: NavController
+fun HomeScreen(
+    vm: HomeViewModel = hiltViewModel(),
+    navController: NavController
 ) {
     val state by vm.state.collectAsState()
 

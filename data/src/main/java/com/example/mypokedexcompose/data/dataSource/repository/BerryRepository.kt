@@ -8,10 +8,10 @@ import com.example.mypokedexcompose.domain.repository.IBerryRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
-import org.koin.core.annotation.Factory
+import javax.inject.Inject
 
-@Factory
-class BerryRepository(
+
+class BerryRepository @Inject constructor(
     private val berryRoomDataSource: BerryLocalDataSource,
     private val berryServerDataSource: BerryRemoteDataSource
 ) : IBerryRepository {

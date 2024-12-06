@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -49,10 +50,9 @@ dependencies {
     implementation(libs.play.services.location)
     ksp(libs.room.compiler)
 
-    implementation(platform(libs.koin.bom))
-    implementation(libs.koin.compose)
-    implementation(libs.koin.annotations)
-    ksp(libs.koin.compiler)
+    implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
+    ksp(libs.hilt.compiler)
 
 
     implementation(libs.retrofit.converter.kotlinx.serialization)

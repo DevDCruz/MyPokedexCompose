@@ -1,10 +1,9 @@
 package com.example.mypokedexcompose.usecase
 
 import com.example.mypokedexcompose.domain.repository.IBerryRepository
-import org.koin.core.annotation.Factory
+import javax.inject.Inject
 
-@Factory
-class FetchBerriesUseCase(
+class FetchBerriesUseCase @Inject constructor(
     private val berryRepository: IBerryRepository
 ) {
     suspend operator fun invoke() = berryRepository.fetchBerries()

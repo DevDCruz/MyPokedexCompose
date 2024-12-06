@@ -5,10 +5,10 @@ import com.example.mypokedexcompose.data.dataSource.remote.pokedex.PokedexRemote
 import com.example.mypokedexcompose.domain.pokemon.PokemonDomain
 import com.example.mypokedexcompose.domain.repository.IPokedexRepository
 import kotlinx.coroutines.flow.Flow
-import org.koin.core.annotation.Factory
+import javax.inject.Inject
 
-@Factory
-class PokedexRepository(
+
+class PokedexRepository @Inject constructor(
     private val pokedexServerDataSource: PokedexRemoteDataSource,
     private val pokedexRoomDataSource: PokedexLocalDataSource
 ) : IPokedexRepository {

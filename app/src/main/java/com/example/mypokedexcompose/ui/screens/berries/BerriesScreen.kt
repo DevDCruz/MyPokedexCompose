@@ -21,18 +21,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mypokedexcompose.domain.berries.BerryDomain
 import com.example.mypokedexcompose.ui.common.AcScaffold
 import com.example.mypokedexcompose.ui.common.DropDownCustomItem
 import com.example.mypokedexcompose.ui.common.PropertyDetailItem
 import com.example.mypokedexcompose.ui.theme.DarkRed
-import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BerriesScreen(
-    vm: BerriesViewModel = koinViewModel(),
+    vm: BerriesViewModel = hiltViewModel(),
     onBack: () -> Unit
 ) {
     val state by vm.state.collectAsState()
@@ -66,7 +66,7 @@ fun BerriesScreen(
             contentPadding = padding
         ) {
             itemsIndexed(berries) { index, berry ->
-                DropDownBerry(berry, index +1)
+                DropDownBerry(berry, index + 1)
             }
         }
     }

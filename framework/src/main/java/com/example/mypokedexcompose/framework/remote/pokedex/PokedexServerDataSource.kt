@@ -3,10 +3,9 @@ package com.example.mypokedexcompose.framework.remote.pokedex
 import com.example.mypokedexcompose.data.dataSource.remote.pokedex.PokedexRemoteDataSource
 import com.example.mypokedexcompose.domain.pokemon.PokemonDomain
 import com.example.mypokedexcompose.framework.mappers.PokemonMapper
-import org.koin.core.annotation.Factory
+import javax.inject.Inject
 
-@Factory
-internal class PokedexServerDataSource(
+internal class PokedexServerDataSource @Inject constructor(
     private val pokedexService: PokedexService,
     private val pokemonMapper: PokemonMapper
 ) : PokedexRemoteDataSource {

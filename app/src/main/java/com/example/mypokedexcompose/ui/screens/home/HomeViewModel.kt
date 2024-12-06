@@ -4,15 +4,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypokedexcompose.domain.pokemon.PokemonDomain
 import com.example.mypokedexcompose.usecase.FetchRandomPokemonUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
-import org.koin.android.annotation.KoinViewModel
+import javax.inject.Inject
 
-@KoinViewModel
-class HomeViewModel(
+@HiltViewModel
+class HomeViewModel @Inject constructor(
     fetchRandomPokemonUseCase: FetchRandomPokemonUseCase
 
 ) : ViewModel() {

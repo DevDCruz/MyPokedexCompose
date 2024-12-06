@@ -4,10 +4,9 @@ import android.util.Log
 import com.example.mypokedexcompose.data.dataSource.remote.berry.BerryRemoteDataSource
 import com.example.mypokedexcompose.domain.berries.BerryDomain
 import com.example.mypokedexcompose.framework.mappers.BerryMapper
-import org.koin.core.annotation.Factory
+import javax.inject.Inject
 
-@Factory
-internal class BerryServerDataSource(
+internal class BerryServerDataSource @Inject constructor(
     private val berryService: BerryService,
     private val berryMapper: BerryMapper
 ) : BerryRemoteDataSource {

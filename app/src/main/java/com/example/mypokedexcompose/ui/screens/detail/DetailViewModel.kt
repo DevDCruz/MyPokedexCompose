@@ -9,15 +9,17 @@ import com.example.mypokedexcompose.domain.pokemon.PokemonDomain
 import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
 import com.example.mypokedexcompose.usecase.FetchPokemonByNameUseCase
 import com.example.mypokedexcompose.usecase.ToggleFavoriteUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import org.koin.android.annotation.KoinViewModel
+import javax.inject.Inject
+import javax.inject.Named
 
-@KoinViewModel
-class DetailViewModel(
+@HiltViewModel
+class DetailViewModel @Inject constructor(
     fetchPokemonByNameUseCase: FetchPokemonByNameUseCase,
     private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
-    name: String
+    @Named("pokemonName") name: String
 ) : ViewModel() {
 
     val state: StateFlow<Result<PokemonDomain>> = fetchPokemonByNameUseCase(name)

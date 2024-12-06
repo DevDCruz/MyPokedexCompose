@@ -1,11 +1,9 @@
 package com.example.mypokedexcompose.usecase
 
 import com.example.mypokedexcompose.domain.repository.IBackPackItemRepository
-import org.koin.core.annotation.Factory
+import javax.inject.Inject
 
-
-@Factory
-class FetchBackpackItemsUseCase(
+class FetchBackpackItemsUseCase @Inject constructor(
     private val backPackItemRepository: IBackPackItemRepository
 ) {
     suspend operator fun invoke() = backPackItemRepository.fetchBackPackItems()

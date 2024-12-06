@@ -5,10 +5,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypokedexcompose.data.Result
 import com.example.mypokedexcompose.data.region.PokedexRegion
-import com.example.mypokedexcompose.framework.mappers.RegionMapper
 import com.example.mypokedexcompose.data.region.RegionRepository
 import com.example.mypokedexcompose.data.stateAsResultIn
 import com.example.mypokedexcompose.domain.pokemon.PokemonDomain
+import com.example.mypokedexcompose.framework.mappers.RegionMapper
+import com.example.mypokedexcompose.usecase.FetchPokedexForRegionUseCase
+import com.example.mypokedexcompose.usecase.FetchPokedexUseCase
+import com.example.mypokedexcompose.usecase.GetPokedexUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,15 +20,15 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
-import org.koin.android.annotation.KoinViewModel
+import javax.inject.Inject
 
-@KoinViewModel
-class PokedexViewModel(
+@HiltViewModel
+class PokedexViewModel @Inject constructor(
     val savedStateHandle: SavedStateHandle,
     private val regionRepository: RegionRepository,
-    private val getPokedexUseCase: com.example.mypokedexcompose.usecase.GetPokedexUseCase,
-    private val fetchPokedexUseCase: com.example.mypokedexcompose.usecase.FetchPokedexUseCase,
-    private val fetchPokedexForRegionUseCase: com.example.mypokedexcompose.usecase.FetchPokedexForRegionUseCase,
+    private val getPokedexUseCase: GetPokedexUseCase,
+    private val fetchPokedexUseCase: FetchPokedexUseCase,
+    private val fetchPokedexForRegionUseCase: FetchPokedexForRegionUseCase,
     private val regionMapper: RegionMapper
 ) : ViewModel() {
 

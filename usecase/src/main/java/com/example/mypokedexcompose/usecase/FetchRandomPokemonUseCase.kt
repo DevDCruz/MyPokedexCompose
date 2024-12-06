@@ -3,10 +3,9 @@ package com.example.mypokedexcompose.usecase
 import com.example.mypokedexcompose.domain.pokemon.PokemonDomain
 import com.example.mypokedexcompose.domain.repository.IPokemonRepository
 import kotlinx.coroutines.flow.Flow
-import org.koin.core.annotation.Factory
+import javax.inject.Inject
 
-@Factory
-class FetchRandomPokemonUseCase(
+class FetchRandomPokemonUseCase @Inject constructor(
     private val pokemonRepository: IPokemonRepository
 ) {
     suspend operator fun invoke(): Flow<PokemonDomain?> = pokemonRepository.fetchRandomPokemon()

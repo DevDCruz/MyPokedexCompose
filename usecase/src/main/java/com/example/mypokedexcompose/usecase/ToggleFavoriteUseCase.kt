@@ -2,11 +2,11 @@ package com.example.mypokedexcompose.usecase
 
 import com.example.mypokedexcompose.domain.pokemon.PokemonDomain
 import com.example.mypokedexcompose.domain.repository.IPokemonRepository
-import org.koin.core.annotation.Factory
+import javax.inject.Inject
 
-@Factory
-class ToggleFavoriteUseCase(
+class ToggleFavoriteUseCase @Inject constructor(
     private val pokemonRepository: IPokemonRepository
 ) {
-    suspend operator fun invoke(pokemonDomain: PokemonDomain) = pokemonRepository.toggleFavorite(pokemonDomain)
+    suspend operator fun invoke(pokemonDomain: PokemonDomain) =
+        pokemonRepository.toggleFavorite(pokemonDomain)
 }

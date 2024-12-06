@@ -9,7 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.mypokedexcompose.ui.screens.Navigation
 import com.example.mypokedexcompose.ui.theme.MyPokedexComposeTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -18,17 +20,6 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             Navigation()
-        }
-    }
-}
-
-
-@Preview
-@Composable
-private fun MyLazyColumnPreview() {
-    MyPokedexComposeTheme {
-        Surface {
-
         }
     }
 }

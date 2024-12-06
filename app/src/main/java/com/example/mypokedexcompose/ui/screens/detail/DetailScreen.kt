@@ -32,6 +32,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.example.mypokedexcompose.R
 import com.example.mypokedexcompose.data.ifSuccess
@@ -43,12 +44,11 @@ import com.example.mypokedexcompose.ui.common.changefirstCharToUpperCase
 import com.example.mypokedexcompose.ui.theme.DarkRed
 import com.example.mypokedexcompose.ui.theme.DarkRedII
 import com.example.mypokedexcompose.ui.theme.LightRed
-import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(
-    vm: DetailViewModel = koinViewModel(),
+    vm: DetailViewModel = hiltViewModel(),
     onBack: () -> Unit
 ) {
     val state by vm.state.collectAsState()

@@ -5,11 +5,11 @@ import com.example.mypokedexcompose.data.dataSource.LocationDataSource
 import com.example.mypokedexcompose.domain.Location
 import com.google.android.gms.location.FusedLocationProviderClient
 import kotlinx.coroutines.suspendCancellableCoroutine
-import org.koin.core.annotation.Factory
+import javax.inject.Inject
 import kotlin.coroutines.resume
 
-@Factory
-class PlayServicesLocationDataSource(private val fusedLocationClient: FusedLocationProviderClient) :
+
+class PlayServicesLocationDataSource @Inject constructor(private val fusedLocationClient: FusedLocationProviderClient) :
     LocationDataSource {
 
     override suspend fun findLastLocation(): Location? = fusedLocationClient.lastLocation()

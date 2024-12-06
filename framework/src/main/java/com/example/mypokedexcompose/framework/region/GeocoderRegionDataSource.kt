@@ -4,10 +4,10 @@ import android.location.Geocoder
 import com.example.mypokedexcompose.data.dataSource.LocationDataSource
 import com.example.mypokedexcompose.data.dataSource.RegionDataSource
 import com.example.mypokedexcompose.domain.Location
-import org.koin.core.annotation.Factory
+import javax.inject.Inject
 
-@Factory
-class GeocoderRegionDataSource(
+
+class GeocoderRegionDataSource @Inject constructor(
     private val geocoder: Geocoder,
     private val locationDataSource: LocationDataSource
 ) :
