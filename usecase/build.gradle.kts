@@ -14,7 +14,11 @@ dependencies {
     implementation(project(":domain"))
 
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroitunes.test)
 
     implementation(libs.hilt.core)
     ksp(libs.hilt.compiler)
+
+    implementation(libs.junit)
+    implementation(libs.mockito.kotlin)
 }

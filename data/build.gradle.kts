@@ -17,4 +17,7 @@ dependencies {
 
     implementation(libs.hilt.core)
     ksp(libs.hilt.compiler)
+
+    implementation(libs.junit)
+    implementation(libs.mockito.kotlin)
 }

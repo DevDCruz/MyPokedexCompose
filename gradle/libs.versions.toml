@@ -26,6 +26,8 @@ material = "1.12.0"
 toolsCore = "1.0.0-alpha10"
 hilt = "2.51.1"
 hiltNavigationCompose = "1.2.0"
+mockitoKotlin = "5.3.1"
+coroutinesTest = "1.7.1"
 
 
 [libraries]
@@ -54,6 +56,7 @@ converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", ve
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomktx" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomktx" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlinx-coroitunes-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTest" }
 androidx-room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommon" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
@@ -62,6 +65,8 @@ androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navig
 hilt-core = { group = "com.google.dagger", name = "hilt-core", version.ref = "hilt" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt"  }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt"  }
+mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
