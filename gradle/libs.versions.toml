@@ -26,6 +26,7 @@ material = "1.12.0"
 toolsCore = "1.0.0-alpha10"
 hilt = "2.51.1"
 hiltNavigationCompose = "1.2.0"
+mockitoKotlin = "5.3.1"
 
 
 [libraries]
@@ -62,6 +63,7 @@ androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navig
 hilt-core = { group = "com.google.dagger", name = "hilt-core", version.ref = "hilt" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt"  }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt"  }
+mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
