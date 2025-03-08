@@ -20,4 +20,7 @@ dependencies {
 
     implementation(libs.junit)
     implementation(libs.mockito.kotlin)
+    //coroutines test
+    implementation(libs.coroutines.test)
+
 }

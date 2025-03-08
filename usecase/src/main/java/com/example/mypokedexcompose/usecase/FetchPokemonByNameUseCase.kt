@@ -8,5 +8,6 @@ import javax.inject.Inject
 class FetchPokemonByNameUseCase @Inject constructor(
     private val pokemonRepository: IPokemonRepository
 ) {
-    operator fun invoke(name: String): Flow<PokemonDomain> = pokemonRepository.fetchPokemonByName(name)
+    operator fun invoke(name: String): Flow<PokemonDomain> =
+        pokemonRepository.fetchPokemonByName(name)
 }
